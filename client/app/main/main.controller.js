@@ -1,27 +1,15 @@
 'use strict';
 
 angular.module('pahApp')
-  .controller('MainCtrl', function ($scope, $http, socket) {
-    $scope.awesomeThings = [];
+  .controller('MainCtrl', function ($scope, ngDialog) {
 
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-      socket.syncUpdates('thing', $scope.awesomeThings);
-    });
+    $scope.games = [{},{name:'game1'}]
 
-    $scope.addThing = function() {
-      if($scope.newThing === '') {
-        return;
-      }
-      $http.post('/api/things', { name: $scope.newThing });
-      $scope.newThing = '';
+    $scope.createGame = function () {
+      ngDialog.open({ template: 'createGameTmpl' });
     };
 
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
+    $scope.joinGame = function () {
+      ngDialog.open({ template: 'joinGameTmpl' });
     };
-
-    $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('thing');
-    });
   });
