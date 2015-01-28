@@ -18,6 +18,8 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/deck/deck.socket').register(socket);
+  require('../api/game/game.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
 }
 
