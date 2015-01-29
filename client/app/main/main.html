@@ -1,19 +1,14 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
+<!-- <div ng-include="'components/navbar/navbar.html'"></div> -->
 
 <div layout="column" layout-margin>
 
-  <md-button class="md-raised" ng-click="createGame()">Create</md-button>
-  <md-button class="md-raised" ng-click="joinGame()">Join</md-button>
+
+  <md-button class="md-raised" ng-click="startNow()">Start Now</md-button>
 
 </div>
 
-<script type="text/ng-template" id="joinGameTmpl">
-  <h1>Join a game</h1>
-  <p>Content goes here</p>
-  
-</script>
-
-<script type="text/ng-template" id="createGameTmpl">
-  <h1>Create a new game</h1>
-  <p>Content goes here</p>
+<script type="text/ng-template" id="startGameDialog">
+<h1>Join a game</h1>
+<p>Content goes here</p>
+  {{test}}
 </script>
