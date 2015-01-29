@@ -92,39 +92,41 @@ angular.module('pahApp')
         discardedBlack: []
       };
 
-      hand = [
+      hand = {
+        cards: [
 
-        {
-          "id": 24,
-          "cardType": "A",
-          "text": "The Rapture.",
-          "numAnswers": 0,
-          "expansion": "Base"
-        }, {
-          "id": 25,
-          "cardType": "A",
-          "text": "Pterodactyl eggs.",
-          "numAnswers": 0,
-          "expansion": "Base"
-        }, {
-          "id": 26,
-          "cardType": "A",
-          "text": "Crippling debt.",
-          "numAnswers": 0,
-          "expansion": "Base"
-        }, {
-          "id": 27,
-          "cardType": "A",
-          "text": "Eugenics.",
-          "numAnswers": 0,
-          "expansion": "Base"
-        }
-      ];
+          {
+            "id": 24,
+            "cardType": "A",
+            "text": "The Rapture.",
+            "numAnswers": 0,
+            "expansion": "Base"
+          }, {
+            "id": 25,
+            "cardType": "A",
+            "text": "Pterodactyl eggs.",
+            "numAnswers": 0,
+            "expansion": "Base"
+          }, {
+            "id": 26,
+            "cardType": "A",
+            "text": "Crippling debt.",
+            "numAnswers": 0,
+            "expansion": "Base"
+          }, {
+            "id": 27,
+            "cardType": "A",
+            "text": "Eugenics.",
+            "numAnswers": 0,
+            "expansion": "Base"
+          }
+        ]
+      };
     };
 
-factoryMethods.rejoin = function(playerId) {
-  return;
-};
+    factoryMethods.rejoin = function(playerId) {
+      return;
+    };
 
 
     // Public API here
