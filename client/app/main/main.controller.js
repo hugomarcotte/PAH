@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pahApp')
-    .controller('MainCtrl', function($scope, CAHFactory, ngDialog, $location, socket, deck) {
+    .controller('MainCtrl', function($scope, CAHFactory, ngDialog, $http, $location, socket, deck) {
 
         $scope.test = 'test1';
 
@@ -12,41 +12,6 @@ angular.module('pahApp')
                 controller: 'MainCtrl'
             });
         };
-
-        deck.getDeck('base', function() {
-            $scope.deck = deck.getCurrentDeck();
-            console.log($scope.deck);
-        })
-
-        $scope.awesomeThings = [];
-
-        $http.get('/api/things').success(function(awesomeThings) {
-            $scope.awesomeThings = awesomeThings;
-            socket.syncUpdates('thing', $scope.awesomeThings, function(event, item, array) {
-                speak(item.text, function() {
-                    console.log('done');
-                })
-            });
-        });
-
-
-        $scope.addThing = function() {
-            if ($scope.newThing === '') {
-                return;
-            }
-            $http.post('/api/things', {
-                name: $scope.newThing
-            });
-            $scope.newThing = '';
-        };
-
-        $scope.deleteThing = function(thing) {
-            $http.delete('/api/things/' + thing._id);
-        };
-
-        $scope.$on('$destroy', function() {
-            socket.unsyncUpdates('thing');
-        });
 
         $scope.createOrJoin = function() {
 
