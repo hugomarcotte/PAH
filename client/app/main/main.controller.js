@@ -29,6 +29,10 @@ angular.module('pahApp')
     console.log(CAHFactory.draw());
     console.log(CAHFactory.play(24));
     console.log(CAHFactory.judge(24));
-    console.log(CAHFactory.join("John", "4815162342"));
+    console.log(CAHFactory.join('John', '4815162342'))
+    console.log(CAHFactory.getCurrentHand());
+    console.log(CAHFactory.getCardsInPlay());
+    console.log(CAHFactory.getScoreboard());
+
 
   });
