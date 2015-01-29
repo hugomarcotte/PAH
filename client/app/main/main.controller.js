@@ -25,13 +25,13 @@ angular.module('pahApp')
             }
             // Create and join as player
             else if ($scope.playerName) {
-                CAHFactory.init();
-                CAHFactory.join($scope.playerName);
+                CAHFactory.init($scope.playerName);
+                //CAHFactory.join();
             }
             // Create and join as spectator
             else {
                 CAHFactory.init();
-                CAHFactory.spectate();
+                //CAHFactory.spectate();
             }
 
             $location.path('/pah');

@@ -4,8 +4,8 @@ var _ = require('lodash');
 var Pah = require('./pah.model');
 
 var decks = {
-	master: require('../../decks/cards_against_humanity/master_cards'),
-	base: require('../../decks/cards_against_humanity/base')
+    master: require('../../decks/cards_against_humanity/master_cards'),
+    base: require('../../decks/cards_against_humanity/base')
 }
 
 var availableBlackCards = decks.base.black;
@@ -47,7 +47,10 @@ exports.create = function(req, res) {
         users: [],
         discardedWhite: [],
         discardedBlack: []
-    })
+    });
+    var id = pah._id.toString();
+
+    pah.code = id.substring(id.length - 4);
 
     pah.save(function(err, pah) {
         console.log(pah);
@@ -62,37 +65,43 @@ exports.join = function(req, res) {
     var code = req.params.code;
     var nameHash = hashUser(req.body.name, 5);
 
-    var regex = new regExp(code + '$', 'i');
-    var query = Pah.where('_id').$regex(regex);
-
-    query.findOne(function(err, game) {
-        if (err) {
-            return handleError(res, err);
-        }
-        console.log(code, game._id.substr(game._id.length - 4));
-        if (code === game._id.substr(game._id.length - 4)) {
-            console.log('FOUND GAME', game);
-
-            var isJudge = game.users.length === 0 ? true : false;
-            var player = {
-                name: req.body.name,
-                _id: nameHash,
-                score: 0,
-                cards: [],
-                icon: '',
-                isJudge: isJudge
+    // var regex = new RegExp(code + '$', 'i');
+    Pah
+        .findOne({
+            code: code
+        })
+        .exec(function(err, game) {
+            if (err) {
+                console.log(err);
+                return handleError(res, err);
             }
+            console.log(code, game.code);
+            if (code === game.code) {
+                console.log('FOUND GAME', game);
 
-            game.users.push(player);
-            game.save(function(err, game) {
-            		console.log('SAVED GAME',game);
-                if (err) {
-                    return handleError(res, err);
+                var isJudge = game.users.length === 0 ? true : false;
+                var player = {
+                    name: req.body.name,
+                    _id: nameHash,
+                    score: 0,
+                    cards: [],
+                    icon: '',
+                    isJudge: isJudge
                 }
-                return res.json(player)
-            })
-        }
-    })
+
+                game.users.push(player);
+                game.save(function(err, game) {
+                    console.log('SAVED GAME', game);
+                    if (err) {
+                        return handleError(res, err);
+                    }
+                    return res.json({
+                        state: game,
+                        playerId: player._id
+                    });
+                })
+            }
+        })
 };
 
 exports.draw = function(req, res) {
@@ -129,42 +138,41 @@ exports.submit = function(req, res) {
 };
 
 exports.judge = function(req, res) {
-		var winning_card = req.body.card_id;
-		var winning_user = req.body.user_id;
+    var winning_card = req.body.card_id;
+    var winning_user = req.body.user_id;
 
     Pah.findById(req.params.id, function(err, pah) {
         if (err) {
             return handleError(res, err);
         }
         //MAYBE MARK MODIFIED.
-        pah.users.forEach(function(user){
-        	if(user._id === winning_user){
-        		console.log('WINNING USER',user);
-        		user.score += 1000;
-        	}
+        pah.users.forEach(function(user) {
+            if (user._id === winning_user) {
+                console.log('WINNING USER', user);
+                user.score += 1000;
+            }
         })
 
         var judgeIndex;
-        pah.users.forEach(function(user,index){
-        	if(user.isJudge){
-        		judgeIndex = index;
-        		user.isJudge = false;
-        	}
+        pah.users.forEach(function(user, index) {
+            if (user.isJudge) {
+                judgeIndex = index;
+                user.isJudge = false;
+            }
         })
 
-        if(judgeIndex === pah.users.length - 1){
-        	pah.users[0].isJudge = true;
-        }
-        else{
-        	pah.users[judgeIndex+1].isJudge = true;
+        if (judgeIndex === pah.users.length - 1) {
+            pah.users[0].isJudge = true;
+        } else {
+            pah.users[judgeIndex + 1].isJudge = true;
         }
 
-        availableBlackCards = _.filter(availableBlackCards,function(card){
-        	return card._id !== pah.blackCard._id;
+        availableBlackCards = _.filter(availableBlackCards, function(card) {
+            return card._id !== pah.blackCard._id;
         })
         console.log(availableBlackCards);
 
-        pah.blackCard = availableBlackCards[Math.floor(Math.random()*availableBlackCards.length)];
+        pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
         console.log(pah.blackCard);
 
         pah.cardsInPlay.length = 0;
