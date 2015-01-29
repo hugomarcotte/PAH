@@ -6,7 +6,7 @@ angular.module('pahApp')
 
         deck.getDeck('base', function() {
             $scope.deck = deck.getCurrentDeck();
-            console.log($scope.deck);
+            //console.log($scope.deck);
         })
 
         $scope.awesomeThings = [];
@@ -14,9 +14,9 @@ angular.module('pahApp')
         $http.get('/api/things').success(function(awesomeThings) {
             $scope.awesomeThings = awesomeThings;
             socket.syncUpdates('thing', $scope.awesomeThings, function(event, item, array) {
-                speak(item.text, function() {
-                    console.log('done');
-                })
+                // speak(item.text, function() {
+                //     console.log('done');
+                // })
             });
         });
 

@@ -1,13 +1,25 @@
 'use strict';
 
 angular.module('pahApp')
-  .factory('CAHFactory', function() {
-    var gameId;
-    var isPlayer = false;
+  .factory('CAHFactory', function($http) {
     var factoryMethods = {};
+    var gameId;
+    var gameCode;
+    var playerId;
+    var isPlayer = false;
     var gameState;
-    var hand;
+    var hand = {
+      cards: []
+    };
     var fakeInPlay = {
+      currentJudge: 0,
+      questionCard: {
+        "id": 536,
+        "cardType": "Q",
+        "text": "What am I giving up for Lent?",
+        "numAnswers": 1,
+        "expansion": "Base"
+      },
       cards: [{
         "id": 33,
         "cardType": "A",
@@ -32,37 +44,56 @@ angular.module('pahApp')
     };
 
     factoryMethods.getScoreboard = function() {
-      return gameState.players;
+      return {
+        users: gameState.users
+      };
     };
 
-    factoryMethods.init = function() {
-      gameState = {
-        _id: "P4802OIN489H489",
-        currentJudge: 0,
-        players: [{
-          name: "Griffin",
-          points: 0,
-          // isDealer: Boolean,
-          hand: [0, 1, 2, 3, 4, 5, 6]
-        }],
-        discardedWhite: [],
-        discardedBlack: [],
-        cardsInPlay: []
-      };
-      gameId = gameState._id;
-      console.log('game initialized successfully');
-      return;
+    factoryMethods.getPlayers = function() {
+      return this.getScoreboard();
+    }
+
+    factoryMethods.init = function(playerName) {
+      var self = this;
+      // gameState = {
+      //   _id: "P4802OIN489H489",
+      //   currentJudge: 0,
+      //   users: [],
+      //   discardedWhite: [],
+      //   discardedBlack: [],
+      //   cardsInPlay: []
+      // };
+      // gameId = gameState._id;
+
+      $http.post('/api/pahs/', {})
+        .success(function(state) {
+          // console.log('new game state: ', state);
+          gameState = state;
+          gameId = gameState._id
+          console.log('game initialized successfully');
+          gameCode = gameId.substring(gameId.length-4);
+          if (playerName) {
+            self.join(playerName, gameCode);
+          } else {
+            self.spectate(gameCode);
+          }
+        })
+        .error(function(err) {
+          console.log('Failed to initialize game: ', err);
+        });
+
+      return gameState;
     };
 
     factoryMethods.draw = function() {
-      return {
+      hand.cards.push({
         "id": 18,
         "cardType": "A",
         "text": "Being on fire.",
         "numAnswers": 0,
         "expansion": "Base"
-      };
-
+      });
+      return hand;
     };
 
     factoryMethods.play = function(cardId) {
@@ -75,12 +106,36 @@ angular.module('pahApp')
       return;
     };
 
-    factoryMethods.join = function(name, joinCode) {
-      isPlayer = true;
+    factoryMethods.spectate = function(joinCode) {
+      if (!joinCode) {} // Do some stuff if you were the one to init
+      isPlayer = false;
       gameState = {
         _id: "P4802OIN489H489",
         currentJudge: 0,
-        players: [{
+        users: [{
+          name: "Griffin",
+          points: 0,
+          // isDealer: Boolean,
+          hand: [0, 1, 2, 3, 4, 5, 6]
+        }, {
+          name: name,
+          points: 0,
+          hand: [24, 25, 26, 27]
+        }],
+        discardedWhite: [],
+        discardedBlack: []
+      };
+    };
+
+    factoryMethods.join = function(name, joinCode) {
+      if (!joinCode) {} // Do some stuff if you were the one to init
+      isPlayer = true;
+
+      playerId = 1;
+      gameState = {
+        _id: "P4802OIN489H489",
+        currentJudge: 0,
+        users: [{
           name: "Griffin",
           points: 0,
           // isDealer: Boolean,
@@ -124,9 +179,34 @@ angular.module('pahApp')
           }
         ]
       };
+
+      $http.post('/api/pahs/' + joinCode, {
+          'name': name
+        })
+        .success(function(data) {
+          gameState = data.state;
+          gameId = gameState._id;
+          gameState.users.forEach(function(player, index) {
+            if (player._id == data.playerId) {
+              playerId = index;
+            }
+          });
+          //hand = []; // Make the hand...
+        })
+        .error(function(err) {
+          console.log('Failed to join game: ', err);
+        });
+
+
+
+      return gameState;
     };
 
-    factoryMethods.rejoin = function(playerId, joinCode) {
+
+    // this shouldn't be externally facing, 
+    // should just get called when join finds that
+    // you're already in the game
+    factoryMethods.rejoin = function(joinCode) {
       return;
     };
 

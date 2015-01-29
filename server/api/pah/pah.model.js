@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 
 var PahSchema = new Schema({
   name: String,
+  code: String,
   info: String,
   active: Boolean,
   host: String,
