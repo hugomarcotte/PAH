@@ -7,19 +7,21 @@ angular.module('pahApp')
     var factoryMethods = {};
     var gameState;
     var hand;
-    var fakeInPlay = [{
-      "id": 33,
-      "cardType": "A",
-      "text": "Republicans.",
-      "numAnswers": 0,
-      "expansion": "Base"
-    }, {
-      "id": 34,
-      "cardType": "A",
-      "text": "The Big Bang.",
-      "numAnswers": 0,
-      "expansion": "Base"
-    }];
+    var fakeInPlay = {
+      cards: [{
+        "id": 33,
+        "cardType": "A",
+        "text": "Republicans.",
+        "numAnswers": 0,
+        "expansion": "Base"
+      }, {
+        "id": 34,
+        "cardType": "A",
+        "text": "The Big Bang.",
+        "numAnswers": 0,
+        "expansion": "Base"
+      }]
+    };
 
     factoryMethods.getCurrentHand = function() {
       return hand;
