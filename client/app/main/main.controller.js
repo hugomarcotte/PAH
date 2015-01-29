@@ -33,6 +33,7 @@ angular.module('pahApp')
     console.log(CAHFactory.getCurrentHand());
     console.log(CAHFactory.getCardsInPlay());
     console.log(CAHFactory.getScoreboard());
+    console.log(CAHFactory.rejoin(0, '4815162342'))
 
 
   });

@@ -124,7 +124,7 @@ angular.module('pahApp')
       };
     };
 
-    factoryMethods.rejoin = function(playerId) {
+    factoryMethods.rejoin = function(playerId, joinCode) {
       return;
     };
 
