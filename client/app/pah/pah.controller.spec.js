@@ -1,16 +1,16 @@
 'use strict';
 
-describe('Controller: GameCtrl', function () {
+describe('Controller: PahCtrl', function () {
 
   // load the controller's module
   beforeEach(module('pahApp'));
 
-  var GameCtrl, scope;
+  var PahCtrl, scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    GameCtrl = $controller('GameCtrl', {
+    PahCtrl = $controller('PahCtrl', {
       $scope: scope
     });
   }));

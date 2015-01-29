@@ -9,6 +9,15 @@
 
 <script type="text/ng-template" id="startGameDialog">
 <h1>Join a game</h1>
-<p>Content goes here</p>
-  {{test}}
+<md-input-container>
+  <label>Game Code(leave blank to create new game)</label>
+  <textarea ng-model="gameCode" minlength="4" md-maxlength="4"></textarea>
+</md-input-container>
+
+<md-input-container>
+  <label>Name(leave blank to enter as spectator)</label>
+  <textarea ng-model="playerName" md-maxlength="12"></textarea>
+</md-input-container>
+
+<md-button class="md-raised" ng-click="createOrJoin()">go</md-button>
 </script>
