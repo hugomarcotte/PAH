@@ -191,7 +191,7 @@ angular.module('pahApp')
               playerId = index;
             }
           });
-          hand = []; // Make the hand...
+          //hand = []; // Make the hand...
         })
         .error(function(err) {
           console.log('Failed to join game: ', err);
