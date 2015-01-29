@@ -16,9 +16,9 @@ exports.register = function(socket) {
 }
 
 function onSave(socket, doc, cb) {
-  socket.emit('pah:save', doc);
+  socket.emit('pah:'+doc._id, doc);
 }
 
 function onRemove(socket, doc, cb) {
-  socket.emit('pah:remove', doc);
+  socket.emit('pah:'+doc._id, doc);
 }

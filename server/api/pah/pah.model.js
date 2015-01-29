@@ -6,7 +6,13 @@ var mongoose = require('mongoose'),
 var PahSchema = new Schema({
   name: String,
   info: String,
-  active: Boolean
+  active: Boolean,
+  host: String,
+  currentJudge: Number,
+  users: Array,
+  discardedWhite: Array,
+  cardsInPlay: Array,
+  blackCard: Object
 });
 
 module.exports = mongoose.model('Pah', PahSchema);
