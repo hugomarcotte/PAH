@@ -75,7 +75,7 @@ exports.join = function(req, res) {
                 console.log(err);
                 return handleError(res, err);
             }
-            console.log(code, game.code);
+            console.log(game);
             if (code === game.code) {
                 console.log('FOUND GAME', game);
 

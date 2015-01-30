@@ -1,10 +1,20 @@
 'use strict';
 
 angular.module('pahApp')
-    .controller('MainCtrl', function($scope, CAHFactory, ngDialog, $http, $location, socket, deck) {
+    .controller('BackendSandboxCtrl', function($scope, CAHFactory, ngDialog, $http, $location, socket, deck) {
+        $scope.state = {};
 
-        $scope.test = 'test1';
+        $scope.state = CAHFactory.getState();
+        console.log($scope.state._id);
+        socket.socket.on('pah:' + $scope.state._id, function(item) {
+            $scope.state = item;
+        });
 
+
+        $scope.join = function() {
+            console.log('join');
+            CAHFactory.join($scope.name, $scope.joinCode);
+        }
 
         $scope.startNow = function() {
             ngDialog.open({
@@ -35,7 +45,6 @@ angular.module('pahApp')
             }
 
             // $location.path('/pah');
-            $location.path('/backend_sandbox');
             ngDialog.close();
         };
 

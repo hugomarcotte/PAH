@@ -1,0 +1,35 @@
+<div class="col-md-12">
+<h1>GAME STATE</h1>
+{{state}}
+<md-button class="md-raised" ng-click="getInitialState()">go</md-button>
+</div>
+
+<div class="col-md-12">
+<h1>PLAYERS</h1>
+{{state.users}}
+<input ng-model="name" type="text">
+<input ng-model="joinCode" type="text">
+<md-button class="md-raised" ng-click="join()">go</md-button>
+</div>
+
+<div layout="column" layout-margin>
+
+
+  <md-button class="md-raised" ng-click="startNow()">Start Now</md-button>
+
+</div>
+
+<script type="text/ng-template" id="startGameDialog">
+<h1>Join a game</h1>
+<md-input-container>
+  <label>Game Code(leave blank to create new game)</label>
+  <textarea ng-model="gameCode" minlength="4" md-maxlength="4"></textarea>
+</md-input-container>
+
+<md-input-container>
+  <label>Name(leave blank to enter as spectator)</label>
+  <textarea ng-model="playerName" md-maxlength="12"></textarea>
+</md-input-container>
+
+<md-button class="md-raised" ng-click="createOrJoin()">go</md-button>
+</script>
