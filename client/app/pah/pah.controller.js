@@ -6,6 +6,7 @@ angular.module('pahApp')
 
         $scope.users = [{name:'Hugo'}, {name:'Christian'}];
 
+
         deck.getDeck('base', function() {
             $scope.deck = deck.getCurrentDeck();
             //console.log($scope.deck);
@@ -21,6 +22,15 @@ angular.module('pahApp')
                 // })
             });
         });
+
+
+        $scope.whiteCards =[{"id":12,"cardType":"A","text":"Puppies!","numAnswers":0,"expansion": "Base"},
+    {"id":13,"cardType":"A","text":"A windmill full of corpses.","numAnswers":0,"expansion": "Base"},
+    {"id":14,"cardType":"A","text":"Guys who don't call.","numAnswers":0,"expansion": "Base"},
+    {"id":15,"cardType":"A","text":"Racially-biased SAT questions.","numAnswers":0,"expansion": "Base"},
+    {"id":16,"cardType":"A","text":"Dying.","numAnswers":0,"expansion": "Base"},{"id":12,"cardType":"A","text":"Puppies!","numAnswers":0,"expansion": "Base"},
+    {"id":13,"cardType":"A","text":"A windmill full of corpses.","numAnswers":0,"expansion": "Base"},
+    {"id":14,"cardType":"A","text":"Guys who don't call.","numAnswers":0,"expansion": "Base"}]
 
 
         $scope.addThing = function() {
