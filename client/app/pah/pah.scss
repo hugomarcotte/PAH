@@ -1,5 +1,5 @@
 .board {
-  font-size: 2em;
+  font-size: 1em;
 
 
   .players {
@@ -11,11 +11,26 @@
 
   .cardZone {
     padding: 50px;
-    
-    .blackCard {
-      border-radius: 2px;
+
+    .card {
+      font-size: 3em;
+      border-radius: 10px;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.76), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+      padding: 50px;
+      min-height: 500px;
+
+      .text {
+        height: 90%;
+      }
+      .footer {
+        height: 10%;
+        font-size: 0.5em;
+      }
+    }
+    .blackCard {
       background-color: #232323;
+      color: white;
+
 
     }
   }
