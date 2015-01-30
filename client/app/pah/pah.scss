@@ -1,0 +1,22 @@
+.board {
+  font-size: 2em;
+
+
+  .players {
+    div {
+      width:250px;
+    }
+
+  }
+
+  .cardZone {
+    padding: 50px;
+    
+    .blackCard {
+      border-radius: 2px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.76), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+      background-color: #232323;
+
+    }
+  }
+}

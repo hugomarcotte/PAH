@@ -4,6 +4,8 @@ angular.module('pahApp')
     .controller('PahCtrl', function($scope, CAHFactory, $http, $location, socket, deck) {
         $scope.message = 'Hello';
 
+        $scope.users = [{name:'Hugo'}, {name:'Christian'}];
+
         deck.getDeck('base', function() {
             $scope.deck = deck.getCurrentDeck();
             //console.log($scope.deck);

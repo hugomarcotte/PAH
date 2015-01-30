@@ -1,9 +1,30 @@
-<div layout="row">
-  pah game
-  <div>I'm left.</div>
+<div layout="row" class="board">
 
-  
-  <div>I'm right.</div>
+
+  <div layout="column" class="players" flex="25">
+    <div ng-repeat="user in users" layout="row">
+      <div>
+        {{user.name}}
+      </div>
+      <div>
+        score
+      </div>
+    </div>
+  </div>
+
+
+
+  <div layout="column" class="cardZone" flex="75">
+    <div>
+      User this Id to join the game: [gameID]
+    </div>
+    <div class="blackCard">
+      Black card
+    </div>
+    <div>
+      white card
+    </div>
+  </div>
 
 
 </div>
