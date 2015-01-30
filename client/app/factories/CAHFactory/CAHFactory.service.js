@@ -1,12 +1,8 @@
 'use strict';
 
 angular.module('pahApp')
-    .factory('CAHFactory', function($http) {
+    .factory('CAHFactory', function($http, deck) {
         var factoryMethods = {};
-        var gameId;
-        var gameCode;
-        var playerId;
-        var isPlayer = false;
         var gameState = {};
         var hand = {
             cards: []
@@ -63,31 +59,36 @@ angular.module('pahApp')
             $http.post('/api/pahs/', {})
                 .success(function(state) {
                     console.log('new game state: ', state);
-                    gameState = state;
-                    gameId = gameState._id
-                    console.log('game initialized successfully');
-                    gameCode = gameId.substring(gameId.length - 4);
                     if (playerName) {
-                        self.join(playerName, gameCode);
+                        callback(state);
+                        self.join(playerName, state.code);
                     } else {
-                        self.spectate(gameCode);
+                        callback(state);
+                        self.spectate(state.code);
                     }
-
                 })
                 .error(function(err) {
                     console.log('Failed to initialize game: ', err);
                 });
         };
 
-        factoryMethods.draw = function() {
-            hand.cards.push({
-                "id": 18,
-                "cardType": "A",
-                "text": "Being on fire.",
-                "numAnswers": 0,
-                "expansion": "Base"
-            });
-            return hand;
+        factoryMethods.getGameByCode = function(code, callback) {
+            var self = this;
+            console.log(code);
+            $http.get('/api/pahs/'+code, {})
+                .success(function(state) {
+                    console.log('new game state: ', state);
+                        callback(state);
+                })
+                .error(function(err) {
+                    console.log('Failed to initialize game: ', err);
+                });
+        };
+
+        factoryMethods.draw = function(cardsWeDrew, gameId) {
+          $http.put('api/pahs/'+ gameId +'/draw/', {cardsWeDrew: cardsWeDrew}).success(function (data) {
+            console.log(data);
+          });
         };
 
         factoryMethods.play = function(cardId) {
@@ -113,15 +114,7 @@ angular.module('pahApp')
                     'name': name
                 })
                 .success(function(data) {
-                		console.log(data);
-                    gameState = data.state;
-                    gameId = gameState._id;
-                    gameState.users.forEach(function(player, index) {
-                        if (player._id == data.playerId) {
-                            playerId = index;
-                        }
-                    });
-                    //hand = []; // Make the hand...
+                	if(callback) callback(data);
                 })
                 .error(function(err) {
                     console.log('Failed to join game: ', err);

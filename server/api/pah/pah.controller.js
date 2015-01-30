@@ -29,7 +29,7 @@ exports.index = function(req, res) {
 
 // Get a single pah
 exports.show = function(req, res) {
-    Pah.findById(req.params.id, function(err, pah) {
+    Pah.findOne({code:req.params.code}, function(err, pah) {
         if (err) {
             return handleError(res, err);
         }
@@ -109,7 +109,7 @@ exports.draw = function(req, res) {
         if (err) {
             return handleError(res, err);
         }
-        pah.discardedWhite.push(req.params.card_id);
+        pah.discardedWhite = pah.discardedWhite.concat(req.body.cardsWeDrew);
         pah.save(function(err, pah) {
             if (err) {
                 return handleError(res, err);

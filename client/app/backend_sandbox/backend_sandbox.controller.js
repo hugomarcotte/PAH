@@ -1,20 +1,66 @@
 'use strict';
 
 angular.module('pahApp')
-    .controller('BackendSandboxCtrl', function($scope, CAHFactory, ngDialog, $http, $location, socket, deck) {
+    .controller('BackendSandboxCtrl', function($stateParams, $state,$scope, CAHFactory, ngDialog, $http, $location, socket, deck, $cookies) {
+        
+        console.log($cookies.games);
+        console.log(JSON.parse($cookies.games));
+
+        var cookie = JSON.parse($cookies.games);
+        var userId = cookie[0].userId;
+        $scope.player = {};
+        $scope.judge = {};
+
+
+
+
+
+
+    
+
+
+
+        console.log($stateParams);
         $scope.state = {};
 
-        $scope.state = CAHFactory.getState();
-        console.log($scope.state._id);
-        socket.socket.on('pah:' + $scope.state._id, function(item) {
-            $scope.state = item;
-        });
+
+        CAHFactory.getGameByCode($stateParams.gameid,function(state){
+
+            $scope.state = state;
+            deck.getDeck("base", function(status){
+                console.log(status);
+            });
+            state.users.forEach(function(user){
+                   if (user._id === userId) {
+                    $scope.player = user;
+                   }
+                });
+            $scope.judge = state.users[state.currentJudge];
+            socket.socket.on('pah:' + state._id, function(newstate) {
+                $scope.state = state;
+                state.users.forEach(function(user){
+                   if (user.id === userId) {
+                    $scope.player = user;
+                   }
+                });
+                $scope.judge = state.users[state.currentJudge];
+
+            });
+        })
+
+        $scope.drawCard = function () {
+            deck.drawCard($scope.state.discardedWhite, (10 - $scope.player.cards.length), function (data) {
+                $scope.player.cards = $scope.player.cards.concat(data.cards);
+                CAHFactory.draw(data.cardsWeDrew, $scope.state._id);
+            });
+        }
 
 
         $scope.join = function() {
             console.log('join');
             CAHFactory.join($scope.name, $scope.joinCode);
         }
+
 
         $scope.startNow = function() {
             ngDialog.open({
