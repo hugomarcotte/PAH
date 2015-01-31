@@ -1,38 +1,42 @@
 <div layout="row" class="board">
 
 
-  <div layout="column" class="players" flex="25">
+  <div layout="column" class="players" flex="15">
     <div ng-repeat="user in users" layout="row">
       <div>
         {{user.name}}
       </div>
       <div>
-        score
+        {{user.score}}
       </div>
     </div>
   </div>
 
 
 
-  <div layout="column" class="cardZone" flex="75">
-    <div>
-      User this Id to join the game: [gameID]
+  <div layout="column" class="cardZone" flex="85">
+    <div class="headerBar">
+      Game code: 1234
     </div>
-    <div class="card blackCard" layout="column">
-      <div class="text">
-        As part of his daily regimen, Anderson Cooper sets aside 15 minutes for ___________
+    <div layout="row">
+      <div class="card blackCard" layout="column" flex="65">
+        <div class="text">
+          As part of his daily regimen, Anderson Cooper sets aside 15 minutes for ___________
+        </div>
+        <div class="footer">
+          Phones Against Humanity
+        </div>
       </div>
-      <div class="footer">
-        Phones Against Humanity
+
+
+      <div class="whiteCardZone" flex="35">
+        <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
+          Phones Against Humanity
+        </div>
       </div>
     </div>
 
 
-    <div layout='row' class="whiteCardZone">
-      <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
-        Phones Against Humanity
-      </div>
-    </div>
 </div>
 
 

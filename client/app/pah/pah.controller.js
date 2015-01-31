@@ -4,7 +4,7 @@ angular.module('pahApp')
     .controller('PahCtrl', function($scope, CAHFactory, $http, $location, socket, deck) {
         $scope.message = 'Hello';
 
-        $scope.users = [{name:'Hugo'}, {name:'Christian'}];
+        $scope.users = [{name:'Hugo', score:10}, {name:'Christian', score:25}];
 
 
         deck.getDeck('base', function() {
@@ -30,6 +30,8 @@ angular.module('pahApp')
     {"id":15,"cardType":"A","text":"Racially-biased SAT questions.","numAnswers":0,"expansion": "Base"},
     {"id":16,"cardType":"A","text":"Dying.","numAnswers":0,"expansion": "Base"},{"id":12,"cardType":"A","text":"Puppies!","numAnswers":0,"expansion": "Base"},
     {"id":13,"cardType":"A","text":"A windmill full of corpses.","numAnswers":0,"expansion": "Base"},
+    {"id":14,"cardType":"A","text":"Guys who don't call.","numAnswers":0,"expansion": "Base"},
+    {"id":14,"cardType":"A","text":"Guys who don't call.","numAnswers":0,"expansion": "Base"},
     {"id":14,"cardType":"A","text":"Guys who don't call.","numAnswers":0,"expansion": "Base"}]
 
 
