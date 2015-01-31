@@ -3,14 +3,34 @@
 angular.module('pahApp')
     .controller('MainCtrl', function($scope, CAHFactory, ngDialog, $http, $location, socket, deck) {
 
-        $scope.test = 'test1';
 
+        $scope.openJoinDialog = function() {
+          ngDialog.open({
+            template: 'joinGameDialog',
+            controller: 'MainCtrl'
+          });
+        };
 
+        $scope.createNewGame = function() {
+          CAHFactory.init();
+          $location.path('/pah/1234');
+          ngDialog.close();
+        };
+
+        $scope.joinGame = function() {
+          if ($scope.gameCode && $scope.playerName) {
+            CAHFactory.join($scope.playerName, $scope.gameCode);
+            $location.path('/pah/1234');
+            ngDialog.close();
+          }
+        };
+
+        /////
         $scope.startNow = function() {
-            ngDialog.open({
-                template: 'startGameDialog',
-                controller: 'MainCtrl'
-            });
+          ngDialog.open({
+            template: 'startGameDialog',
+            controller: 'MainCtrl'
+          });
         };
 
         $scope.createOrJoin = function() {
@@ -34,7 +54,7 @@ angular.module('pahApp')
                 //CAHFactory.spectate();
             }
 
-            $location.path('/pah');
+            $location.path('/pah/1234');
             ngDialog.close();
         };
 

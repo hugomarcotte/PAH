@@ -1,10 +1,17 @@
 
-<div layout="column">
-  <h1>Phones Against Humanity<h1>
+<div class="header" layout="column">
+  <div class="title">
+    <h1>Phones<br>Against<br>Humanity<h1>
+    <h2>A party game for horrible people... with phones</h2>
+  </div>
 
 
+  <div>
+    <md-button class="md-raised" ng-click="createNewGame()">Create new game</md-button>
+    <md-button class="md-raised" ng-click="openJoinDialog()">Join</md-button>
+  </div>
 
-  <md-button class="md-raised" ng-click="startNow()">Start Now</md-button>
+
 
 </div>
 
@@ -21,4 +28,21 @@
 </md-input-container>
 
 <md-button class="md-raised" ng-click="createOrJoin()">go</md-button>
+</script>
+
+<script type="text/ng-template" id="joinGameDialog">
+<div class="joinDialog">
+  <h1>Join a game</h1>
+  <md-input-container>
+    <label>Game Code</label>
+    <textarea ng-model="gameCode" minlength="4" md-maxlength="4"></textarea>
+  </md-input-container>
+
+  <md-input-container>
+    <label>Name (leave blank to enter as spectator)</label>
+    <textarea ng-model="playerName" md-maxlength="12"></textarea>
+  </md-input-container>
+
+  <md-button class="md-raised" ng-click="joinGame()">go</md-button>
+</div>
 </script>

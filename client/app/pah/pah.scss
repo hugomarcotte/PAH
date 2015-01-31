@@ -2,13 +2,35 @@
   font-size: 1em;
   color: white;
   background-color: #232323;
+  font-weight: bold;
 
 
-
-  .players {
+  .sideBar {
     padding: 20px;
-    div {
-      width:250px;
+    width:250px;
+
+    .players {
+
+      .md-button {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      .username {
+        line-height:24px;
+      }
+      .score{
+        line-height:24px;
+        text-align: right;
+      }
+    }
+
+    .gameInfo{
+      .text {
+        font-size: 1em;
+      }
+      .code {
+        font-size: 2em;
+      }
     }
 
   }
@@ -16,9 +38,7 @@
   .cardZone {
     padding: 20px;
 
-    .headerBar{
-      font-size: 2em;
-    }
+
     .card {
       font-size: 3em;
       border-radius: 10px;
