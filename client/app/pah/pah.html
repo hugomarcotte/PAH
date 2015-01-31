@@ -1,9 +1,64 @@
-<div layout="row">
-  pah game
-  <div>I'm left.</div>
+<div layout="row" class="board">
 
-  
-  <div>I'm right.</div>
+
+
+  <div layout="column" class="sideBar" flex="15" layout-align="space-between">
+    <div class="players">
+      <md-button class="md-raised" ng-click="" ng-show="!hasJoined">+ Join</md-button>
+      <div>
+        <div ng-repeat="user in users" layout="row">
+          <div class="icon icon-social-white icon-social-white-ic_person_white_24dp" flex="15"></div>
+          <div class="username" flex="50">
+            {{user.name}}
+          </div>
+          <div class="score" flex="35">
+            {{user.score}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="gameInfo">
+      <div class="text">
+        Use this code to join the game
+      </div>
+      <div class="code">
+        {{gameCode}}
+      </div>
+    </div>
+  </div>
+
+
+
+  <div layout="column" class="cardZone" flex="85">
+
+    <div layout="row">
+      <div class="card blackCard" layout="column" flex="50" ng-show="gameStarted">
+        <div class="text">
+          {{blackCard.text}}
+        </div>
+        <div class="footer">
+          Phones Against Humanity
+        </div>
+      </div>
+      <div class="card blackCard" layout="column" flex="50" ng-hide="gameStarted">
+        <div class="text">
+          Phones Against Humanity
+        </div>
+        <div class="footer" style="text-align: center;">
+          <md-button class="md-raised" ng-click="gameStarted = true" ng-show="isJudge">Start Game</md-button>
+        </div>
+      </div>
+
+
+      <div class="whiteCardZone" flex="50">
+        <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
+          Phones Against Humanity
+        </div>
+      </div>
+    </div>
+
+
+</div>
 
 
 </div>

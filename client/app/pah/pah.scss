@@ -1,0 +1,78 @@
+.board {
+  font-size: 1em;
+  color: white;
+  background-color: #232323;
+  font-weight: bold;
+
+
+  .sideBar {
+    padding: 20px;
+    width:250px;
+
+    .players {
+
+      .md-button {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      .username {
+        line-height:24px;
+      }
+      .score{
+        line-height:24px;
+        text-align: right;
+      }
+    }
+
+    .gameInfo{
+      .text {
+        font-size: 1em;
+      }
+      .code {
+        font-size: 2em;
+      }
+    }
+
+  }
+
+  .cardZone {
+    padding: 20px;
+
+
+    .card {
+      font-size: 3em;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.76), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+
+      .text {
+        height: 90%;
+      }
+      .footer {
+        height: 10%;
+        font-size: 0.5em;
+      }
+    }
+    .blackCard {
+      background-color: #000;
+      color: #FFF;
+      padding: 35px;
+      height: 660px;
+    }
+    .whiteCard {
+      background-color: #FFF;
+      color: #000;
+      font-size: 1em;
+      height: 150px;
+      text-align: left;
+      width: 100px;
+      font-weight: bold;
+      padding-left: 10px;
+      display:inline-block;
+      margin: 10px;
+    }
+    .whiteCardZone{
+      height: 630px;
+      margin-top: -10px;
+    }
+  }
+}
