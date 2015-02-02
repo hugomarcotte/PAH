@@ -5,7 +5,7 @@ var Pah = require('./pah.model');
 
 var decks = {
     master: require('../../decks/cards_against_humanity/master_cards'),
-    base: require('../../decks/cards_against_humanity/base')
+    base: require('../../decks/cards_against_humanity/basedeck')
 }
 
 var availableBlackCards = decks.base.black;
