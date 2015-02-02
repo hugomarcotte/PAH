@@ -134,29 +134,20 @@ angular.module('pahApp')
         factoryMethods.spectate = function(joinCode, callback) {
             if (!joinCode) {} // Do some stuff if you were the one to init
             isPlayer = false;
+        $http.get('/api/pahs/' + joinCode)
+        .success(function(data) {
+            if(callback) callback(data);
+        })
         };
 
         factoryMethods.join = function(name, joinCode, callback) {
-<<<<<<< HEAD
         		//console.log(arguments);
-=======
-            console.log(arguments);
->>>>>>> 5485e5dc220a6c4ee34a9c9bda56684b1653e710
             if (!joinCode) {} // Do some stuff if you were the one to init
 
             $http.post('/api/pahs/' + joinCode, {
                     'name': name
                 })
                 .success(function(data) {
-<<<<<<< HEAD
-                    console.log(data, "DATA----");
-                	if(callback) callback(data);
-                	gameState = data.state;
-                	gameState.users.forEach(function(user, index) {
-                		if (user._id == data.playerId) playerIndex = index;
-                	})
-                	                })
-=======
                     if (callback) callback(data);
                     gameId = data.state._id;
                     gameState = data.state;
@@ -164,7 +155,6 @@ angular.module('pahApp')
                         if (user._id == data.playerId) playerIndex = index;
                     })
                 })
->>>>>>> 5485e5dc220a6c4ee34a9c9bda56684b1653e710
                 .error(function(err) {
                     console.log('Failed to join game: ', err);
                 });
