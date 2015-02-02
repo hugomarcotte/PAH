@@ -28,6 +28,11 @@ angular.module('pahApp')
 
                    if (user._id === gameCookie.userId) {
                     $scope.player = user;
+                    cookie.forEach(function(game){
+                        if (game.gameId === state._id && game.cards){
+                            $scope.player.cards = game.cards;
+                        }
+                    });
                    }
             	})
             });
@@ -46,7 +51,15 @@ angular.module('pahApp')
 
         $scope.drawCard = function () {
             deck.drawCard($scope.state.discardedWhite, (10 - $scope.player.cards.length), function (data) {
-                $scope.player.cards = $scope.player.cards.concat(data.cards);
+                var playerCards = $scope.player.cards.concat(data.cards);
+                var cookies = JSON.parse($cookies.games);
+                cookies.forEach(function(game){
+                    if (game.gameId = $scope.state._id) {
+                        game.cards = playerCards;
+                    }
+                })
+                $scope.player.cards = playerCards;
+                $cookies.games = JSON.stringify(cookies);
                 CAHFactory.draw(data.cardsWeDrew, $scope.state._id);
             });
         }
