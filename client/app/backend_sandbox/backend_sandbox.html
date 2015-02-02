@@ -6,14 +6,20 @@
 
 <h1>Public Board</h1>
 	<p><strong>Code:</strong> {{state.code}}</p>
-	<p><strong>White Cards:</strong> {{state.cardsInPLay}}</p>
+	<p><strong>White Cards:</strong> 	<div ng-repeat="card in state.cardsInPlay">
+		<md-button class="md-raised" ng-click="judgeCard(card)">{{card}}</md-button>
+	</div></p>
 	<p><strong>Players:</strong> {{state.users}}</p>
 	<p><strong>Current Judge:</strong> {{state.users[0]}}</p>
 </div>
 
 <h1>Private Board</h1>
 	<p><strong>My Name:</strong> {{player.name}}</p>
-	<p><strong>Cards in Hand:</strong> {{player.cards}}</p>
+	<p><strong>Cards in Hand:</strong>
+	<div ng-repeat="card in player.cards">
+		<md-button class="md-raised" ng-click="submitCard(card.id)">{{card.text}}</md-button>
+	</div>
+	</p>
 	<p><strong>Score:</strong>{{player.score}}</p>
 	<p><strong>I am the judge:</strong> {{player.isJudge}}</p>
 	<md-button class="md-raised" ng-click="drawCard()">Draw Card</md-button>
