@@ -34,13 +34,13 @@ angular.module('pahApp')
             cardsWeDrew: []
            };
 
-           console.log(current_deck, "RAEHSRFDASBFDASFKJDASFKDSAJFDASF");
+           //console.log(current_deck, "RAEHSRFDASBFDASFKJDASFKDSAJFDASF");
 
            var availableWhiteCards = current_deck.filter(function(whiteCard){
-            console.log(whiteCard);
+            //console.log(whiteCard);
             return discardedCards.indexOf(whiteCard.id) === -1
            })
-           console.log(availableWhiteCards, "THAT IS AVAILABLE WHTIE CARDS");
+           //console.log(availableWhiteCards, "THAT IS AVAILABLE WHTIE CARDS");
 
 
            for (var i = 0; i < numToDraw; i++) {
@@ -51,8 +51,8 @@ angular.module('pahApp')
                 // we are not handeling the end of the deck
            }
 
-           console.log(current_deck.length);
-           console.log(availableWhiteCards);
+           // console.log(current_deck.length);
+           // console.log(availableWhiteCards);
            cb(data);
         }
 
