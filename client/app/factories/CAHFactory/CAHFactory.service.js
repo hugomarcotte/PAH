@@ -2,6 +2,7 @@
 
 angular.module('pahApp')
     .factory('CAHFactory', function($http, deck) {
+        var gameId = '';
         var factoryMethods = {};
         var gameState = {};
         var playerIndex;
@@ -52,9 +53,9 @@ angular.module('pahApp')
         };
 
         factoryMethods.getCurrentPlayer = function() {
-        	return {
-        		player: gameState.users[playerIndex]
-        	};
+            return {
+                player: gameState.users[playerIndex]
+            };
         }
 
         factoryMethods.getPlayers = function() {
@@ -81,10 +82,11 @@ angular.module('pahApp')
         factoryMethods.getGameByCode = function(code, callback) {
             var self = this;
             console.log(code);
-            $http.get('/api/pahs/'+code, {})
+            $http.get('/api/pahs/' + code, {})
                 .success(function(state) {
                     console.log('new game state: ', state);
-                        callback(state);
+                    gameId = state._id;
+                    callback(state);
                 })
                 .error(function(err) {
                     console.log('Failed to initialize game: ', err);
@@ -92,18 +94,39 @@ angular.module('pahApp')
         };
 
         factoryMethods.draw = function(cardsWeDrew, gameId) {
-          $http.put('api/pahs/'+ gameId +'/draw/', {cardsWeDrew: cardsWeDrew}).success(function (data) {
-            console.log(data);
-          });
+            $http.put('api/pahs/' + gameId + '/draw/', {
+                cardsWeDrew: cardsWeDrew
+            }).success(function(data) {
+                console.log(data);
+            });
         };
 
-        factoryMethods.play = function(cardId) {
-            console.log('you just played card number: ', cardId);
+        factoryMethods.play = function(card, userId) {
+            console.log('you just played card number: ', card);
+            $http.put('/api/pahs/' + gameId + '/submit/' + userId + '', {
+                    card: card
+                })
+                .success(function(data) {
+                	console.log('Played card',card);
+                })
+                .error(function(err) {
+                    console.log('Failed to join game: ', err);
+                });
             return;
         };
 
-        factoryMethods.judge = function(cardId) {
-            console.log('the player who played card ', cardId, ' is the winner!');
+        factoryMethods.judge = function(card) {
+            console.log('the player who played card ', card, ' is the winner!');
+             $http.put('/api/pahs/' + gameId + '/judge/', {
+                    card_id: card._id,
+                    user_id: card.userId
+                })
+                .success(function(data) {
+                	console.log('Judged this card as the winner:',card);
+                })
+                .error(function(err) {
+                    console.log('Failed to join game: ', err);
+                });
             return;
         };
 
@@ -113,19 +136,20 @@ angular.module('pahApp')
         };
 
         factoryMethods.join = function(name, joinCode, callback) {
-        		console.log(arguments);
+            console.log(arguments);
             if (!joinCode) {} // Do some stuff if you were the one to init
 
             $http.post('/api/pahs/' + joinCode, {
                     'name': name
                 })
                 .success(function(data) {
-                	if(callback) callback(data);
-                	gameState = data.state;
-                	gameState.users.forEach(function(user, index) {
-                		if (user._id == data.playerId) playerIndex = index;
-                	})
-                	                })
+                    if (callback) callback(data);
+                    gameId = data.state._id;
+                    gameState = data.state;
+                    gameState.users.forEach(function(user, index) {
+                        if (user._id == data.playerId) playerIndex = index;
+                    })
+                })
                 .error(function(err) {
                     console.log('Failed to join game: ', err);
                 });

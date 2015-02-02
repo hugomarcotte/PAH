@@ -14,12 +14,14 @@ angular.module('pahApp')
         };
 
         $scope.createNewGame = function() {
+        	return $scope.createOrJoin();
           CAHFactory.init();
           $location.path('/pah/1234');
           ngDialog.close();
         };
 
         $scope.joinGame = function() {
+        	return $scope.createOrJoin();
           if ($scope.gameCode && $scope.playerName) {
             CAHFactory.join($scope.playerName, $scope.gameCode);
             $location.path('/pah/1234');

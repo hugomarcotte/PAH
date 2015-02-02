@@ -12,6 +12,7 @@ var PahSchema = new Schema({
   currentJudge: Number,
   users: Array,
   discardedWhite: Array,
+  discardedBlack: Array,
   cardsInPlay: Array,
   blackCard: Object
 });

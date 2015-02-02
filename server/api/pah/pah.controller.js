@@ -128,10 +128,10 @@ exports.submit = function(req, res) {
         if (err) {
             return handleError(res, err);
         }
-        pah.cardsInPlay.push({
-            user_id: req.params.user,
-            card_id: req.body.card_id
-        });
+        var card = req.body.card;
+        card.userId = req.params.user;
+
+        pah.cardsInPlay.push(card);
         pah.save(function(err, pah) {
             if (err) {
                 return handleError(res, err);
@@ -149,6 +149,7 @@ exports.judge = function(req, res) {
         if (err) {
             return handleError(res, err);
         }
+        console.log(pah);
         //MAYBE MARK MODIFIED.
         pah.users.forEach(function(user) {
             if (user._id === winning_user) {
@@ -175,11 +176,15 @@ exports.judge = function(req, res) {
         //     return card._id !== pah.blackCard._id;
         // })
         // console.log(availableBlackCards);
+        // console.log(pah.blackCard);
+				pah.discardedBlack.push(pah.blackCard.id);
+				// console.log(pah.discardedBlack);
+				//console.log(Math.floor(Math.random()*availableBlackCards.length));
         pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
-				while(pah.discardedBlack.indexOf(pah.blackCard._id) >= 0) {
+				while(pah.discardedBlack.indexOf(pah.blackCard.id) >= 0) {
+				//console.log(Math.floor(Math.random()*availableBlackCards.length));
         	pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
 				}
-				pah.discardedBlack.push(pah.blackCard._id);
         console.log(pah.blackCard);
 
         pah.cardsInPlay.length = 0;
