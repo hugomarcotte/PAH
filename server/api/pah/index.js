@@ -7,8 +7,9 @@ var router = express.Router();
 
 
 router.post('/', controller.create);
+router.get('/:code', controller.show);
 router.post('/:code', controller.join);
-router.put('/:id/draw/:card_id', controller.draw);
+router.put('/:id/draw/', controller.draw);
 router.put('/:id/submit/:user', controller.submit);
 router.put('/:id/judge/', controller.judge);
 

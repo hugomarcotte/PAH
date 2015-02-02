@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('pahApp')
-    .controller('MainCtrl', function($scope, CAHFactory, ngDialog, $http, $location, socket, deck) {
+    .controller('MainCtrl', function($scope, CAHFactory, ngDialog, $http, $location, socket, deck, $cookies) {
+
 
 
         $scope.openJoinDialog = function() {
@@ -11,19 +12,19 @@ angular.module('pahApp')
           });
         };
 
-        $scope.createNewGame = function() {
-          CAHFactory.init();
-          $location.path('/pah/1234');
-          ngDialog.close();
-        };
+        // $scope.createNewGame = function() {
+        //   CAHFactory.init();
+        //   $location.path('/pah/1234');
+        //   ngDialog.close();
+        // };
 
-        $scope.joinGame = function() {
-          if ($scope.gameCode && $scope.playerName) {
-            CAHFactory.join($scope.playerName, $scope.gameCode);
-            $location.path('/pah/1234');
-            ngDialog.close();
-          }
-        };
+        // $scope.joinGame = function() {
+        //   if ($scope.gameCode && $scope.playerName) {
+        //     CAHFactory.join($scope.playerName, $scope.gameCode);
+        //     $location.path('/pah/1234');
+        //     ngDialog.close();
+        //   }
+        // };
 
         /////
         $scope.startNow = function() {
@@ -33,30 +34,87 @@ angular.module('pahApp')
           });
         };
 
-        $scope.createOrJoin = function() {
+            $scope.joinGame = function() {
+          if ($scope.gameCode && $scope.playerName) {
 
-            // Join as player
-            if ($scope.gameCode && $scope.playerName) {
-                CAHFactory.join($scope.playerName, $scope.gameCode);
-            }
-            // Join as spectator
-            else if ($scope.gameCode) {
-                CAHFactory.spectate($scope.gameCode);
-            }
-            // Create and join as player
-            else if ($scope.playerName) {
-                CAHFactory.init($scope.playerName);
-                //CAHFactory.join();
-            }
-            // Create and join as spectator
-            else {
-                CAHFactory.init();
-                //CAHFactory.spectate();
-            }
+             CAHFactory.join($scope.playerName, $scope.gameCode, function(game){
+                    //ngDialog.close();
+                    if ($cookies.games) {
+                
+                        /// parse it push it stringify it reset it
+                        $cookies.games = JSON.stringify(JSON.parse($cookies.games).push({gameId: game.state.code, userId: game.playerId}));
+                    } else {
+                        console.log("Doing this!!!!!!!!")
+                        /// [{gameid: fdsaf, playerId: fdsafds}] /// stringify and set
+                        $cookies.games = JSON.stringify([{gameId: game.state._id, userId: game.playerId}]);
+                    }
+                    
+                    $location.path('/pah/'+game.state.code);
 
-            $location.path('/pah/1234');
+                });
+
+
+
+            // $cookies.games = JSON.stringify([{gameId: $scope.gameCode, userId: $scope.playerName}]);
+            // console.log(JSON.parse($cookies.games));
+            // CAHFactory.join($scope.playerName, $scope.gameCode);
+            // $location.path('/pah/1234');
             ngDialog.close();
+          }
         };
+
+        // $scope.createOrJoin = function() {
+
+           
+
+
+        //     // Join as player
+        //     if ($scope.gameCode && $scope.playerName) {
+        //         CAHFactory.join($scope.playerName, $scope.gameCode, function(game){
+        //             ngDialog.close();
+        //             if ($cookies.games) {
+                
+        //                 /// parse it push it stringify it reset it
+        //                 $cookies.games = JSON.stringify(JSON.parse($cookies.games).push({gameId: game.state.code, userId: game.playerId}));
+        //             } else {
+        //                 console.log("Doing this!!!!!!!!")
+        //                 /// [{gameid: fdsaf, playerId: fdsafds}] /// stringify and set
+        //                 $cookies.games = JSON.stringify([{gameId: game.state._id, userId: game.playerId}]);
+        //             }
+                    
+        //             $location.path('/backend_sandbox/'+game.state.code);
+
+        //         });
+        //    }
+
+
+
+            // // Join as spectator
+            // else if ($scope.gameCode) {
+            //     CAHFactory.spectate($scope.gameCode);
+            // }
+            // // Create and join as player
+            // else if ($scope.playerName) {
+            //     CAHFactory.init($scope.playerName,function(game){
+            //         ngDialog.close();
+            //         $location.path('/backend_sandbox/'+game.code);
+            //     });
+            //     //CAHFactory.join();
+            // }
+            // // Create and join as spectator
+            // else {
+            //     CAHFactory.init(null,function(game){
+            //         ngDialog.close();
+            //         $location.path('/backend_sandbox/'+game.code);
+            //     });
+            //     //CAHFactory.spectate();
+            // }
+
+
+            // $location.path('/pah/1234');
+            // ngDialog.close();
+
+       // };
 
         // console.log(CAHFactory.init());
         // console.log(CAHFactory.draw());
