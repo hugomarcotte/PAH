@@ -7,8 +7,14 @@ angular.module('pahApp')
         // console.log(JSON.parse($cookies.games));
         var cookie = JSON.parse($cookies.games);
         var userId = cookie[0].userId;
+        if (cookie[0].cards) {
+            $scope.whiteCards = cookie[0].cards;
+        }
         $scope.player = {};
         //console.log($stateParams, "STATE PARAMS");
+
+
+
 
         CAHFactory.getGameByCode($stateParams.code, function(state) {
 
@@ -20,7 +26,6 @@ angular.module('pahApp')
                     if (user._id === userId) {
                         //console.log("got here!!!!!!!")
                         $scope.player = user;
-                        $scope.whiteCards = user.cards
                     }
                 });
                 $scope.judge = state.users[state.currentJudge];
@@ -45,7 +50,6 @@ angular.module('pahApp')
                 state.users.forEach(function(user) {
                     if (user.id === userId) {
                         $scope.player = user;
-                        $scope.whiteCards = user.cards
                     }
                 });
                 $scope.judge = state.users[state.currentJudge];
@@ -53,9 +57,16 @@ angular.module('pahApp')
         })
 
         $scope.drawCard = function() {
-            deck.drawCard($scope.state.discardedWhite, (10 - $scope.player.cards.length), function(data) {
-                console.log(data, "DATA")
+           deck.drawCard($scope.state.discardedWhite, (10 - $scope.player.cards.length), function (data) {
+                $scope.whiteCards = $scope.player.cards.concat(data.cards);
                 var cookies = JSON.parse($cookies.games);
+                cookies.forEach(function(game){
+                    if (game.gameId = $scope.state._id) {
+                        game.cards = $scope.whiteCards;
+                    }
+                })
+                // $scope.player.cards = playerCards;
+                $cookies.games = JSON.stringify(cookies);
                 CAHFactory.draw(data.cardsWeDrew, $scope.state._id);
             });
         }
