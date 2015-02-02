@@ -36,36 +36,20 @@ angular.module('pahApp')
 
 
        
-
-            $scope.joinGame = function() {
+ $scope.joinGame = function() {
           if ($scope.gameCode && $scope.playerName) {
 
              CAHFactory.join($scope.playerName, $scope.gameCode, function(game){
                     //ngDialog.close();
-
                     if ($cookies.games) {
                 
                         /// parse it push it stringify it reset it
-                        var cookieGamesTemp = JSON.parse($cookies.games);
-                        cookieGamesTemp.push({
-                            gameId: game.state.code,
-                            userId: game.playerId
-                        });
-                        // console.log($cookies.games);
-                        // console.log(JSON.parse($cookies.games).push({gameId: game.state.code, userId: game.playerId}));
-                        $cookies.games = JSON.stringify(cookieGamesTemp);
-                        // console.log($cookies.games);
+                        $cookies.games = JSON.stringify(JSON.parse($cookies.games).push({gameId: game.state.code, userId: game.playerId}));
                     } else {
                         console.log("Doing this!!!!!!!!")
                         /// [{gameid: fdsaf, playerId: fdsafds}] /// stringify and set
-                        var cookieGamesTemp = JSON.parse($cookies.games);
-                        cookieGamesTemp.push({
-                            gameId: game.state._id,
-                            userId: game.playerId
-                        });
-                        $cookies.games = JSON.stringify(cookieGamesTemp);
+                        $cookies.games = JSON.stringify([{gameId: game.state._id, userId: game.playerId}]);
                     }
-
                     
                     $location.path('/pah/'+game.state.code);
 
@@ -80,8 +64,10 @@ angular.module('pahApp')
             ngDialog.close();
           }
 
+
         };
 
+        
         // $scope.createOrJoin = function() {
 
            
