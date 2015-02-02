@@ -29,7 +29,7 @@ exports.index = function(req, res) {
 
 // Get a single pah
 exports.show = function(req, res) {
-    Pah.findById(req.params.id, function(err, pah) {
+    Pah.findOne({code:req.params.code}, function(err, pah) {
         if (err) {
             return handleError(res, err);
         }
@@ -46,7 +46,8 @@ exports.create = function(req, res) {
         host: '',
         users: [],
         discardedWhite: [],
-        discardedBlack: []
+        discardedBlack: [],
+        blackCard: availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)]
     });
     var id = pah._id.toString();
 
@@ -71,11 +72,14 @@ exports.join = function(req, res) {
             code: code
         })
         .exec(function(err, game) {
+        	if (!game) {
+        		res.send(404);
+        	}
             if (err) {
                 console.log(err);
                 return handleError(res, err);
             }
-            console.log(code, game.code);
+            console.log(game);
             if (code === game.code) {
                 console.log('FOUND GAME', game);
 
@@ -109,7 +113,7 @@ exports.draw = function(req, res) {
         if (err) {
             return handleError(res, err);
         }
-        pah.discardedWhite.push(req.params.card_id);
+        pah.discardedWhite = pah.discardedWhite.concat(req.body.cardsWeDrew);
         pah.save(function(err, pah) {
             if (err) {
                 return handleError(res, err);
@@ -167,12 +171,15 @@ exports.judge = function(req, res) {
             pah.users[judgeIndex + 1].isJudge = true;
         }
 
-        availableBlackCards = _.filter(availableBlackCards, function(card) {
-            return card._id !== pah.blackCard._id;
-        })
-        console.log(availableBlackCards);
-
+        // availableBlackCards = _.filter(availableBlackCards, function(card) {
+        //     return card._id !== pah.blackCard._id;
+        // })
+        // console.log(availableBlackCards);
         pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
+				while(pah.discardedBlack.indexOf(pah.blackCard._id) >= 0) {
+        	pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
+				}
+				pah.discardedBlack.push(pah.blackCard._id);
         console.log(pah.blackCard);
 
         pah.cardsInPlay.length = 0;

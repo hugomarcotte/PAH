@@ -16,6 +16,7 @@ exports.register = function(socket) {
 }
 
 function onSave(socket, doc, cb) {
+	console.log('FROM SOCKET', doc._id);
   socket.emit('pah:'+doc._id, doc);
 }
 

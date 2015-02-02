@@ -1,0 +1,50 @@
+<div class="col-md-12">
+<h1>GAME STATE</h1>
+{{state}}
+<md-button class="md-raised" ng-click="getInitialState()">go</md-button>
+</div>
+
+<h1>Public Board</h1>
+	<p><strong>Code:</strong> {{state.code}}</p>
+	<p><strong>White Cards:</strong> {{state.cardsInPLay}}</p>
+	<p><strong>Players:</strong> {{state.users}}</p>
+	<p><strong>Current Judge:</strong> {{state.users[0]}}</p>
+</div>
+
+<h1>Private Board</h1>
+	<p><strong>My Name:</strong> {{player.name}}</p>
+	<p><strong>Cards in Hand:</strong> {{player.cards}}</p>
+	<p><strong>Score:</strong>{{player.score}}</p>
+	<p><strong>I am the judge:</strong> {{player.isJudge}}</p>
+	<md-button class="md-raised" ng-click="drawCard()">Draw Card</md-button>
+	<md-button class="md-raised" ng-click="drawCard()">Submit Card</md-button>
+</div>
+
+<div class="col-md-12">
+<h1>Enter Game</h1>
+<input placeholder="name" ng-model="name" type="text">
+<input placeholder="code" ng-model="joinCode" type="text">
+<md-button class="md-raised" ng-click="join()">go</md-button>
+</div>
+
+<div layout="column" layout-margin>
+
+
+  <md-button class="md-raised" ng-click="startNow()">Start Now</md-button>
+
+</div>
+
+<script type="text/ng-template" id="startGameDialog">
+<h1>Join a game</h1>
+<md-input-container>
+  <label>Game Code(leave blank to create new game)</label>
+  <textarea ng-model="gameCode" minlength="4" md-maxlength="4"></textarea>
+</md-input-container>
+
+<md-input-container>
+  <label>Name(leave blank to enter as spectator)</label>
+  <textarea ng-model="playerName" md-maxlength="12"></textarea>
+</md-input-container>
+
+<md-button class="md-raised" ng-click="createOrJoin()">go</md-button>
+</script>
