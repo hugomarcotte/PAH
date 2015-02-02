@@ -189,7 +189,9 @@ exports.judge = function(req, res) {
 
         pah.cardsInPlay.length = 0;
 
+        pah.markModified('users')
         pah.save(function(err, pah) {
+        		console.log(pah);
             if (err) {
                 return handleError(res, err);
             }
