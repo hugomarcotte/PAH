@@ -6,9 +6,9 @@
     <div class="players">
       <md-button class="md-raised" ng-click="" ng-show="!hasJoined">+ Join</md-button>
       <div>
-        <div ng-repeat="user in users" layout="row">
+        <div ng-repeat="user in state.users"  layout="row">
           <div class="icon icon-social-white icon-social-white-ic_person_white_24dp" flex="15"></div>
-          <div class="username" flex="50">
+          <div ng-class='{judge: user.isJudge}' class="username" flex="50">
             {{user.name}}
           </div>
           <div class="score" flex="35">
@@ -45,15 +45,18 @@
           Phones Against Humanity
         </div>
         <div class="footer" style="text-align: center;">
-          <md-button class="md-raised" ng-click="gameStarted = true" ng-show="isJudge">Start Game</md-button>
+          <md-button class="md-raised" ng-click="drawCard()" ng-show="isJudge">Black Card</md-button>
+          <md-button class="md-raised" ng-click="drawCard()" ng-show="isJudge">Draw Hand</md-button>
         </div>
       </div>
 
 
       <div class="whiteCardZone" flex="50">
-        <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
+      <!--   <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
           Phones Against Humanity
-        </div>
+        </div> -->
+        <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
+          {{whiteCard.text}}
       </div>
     </div>
 

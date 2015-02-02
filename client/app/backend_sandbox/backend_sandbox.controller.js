@@ -3,16 +3,15 @@
 angular.module('pahApp')
     .controller('BackendSandboxCtrl', function($stateParams, $state,$scope, CAHFactory, ngDialog, $http, $location, socket, deck, $cookies) {
 
-        console.log($cookies.games);
-        console.log(JSON.parse($cookies.games));
+        // console.log($cookies.games);
+        // console.log(JSON.parse($cookies.games));
 
         var cookie = JSON.parse($cookies.games);
         var userId = cookie[0].userId;
         $scope.player = {};
-        $scope.judge = {};
 
 
-        console.log($stateParams);
+
         $scope.state = {};
 
 

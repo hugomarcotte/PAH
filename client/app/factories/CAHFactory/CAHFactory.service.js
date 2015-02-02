@@ -81,8 +81,9 @@ angular.module('pahApp')
 
         factoryMethods.getGameByCode = function(code, callback) {
             var self = this;
-            console.log(code);
-            $http.get('/api/pahs/' + code, {})
+
+            //console.log(code);
+            $http.get('/api/pahs/'+code, {})
                 .success(function(state) {
                     console.log('new game state: ', state);
                     gameId = state._id;
@@ -133,10 +134,14 @@ angular.module('pahApp')
         factoryMethods.spectate = function(joinCode, callback) {
             if (!joinCode) {} // Do some stuff if you were the one to init
             isPlayer = false;
+        $http.get('/api/pahs/' + joinCode)
+        .success(function(data) {
+            if(callback) callback(data);
+        })
         };
 
         factoryMethods.join = function(name, joinCode, callback) {
-            console.log(arguments);
+        		//console.log(arguments);
             if (!joinCode) {} // Do some stuff if you were the one to init
 
             $http.post('/api/pahs/' + joinCode, {
