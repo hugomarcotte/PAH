@@ -1,4 +1,4 @@
-<div layout="row" class="board">
+<div layout="row" class="board" resize ng-style="style()">
 
 
 
@@ -29,10 +29,10 @@
 
 
 
-  <div layout="column" class="cardZone" flex="85">
+  <div layout="row" class="cardZone" flex="85">
 
-    <div layout="row">
-      <div class="card blackCard" layout="column" flex="50" ng-show="gameStarted">
+    <div class="blackCardZone" flex="50" layout="column">
+      <div class="card blackCard" flex="75" layout="column" ng-show="gameStarted">
         <div class="text">
           {{blackCard.text}}
         </div>
@@ -40,7 +40,7 @@
           Phones Against Humanity
         </div>
       </div>
-      <div class="card blackCard" layout="column" flex="50" ng-hide="gameStarted">
+      <div class="card blackCard" flex="75" layout="column" ng-hide="gameStarted">
         <div class="text">
           Phones Against Humanity
         </div>
@@ -48,17 +48,21 @@
           <md-button class="md-raised" ng-click="drawCard()" ng-show="isJudge">Start Game</md-button>
         </div>
       </div>
-
-
-      <div class="whiteCardZone" flex="50">
-      <!--   <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
-          Phones Against Humanity
-        </div> -->
+      <div flex="25">
         <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
           {{whiteCard.text}}
+        </div>
       </div>
     </div>
 
+    <div class="whiteCardZone" flex="50">
+    <!--   <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
+        Phones Against Humanity
+      </div> -->
+      <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
+        {{whiteCard.text}}
+      </div>
+    </div>
 
 </div>
 

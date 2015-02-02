@@ -3,11 +3,11 @@
   color: white;
   background-color: #232323;
   font-weight: bold;
-
+  height: 700px;
 
   .sideBar {
     padding: 20px;
-    width:250px;
+    height: 100%;
 
     .players {
 
@@ -41,7 +41,16 @@
 
   .cardZone {
     padding: 20px;
+    height: 100%;
 
+    .blackCardZone {
+      height: 100%;
+    }
+
+    .whiteCardZone{
+      // height: 630px;
+      margin-top: -10px;
+    }
 
     .card {
       font-size: 3em;
@@ -60,7 +69,7 @@
       background-color: #000;
       color: #FFF;
       padding: 35px;
-      height: 660px;
+      height: 100%;
     }
     .whiteCard {
       background-color: #FFF;
@@ -74,9 +83,6 @@
       display:inline-block;
       margin: 10px;
     }
-    .whiteCardZone{
-      height: 630px;
-      margin-top: -10px;
-    }
+
   }
 }
