@@ -26,7 +26,6 @@ angular.module('pahApp')
         //     ngDialog.close();
         //   }
         // };
-// =======
         $scope.createNewGame = function() {
             return $scope.createOrJoin();
             CAHFactory.init();
@@ -42,7 +41,6 @@ angular.module('pahApp')
 //                 ngDialog.close();
 //           }
 //         };
-// >>>>>>> 5485e5dc220a6c4ee34a9c9bda56684b1653e710
 
 //         /////
 
@@ -103,9 +101,12 @@ angular.module('pahApp')
                         cookies.push({gameId: game.state.code, userId: game.playerId});
                         $cookies.games = JSON.stringify(cookies);
                     } else {
-                        console.log("Doing this!!!!!!!!")
-                        /// [{gameid: fdsaf, playerId: fdsafds}] /// stringify and set
-                        $cookies.games = JSON.stringify([{gameId: game.state._id, userId: game.playerId}]);
+
+                        /// [{gameid: fdsaf, playerId: fdsafds}] /// stringify and se
+                        $cookies.games = JSON.stringify([{
+                            gameId: game.state._id,
+                            userId: game.playerId
+                        }]);
                     }
                     
                     $location.path('/backend_sandbox/'+game.state.code);
