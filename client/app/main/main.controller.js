@@ -54,13 +54,11 @@ angular.module('pahApp')
                         $cookies.games = JSON.stringify(cookieGamesTemp);
                         // console.log($cookies.games);
                     } else {
-                        /// [{gameid: fdsaf, playerId: fdsafds}] /// stringify and set
-                        var cookieGamesTemp = JSON.parse($cookies.games);
-                        cookieGamesTemp.push({
+                        /// [{gameid: fdsaf, playerId: fdsafds}] /// stringify and se
+                        $cookies.games = JSON.stringify([{
                             gameId: game.state._id,
                             userId: game.playerId
-                        });
-                        $cookies.games = JSON.stringify(cookieGamesTemp);
+                        }]);
                     }
 
                     $location.path('/backend_sandbox/' + game.state.code);
