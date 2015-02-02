@@ -2,7 +2,7 @@
 
 angular.module('pahApp')
     .controller('BackendSandboxCtrl', function($stateParams, $state,$scope, CAHFactory, ngDialog, $http, $location, socket, deck, $cookies) {
-        
+
         console.log($cookies.games);
         console.log(JSON.parse($cookies.games));
 
@@ -12,14 +12,6 @@ angular.module('pahApp')
         $scope.judge = {};
 
 
-
-
-
-
-    
-
-
-
         console.log($stateParams);
         $scope.state = {};
 
@@ -27,14 +19,18 @@ angular.module('pahApp')
         CAHFactory.getGameByCode($stateParams.gameid,function(state){
 
             $scope.state = state;
+            console.log($scope.state);
             deck.getDeck("base", function(status){
                 console.log(status);
             });
             state.users.forEach(function(user){
-                   if (user._id === userId) {
+            	cookie.forEach(function(gameCookie) {
+
+                   if (user._id === gameCookie.userId) {
                     $scope.player = user;
                    }
-                });
+            	})
+            });
             $scope.judge = state.users[state.currentJudge];
             socket.socket.on('pah:' + state._id, function(newstate) {
                 $scope.state = state;

@@ -46,7 +46,8 @@ exports.create = function(req, res) {
         host: '',
         users: [],
         discardedWhite: [],
-        discardedBlack: []
+        discardedBlack: [],
+        blackCard: availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)]
     });
     var id = pah._id.toString();
 
@@ -71,6 +72,9 @@ exports.join = function(req, res) {
             code: code
         })
         .exec(function(err, game) {
+        	if (!game) {
+        		res.send(404);
+        	}
             if (err) {
                 console.log(err);
                 return handleError(res, err);
@@ -167,12 +171,15 @@ exports.judge = function(req, res) {
             pah.users[judgeIndex + 1].isJudge = true;
         }
 
-        availableBlackCards = _.filter(availableBlackCards, function(card) {
-            return card._id !== pah.blackCard._id;
-        })
-        console.log(availableBlackCards);
-
+        // availableBlackCards = _.filter(availableBlackCards, function(card) {
+        //     return card._id !== pah.blackCard._id;
+        // })
+        // console.log(availableBlackCards);
         pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
+				while(pah.discardedBlack.indexOf(pah.blackCard._id) >= 0) {
+        	pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
+				}
+				pah.discardedBlack.push(pah.blackCard._id);
         console.log(pah.blackCard);
 
         pah.cardsInPlay.length = 0;

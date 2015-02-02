@@ -4,6 +4,7 @@ angular.module('pahApp')
     .factory('CAHFactory', function($http, deck) {
         var factoryMethods = {};
         var gameState = {};
+        var playerIndex;
         var hand = {
             cards: []
         };
@@ -30,6 +31,7 @@ angular.module('pahApp')
                 "expansion": "Base"
             }]
         };
+        var isPlayer = false;
 
         factoryMethods.getState = function() {
             return gameState;
@@ -49,6 +51,12 @@ angular.module('pahApp')
             };
         };
 
+        factoryMethods.getCurrentPlayer = function() {
+        	return {
+        		player: gameState.users[playerIndex]
+        	};
+        }
+
         factoryMethods.getPlayers = function() {
             return this.getScoreboard();
         }
@@ -60,11 +68,9 @@ angular.module('pahApp')
                 .success(function(state) {
                     console.log('new game state: ', state);
                     if (playerName) {
-                        callback(state);
-                        self.join(playerName, state.code);
+                        self.join(playerName, state.code, callback);
                     } else {
-                        callback(state);
-                        self.spectate(state.code);
+                        self.spectate(state.code, callback);
                     }
                 })
                 .error(function(err) {
@@ -115,7 +121,11 @@ angular.module('pahApp')
                 })
                 .success(function(data) {
                 	if(callback) callback(data);
-                })
+                	gameState = data.state;
+                	gameState.users.forEach(function(user, index) {
+                		if (user._id == data.playerId) playerIndex = index;
+                	})
+                	                })
                 .error(function(err) {
                     console.log('Failed to join game: ', err);
                 });
