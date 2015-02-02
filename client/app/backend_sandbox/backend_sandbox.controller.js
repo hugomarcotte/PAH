@@ -24,7 +24,6 @@ angular.module('pahApp')
             });
             state.users.forEach(function(user){
             	cookie.forEach(function(gameCookie) {
-
                    if (user._id === gameCookie.userId) {
                     $scope.player = user;
                     cookie.forEach(function(game){
@@ -37,16 +36,28 @@ angular.module('pahApp')
             });
             $scope.judge = state.users[state.currentJudge];
             socket.socket.on('pah:' + state._id, function(newstate) {
-                $scope.state = state;
+                $scope.state = newstate;
                 state.users.forEach(function(user){
                    if (user.id === userId) {
                     $scope.player = user;
                    }
                 });
                 $scope.judge = state.users[state.currentJudge];
-
             });
         })
+
+				$scope.submitCard = function (id) {
+					var cardToAdd = {}
+					$scope.player.cards = $scope.player.cards.filter(function(card){
+						if(card.id === id) cardToAdd = card;
+						return card.id !== id;
+					})
+					CAHFactory.play(cardToAdd,$scope.player._id);
+				}
+
+				$scope.judgeCard = function(card) {
+					CAHFactory.judge(card);
+				}
 
         $scope.drawCard = function () {
             deck.drawCard($scope.state.discardedWhite, (10 - $scope.player.cards.length), function (data) {

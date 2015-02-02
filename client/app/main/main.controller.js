@@ -12,6 +12,7 @@ angular.module('pahApp')
           });
         };
 
+
         // $scope.createNewGame = function() {
         //   CAHFactory.init();
         //   $location.path('/pah/1234');
@@ -25,8 +26,27 @@ angular.module('pahApp')
         //     ngDialog.close();
         //   }
         // };
+// =======
+//         $scope.createNewGame = function() {
+//             return $scope.createOrJoin();
+//             CAHFactory.init();
+//             $location.path('/pah/1234');
+//              ngDialog.close();
+//         };
 
-        /////
+//         $scope.joinGame = function() {
+//         	return $scope.createOrJoin();
+//                 if ($scope.gameCode && $scope.playerName) {
+//                 CAHFactory.join($scope.playerName, $scope.gameCode);
+//                  $location.path('/pah/1234');
+//                 ngDialog.close();
+//           }
+//         };
+// >>>>>>> 5485e5dc220a6c4ee34a9c9bda56684b1653e710
+
+//         /////
+
+
         $scope.startNow = function() {
           ngDialog.open({
             template: 'startGameDialog',
