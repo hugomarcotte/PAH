@@ -62,7 +62,7 @@ $scope.drawCard = function() {
     $scope.whiteCards = $scope.player.cards.concat(data.cards);
     var cookies = JSON.parse($cookies.games);
     cookies.forEach(function(game){
-        if (game.gameId = $scope.state._id) {
+        if (game.gameId == $scope.state._id) {
             game.cards = $scope.whiteCards;
         }
     })
