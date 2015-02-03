@@ -31,7 +31,7 @@
     </div>
   </div>
   <div layout="row" class="cardZone" flex="85">
-    
+
     <div class="blackCardZone" flex="50" layout="column">
       <div class="card blackCard" flex="75" layout="column" ng-show="gameStarted">
         <div class="text">
@@ -50,16 +50,19 @@
           <md-button class="md-raised" ng-click="drawCard()" ng-show="isJudge">Draw Hand</md-button>
         </div>
       </div>
-      <div class="publicWhiteCards" style="margin-left:{{calculateMargin(whiteCards.length)}}px" flex="25">
-        <div class='card whiteCard' style="margin-left:-{{calculateMargin(whiteCards.length)}}px" ng-repeat='whiteCard in whiteCards'>
+      <div class="publicWhiteCards" style="margin-left:{{calStackCardsMargin(publicwhiteCards.length)}}px" flex="25">
+        <div class='card whiteCard' ng-show="!show{{whiteCard.id}}" ng-click="show(whiteCard.id)" style="margin-left:-{{calStackCardsMargin(publicwhiteCards.length)}}px" ng-repeat='whiteCard in publicwhiteCards'>
           Phones Against Humanity
+        </div>
+        <div class='card whiteCard' ng-show="show{{whiteCard.id}}" ng-click="show(whiteCard.id)" style="margin-left:-{{calStackCardsMargin(publicwhiteCards.length)}}px" ng-repeat='whiteCard in publicwhiteCards'>
+          {{whiteCard.text}}
         </div>
       </div>
     </div>
 
 
     <div class="playersWhiteCardZone" flex="50">
-      
+
       <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
         {{whiteCard.text}}
       </div>
