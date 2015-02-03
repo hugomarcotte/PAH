@@ -54,12 +54,9 @@ angular.module('pahApp')
           submittedCards.push(card)
         }
       });
-      console.log(submittedCards);
+      CAHFactory.play(submittedCards[0], $scope.currentPlayer._id);  //CAHFactory.play should be rewritten to accet an array of card objects
     };
 
-    $scope.drawBlackCard = function () {
-      // draw a black card
-    }
 
 
 

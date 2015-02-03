@@ -1,9 +1,9 @@
-<!--<md-card style="width:500px; color: white">-->
-<!--<p>Private: {{privatePlayArea.hand}}</p>-->
-<!--<p>Public: {{publicPlayArea}}</p>-->
-<!--<p>Scoreboard: {{scoreboard}}</p>-->
-<!--<p>Me: {{currentPlayer}}</p>-->
-<!--</md-card>-->
+<md-card style="width:500px; color: white">
+<p>Private: {{privatePlayArea.hand}}</p>
+<p>Public: {{publicPlayArea}}</p>
+<p>Scoreboard: {{scoreboard}}</p>
+<p>Me: {{currentPlayer}}</p>
+</md-card>
 <div layout="row" class="board" resize ng-style="style()">
   <div layout="column" class="sideBar" flex="15" layout-align="space-between">
     <div class="players">
@@ -43,7 +43,7 @@
       </div>
       <div class="card blackCard" flex="75" layout="column" ng-hide="gameStarted">
         <div class="text">
-          Phones Against Humanity
+          {{publicPlayArea.blackCard.text}}
         </div>
         <div class="footer" style="text-align: center;">
           <md-button class="md-raised" ng-click="drawBlackCard()" ng-show="isJudge">Black Card</md-button>
@@ -52,7 +52,7 @@
         </div>
       </div>
       <div class="publicWhiteCards" style="margin-left:{{calculateMargin(whiteCards.length)}}px" flex="25">
-        <div class='card whiteCard' style="margin-left:-{{calculateMargin(whiteCards.length)}}px" ng-repeat='whiteCard in whiteCards'>
+        <div class='card whiteCard' style="margin-left:-{{calculateMargin(whiteCards.length)}}px" ng-repeat='whiteCard in publicPlayArea.submittedCards'>
           Phones Against Humanity
         </div>
       </div>
