@@ -3,7 +3,37 @@
 angular.module('pahApp')
     .controller('PahCtrl', function($scope, CAHFactory, ngDialog, $stateParams, $http, $location, socket, deck, $cookies) {
 
-    		$scope.url = $location.absUrl();
+        // CAHFactory.init(playerName, callback)
+        // if you include a playerName, init will also join you to the game
+
+        // CAHFactory.join(playerName, code, callback)
+
+        $scope.examplePrivatePlayArea = CAHFactory.getPrivatePlayArea();
+        // access each card using exampleHand.hand[i], which is the full object
+
+        $scope.examplePublicPlayArea = CAHFactory.getPublicPlayArea();
+        // access the public play area (not the scoreboard)
+        // 
+        // {
+        //   blackCard: {},
+        //   submittedCards: [],
+        //   judgeMode: false,  // true if everyone has submitted a card?
+        //   currentJudge: {} // user info of judge
+        // }
+
+        $scope.exampleScoreboard = CAHFactory.getScoreboard();
+        // get the scoreboard, which includes the array of all players
+
+        $scope.exampleMe = CAHFactory.getCurrentPlayer();
+        // get the current player's info 
+        // {
+        //   info: {this is the player object},
+        //   index: 4 // index in users array for display porpoises
+        // }
+
+
+        $scope.url = $location.absUrl();
+
 
         // console.log($cookies.games);
         //console.log(JSON.parse($cookies.games));
@@ -15,7 +45,6 @@ angular.module('pahApp')
 
         $scope.player = {};
         //console.log($stateParams, "STATE PARAMS");
-
 
 
 
@@ -47,16 +76,16 @@ angular.module('pahApp')
                 }
             });
             $scope.judge = state.users[state.currentJudge];
-            socket.socket.on('pah:' + state._id, function(newstate) {
-                $scope.state = state;
-                console.log(state, "STATE")
-                state.users.forEach(function(user) {
-                    if (user.id === userId) {
-                        $scope.player = user;
-                    }
-                });
-                $scope.judge = state.users[state.currentJudge];
-            });
+            // socket.socket.on('pah:' + state._id, function(newstate) {
+            //     $scope.state = state;
+            //     console.log(state, "STATE")
+            //     state.users.forEach(function(user) {
+            //         if (user.id === userId) {
+            //             $scope.player = user;
+            //         }
+            //     });
+            //     $scope.judge = state.users[state.currentJudge];
+            // });
         })
 
         $scope.drawCard = function() {
@@ -75,10 +104,7 @@ angular.module('pahApp')
         }
 
 
-
-
         $scope.gameCode = $stateParams.code;
-
 
 
 
@@ -110,21 +136,21 @@ angular.module('pahApp')
         })
 
         $scope.openLinkDialog = function() {
-        		console.log('hey');
+            console.log('hey');
             ngDialog.open({
                 template: 'getLinkDialog',
                 controller: 'PahCtrl'
             });
         };
 
-        $scope.sendText = function () {
-        	$http.post('/api/pahs/invite',{
-        		phoneNumber: $scope.phoneNumber,
-        		link: $scope.url
-        	})
-        	.success(function(data){
-        		console.log('successfully texted');
-        		ngDialog.close();
-        	})
+        $scope.sendText = function() {
+            $http.post('/api/pahs/invite', {
+                    phoneNumber: $scope.phoneNumber,
+                    link: $scope.url
+                })
+                .success(function(data) {
+                    console.log('successfully texted');
+                    ngDialog.close();
+                })
         }
     });
