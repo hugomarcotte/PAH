@@ -1,9 +1,9 @@
-<!-- <md-card style="height:500px;width:500px;">
-<p>Private: {{examplePrivatePlayArea}}</p>
-<p>Public: {{examplePublicPlayArea}}</p>
-<p>Scoreboard: {{exampleScoreboard}}</p>
-<p>Me: {{exampleMe}}</p>
-</md-card> -->
+<md-card style="width:500px; color: white">
+<p>Private: {{privatePlayArea.hand}}</p>
+<p>Public: {{publicPlayArea}}</p>
+<p>Scoreboard: {{scoreboard}}</p>
+<p>Me: {{currentPlayer}}</p>
+</md-card>
 <div layout="row" class="board" resize ng-style="style()">
   <div layout="column" class="sideBar" flex="15" layout-align="space-between">
     <div class="players">
@@ -43,18 +43,21 @@
       </div>
       <div class="card blackCard" flex="75" layout="column" ng-hide="gameStarted">
         <div class="text">
-          Phones Against Humanity
+          {{publicPlayArea.blackCard.text}}
         </div>
         <div class="footer" style="text-align: center;">
-          <md-button class="md-raised" ng-click="drawCard()" ng-show="isJudge">Black Card</md-button>
+          <md-button class="md-raised" ng-click="drawBlackCard()" ng-show="isJudge">Black Card</md-button>
           <md-button class="md-raised" ng-click="drawCard()" ng-show="isJudge">Draw Hand</md-button>
+          <md-button class="md-raised" ng-click="submitCards()" ng-show="isJudge">Submit Cards</md-button>
         </div>
       </div>
+
       <div class="publicWhiteCards" style="margin-left:{{calStackCardsMargin(publicwhiteCards.length)}}px" flex="25">
-        <div class='card whiteCard' ng-show="!show{{whiteCard.id}}" ng-click="show(whiteCard.id)" style="margin-left:-{{calStackCardsMargin(publicwhiteCards.length)}}px" ng-repeat='whiteCard in publicwhiteCards'>
+        <div class='card whiteCard' ng-show="!show{{whiteCard.id}}" ng-click="show(whiteCard.id)" style="margin-left:-{{calStackCardsMargin(publicwhiteCards.length)}}px" ng-repeat='whiteCard in publicPlayArea.submittedCards'>
+
           Phones Against Humanity
         </div>
-        <div class='card whiteCard' ng-show="show{{whiteCard.id}}" ng-click="show(whiteCard.id)" style="margin-left:-{{calStackCardsMargin(publicwhiteCards.length)}}px" ng-repeat='whiteCard in publicwhiteCards'>
+        <div class='card whiteCard' ng-show="show{{whiteCard.id}}" ng-click="show(whiteCard.id)" style="margin-left:-{{calStackCardsMargin(publicwhiteCards.length)}}px" ng-repeat='whiteCard in publicPlayArea.submittedCards'>
           {{whiteCard.text}}
         </div>
       </div>
@@ -63,7 +66,8 @@
 
     <div class="playersWhiteCardZone" flex="50">
 
-      <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
+
+      <div class='card whiteCard' ng-repeat='whiteCard in privatePlayArea.hand' ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}">
         {{whiteCard.text}}
       </div>
     </div>

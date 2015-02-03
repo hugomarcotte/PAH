@@ -3,33 +3,94 @@
 angular.module('pahApp')
     .controller('PahCtrl', function($scope, CAHFactory, ngDialog, $stateParams, $http, $location, socket, deck, $cookies) {
 
-        // CAHFactory.init(playerName, callback)
-        // if you include a playerName, init will also join you to the game
-
-        // CAHFactory.join(playerName, code, callback)
-
-        $scope.examplePrivatePlayArea = CAHFactory.getPrivatePlayArea();
-        // access each card using exampleHand.hand[i], which is the full object
-
-        $scope.examplePublicPlayArea = CAHFactory.getPublicPlayArea();
-        // access the public play area (not the scoreboard)
+        //// CAHFactory.init(playerName, callback)
+        //// if you include a playerName, init will also join you to the game
         //
-        // {
-        //   blackCard: {},
-        //   submittedCards: [],
-        //   judgeMode: false,  // true if everyone has submitted a card?
-        //   currentJudge: {} // user info of judge
-        // }
+        //// CAHFactory.join(playerName, code, callback)
+        //
+        //$scope.examplePrivatePlayArea = CAHFactory.getPrivatePlayArea();
+        //// access each card using exampleHand.hand[i], which is the full object
+        //
+        //$scope.examplePublicPlayArea = CAHFactory.getPublicPlayArea();
+        //// access the public play area (not the scoreboard)
+        ////
+        //// {
+        ////   blackCard: {},
+        ////   submittedCards: [],
+        ////   judgeMode: false,  // true if everyone has submitted a card?
+        ////   currentJudge: {} // user info of judge
+        //// }
+        //
+        //$scope.exampleScoreboard = CAHFactory.getScoreboard();
+        //// get the scoreboard, which includes the array of all players
+        //
+        //$scope.exampleMe = CAHFactory.getCurrentPlayer();
+        //console.log($scope.exampleMe);
+        //// get the current player's info
+        //// {
+        ////   info: {this is the player object},
+        ////   index: 4 // index in users array for display porpoises
+        //// }
 
-        $scope.exampleScoreboard = CAHFactory.getScoreboard();
-        // get the scoreboard, which includes the array of all players
-        $scope.exampleMe = CAHFactory.getCurrentPlayer($stateParams.code);
-        // get the current player's info 
 
-        // {
-        //   info: {this is the player object},
-        //   index: 4 // index in users array for display porpoises
-        // }
+    $scope.privatePlayArea = CAHFactory.getPrivatePlayArea();
+    $scope.publicPlayArea = CAHFactory.getPublicPlayArea();
+    $scope.scoreboard = CAHFactory.getScoreboard();
+    $scope.currentPlayer = CAHFactory.getCurrentPlayer($stateParams.code);
+
+
+    $scope.selectWhiteCard = function(whiteCard) {
+      if (whiteCard.selected) {
+        whiteCard.selected = false;
+      } else {
+        whiteCard.selected = true;
+      }
+    };
+
+    $scope.submitCards = function() {
+      var submittedCards =[];
+      $scope.privatePlayArea.hand.forEach(function(card) {
+        if (card.selected) {
+          submittedCards.push(card)
+        }
+      });
+      CAHFactory.play(submittedCards[0], $scope.currentPlayer._id);  //CAHFactory.play should be rewritten to accet an array of card objects
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         $scope.url = $location.absUrl();
@@ -90,7 +151,7 @@ angular.module('pahApp')
 
         $scope.drawCard = function() {
             console.log('drawing card...');
-            CAHFactory.draw(10-$scope.examplePrivatePlayArea.hand.length);
+            CAHFactory.draw(10-$scope.privatePlayArea.hand.length);
         };
 
         $scope.oldDrawCard = function() {
@@ -152,21 +213,12 @@ angular.module('pahApp')
         };
 
 
-        $scope.calStackCardsMargin = function(nbOfCards) {
-
-            //console.log(angular.element(document.querySelectorAll(".blackCardZone")[0])[0]);
-            var screenSize = angular.element(document.querySelectorAll(".blackCardZone")[0])[0].clientWidth;
-            // console.log(screenSize);
-            // console.log(nbOfCards);
-            // console.log(Math.ceil(((nbOfCards * 100) - screenSize) / (nbOfCards - 1)));
-            var test = Math.ceil(((nbOfCards * 100) - screenSize) / (nbOfCards - 1));
-            var test2 = screenSize - test;
-
-
-          // +1 at the end is a mystery but seems to be working with any number of Cards
-          return Math.floor(((nbOfCards * 100) - screenSize) / (nbOfCards - 1))+1;
-        };
-
+    $scope.calStackCardsMargin = function(nbOfCards) {
+      var screenSize = angular.element(document.querySelectorAll(".blackCardZone")[0])[0].clientWidth;
+      // +1 at the end is a mystery but seems to be working with any number of Cards
+      return Math.floor(((nbOfCards * 100) - screenSize) / (nbOfCards - 1))+1;
+    };
+    
 
         $scope.sendText = function() {
             $http.post('/api/pahs/invite', {
