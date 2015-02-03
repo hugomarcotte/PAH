@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var Pah = require('./pah.model');
 var config = require('../../config/environment')
-var twilo = require('twilio')(config.twilio.sid,config.twilio.auth);
+var twilo = require('twilio')(config.twilio.sid, config.twilio.auth);
 
 var decks = {
     master: require('../../decks/cards_against_humanity/master_cards'),
@@ -118,6 +118,15 @@ exports.draw = function(req, res) {
             return handleError(res, err);
         }
         pah.discardedWhite = pah.discardedWhite.concat(req.body.cardsWeDrew);
+        pah.users.forEach(function(user) {
+            if (user._id === req.params.user) {
+                // req.body.cardsWeDrew.forEach(function(newCard) {
+                //     user.cards.push(newCard)
+                // })
+                user.cards = user.cards.concat(req.body.cardsWeDrew);
+            }
+        })
+        pah.markModified('users');
         pah.save(function(err, pah) {
             if (err) {
                 return handleError(res, err);
@@ -245,8 +254,8 @@ exports.destroy = function(req, res) {
 };
 
 exports.invite = function(req, res) {
-		console.log(req.body);
-    var number = '+1'+req.body.phoneNumber;
+    console.log(req.body);
+    var number = '+1' + req.body.phoneNumber;
     var link = req.body.link;
     // var link = 'http://192.168.1.15:9000/pah/e586';
 
@@ -258,7 +267,7 @@ exports.invite = function(req, res) {
         body: 'You\'ve been summoned for a game of Phones Against Humanity! Click to join lobby: ' + link // body of the SMS message
 
     }, function(err, responseData) { //this function is executed when a response is received from Twilio
-    		console.log(arguments);
+        console.log(arguments);
         if (err) {
             return handleError(res, err);
         }
