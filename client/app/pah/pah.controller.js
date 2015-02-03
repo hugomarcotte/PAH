@@ -13,7 +13,7 @@ angular.module('pahApp')
 
         $scope.examplePublicPlayArea = CAHFactory.getPublicPlayArea();
         // access the public play area (not the scoreboard)
-        // 
+        //
         // {
         //   blackCard: {},
         //   submittedCards: [],
@@ -23,9 +23,9 @@ angular.module('pahApp')
 
         $scope.exampleScoreboard = CAHFactory.getScoreboard();
         // get the scoreboard, which includes the array of all players
-
         $scope.exampleMe = CAHFactory.getCurrentPlayer($stateParams.code);
         // get the current player's info 
+
         // {
         //   info: {this is the player object},
         //   index: 4 // index in users array for display porpoises
@@ -89,6 +89,11 @@ angular.module('pahApp')
         // })
 
         $scope.drawCard = function() {
+            console.log('drawing card...');
+            CAHFactory.draw(10-$scope.examplePrivatePlayArea.hand.length);
+        };
+
+        $scope.oldDrawCard = function() {
             deck.drawCard($scope.state.discardedWhite, (10 - $scope.player.cards.length), function(data) {
                 $scope.whiteCards = $scope.player.cards.concat(data.cards);
                 // var cookies = JSON.parse($cookies.games);
@@ -147,7 +152,7 @@ angular.module('pahApp')
         };
 
 
-        $scope.calculateMargin = function(nbOfCards) {
+        $scope.calStackCardsMargin = function(nbOfCards) {
 
             //console.log(angular.element(document.querySelectorAll(".blackCardZone")[0])[0]);
             var screenSize = angular.element(document.querySelectorAll(".blackCardZone")[0])[0].clientWidth;
@@ -157,8 +162,11 @@ angular.module('pahApp')
             var test = Math.ceil(((nbOfCards * 100) - screenSize) / (nbOfCards - 1));
             var test2 = screenSize - test;
 
-            return Math.ceil(((nbOfCards * 100) - test2) / (nbOfCards - 1));
+
+          // +1 at the end is a mystery but seems to be working with any number of Cards
+          return Math.floor(((nbOfCards * 100) - screenSize) / (nbOfCards - 1))+1;
         };
+
 
         $scope.sendText = function() {
             $http.post('/api/pahs/invite', {

@@ -82,13 +82,19 @@ angular.module('pahApp')
         });
     };
 
-    factoryMethods.draw = function(cardsWeDrew, gameId) {
-      $http.put('api/pahs/' + gameId + '/draw/', {
-        cardsWeDrew: cardsWeDrew
+    factoryMethods.draw = function(numCards) {
+      if (!numCards) numCards = 1;
+      console.log(gameState);
+      var drawInfo = deck.drawCard(gameState.discardedWhite, numCards);
+
+      $http.put('api/pahs/' + gameId + '/draw/' + currentPlayer.info._id, {
+        cardsWeDrew: drawInfo.cardsWeDrew
       }).success(function(data) {
+
+        privatePlayArea.hand.concat(drawInfo.cards);
         console.log(data);
       });
-    };
+    }
 
     factoryMethods.play = function(card, userId) {
       console.log('you just played card number: ', card);
@@ -151,6 +157,7 @@ angular.module('pahApp')
             userId: currentPlayer.info._id
           }]);
           if (callback) callback(joinCode);
+     
         })
         .error(function(err) {
           console.log('Failed to join game: ', err);
