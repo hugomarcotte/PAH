@@ -45,17 +45,47 @@
 
     .blackCardZone {
       height: 100%;
+
+      .publicWhiteCards {
+        margin-left: -10px;
+        margin-top: 30px;
+
+        .whiteCard {
+          font-size: 1em;
+          height: 150px;
+          width: 100px;
+          float: left;
+          margin: 10px;
+        }
+      }
+
     }
 
-    .whiteCardZone{
-      // height: 630px;
+    .playersWhiteCardZone{
       margin-top: -10px;
+      padding-left: 30px;
+
+      .whiteCard {
+        font-size: 1em;
+        height: 150px;
+        width: 125px;
+        float: left;
+        margin: 10px;
+      }
     }
 
     .card {
       font-size: 3em;
       border-radius: 10px;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.76), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+
+    }
+
+    .blackCard {
+      background-color: #000;
+      color: #FFF;
+      padding: 35px;
+      height: 100%;
 
       .text {
         height: 90%;
@@ -65,23 +95,12 @@
         font-size: 0.5em;
       }
     }
-    .blackCard {
-      background-color: #000;
-      color: #FFF;
-      padding: 35px;
-      height: 100%;
-    }
+
     .whiteCard {
       background-color: #FFF;
       color: #000;
-      font-size: 1em;
-      height: 150px;
-      text-align: left;
-      width: 100px;
       font-weight: bold;
-      padding-left: 10px;
-      display:inline-block;
-      margin: 10px;
+      padding: 10px;
     }
 
   }

@@ -49,14 +49,14 @@
           <md-button class="md-raised" ng-click="drawCard()" ng-show="isJudge">Draw Hand</md-button>
         </div>
       </div>
-      <div flex="25">
-        <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
-          {{whiteCard.text}}
+      <div class="publicWhiteCards" style="margin-left:{{calculateMargin(whiteCards.length)}}px" flex="25">
+        <div class='card whiteCard' style="margin-left:-{{calculateMargin(whiteCards.length)}}px" ng-repeat='whiteCard in whiteCards'>
+          Phones Against Humanity
         </div>
       </div>
     </div>
 
-    <div class="whiteCardZone" flex="50">
+    <div class="playersWhiteCardZone" flex="50">
     <!--   <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
         Phones Against Humanity
       </div> -->
