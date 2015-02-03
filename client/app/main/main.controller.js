@@ -3,6 +3,11 @@
 angular.module('pahApp')
   .controller('MainCtrl', function($scope, CAHFactory, ngDialog, $http, $location, socket, deck, $cookies) {
 
+    // CAHFactory.init(playerName, callback)
+    // if you include a playerName, init will also join you to the game
+
+    // CAHFactory.join(playerName, code, callback)
+
 
     $scope.openJoinDialog = function() {
       ngDialog.open({

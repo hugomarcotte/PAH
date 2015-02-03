@@ -3,6 +3,11 @@
 angular.module('pahApp')
     .controller('PahCtrl', function($scope, CAHFactory, $stateParams, $http, $location, socket, deck, $cookies) {
 
+        // CAHFactory.init(playerName, callback)
+        // if you include a playerName, init will also join you to the game
+
+        // CAHFactory.join(playerName, code, callback)
+
         $scope.examplePrivatePlayArea = CAHFactory.getPrivatePlayArea();
         // access each card using exampleHand.hand[i], which is the full object
 
