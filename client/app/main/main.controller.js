@@ -61,27 +61,27 @@ angular.module('pahApp')
     $scope.joinGame = function() {
       if ($scope.gameCode && $scope.playerName) {
 
-        CAHFactory.join($scope.playerName, $scope.gameCode, function(game) {
+        CAHFactory.join($scope.playerName, $scope.gameCode, function(code) {
           //ngDialog.close();
-          if ($cookies.games) {
+          // if ($cookies.games) {
 
-            /// parse it push it stringify it reset it
-            var cookies = JSON.parse($cookies.games);
-            cookies.push({
-              gameId: game.state.code,
-              userId: game.playerId
-            });
-            $cookies.games = JSON.stringify(cookies);
-          } else {
-            console.log("Doing this!!!!!!!!")
-              /// [{gameid: fdsaf, playerId: fdsafds}] /// stringify and set
-            $cookies.games = JSON.stringify([{
-              gameId: game.state._id,
-              userId: game.playerId
-            }]);
-          }
+          //   /// parse it push it stringify it reset it
+          //   var cookies = JSON.parse($cookies.games);
+          //   cookies.push({
+          //     gameId: game.state.code,
+          //     userId: game.playerId
+          //   });
+          //   $cookies.games = JSON.stringify(cookies);
+          // } else {
+          //   console.log("Doing this!!!!!!!!")
+          //     /// [{gameid: fdsaf, playerId: fdsafds}] /// stringify and set
+          //   $cookies.games = JSON.stringify([{
+          //     gameId: game.state._id,
+          //     userId: game.playerId
+          //   }]);
+          // }
 
-          $location.path('/pah/' + game.state.code);
+          $location.path('/pah/' + code);
 
         });
 
