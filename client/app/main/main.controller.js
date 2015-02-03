@@ -4,7 +4,6 @@ angular.module('pahApp')
   .controller('MainCtrl', function($scope, CAHFactory, ngDialog, $http, $location, socket, deck, $cookies) {
 
 
-
     $scope.openJoinDialog = function() {
       ngDialog.open({
         template: 'joinGameDialog',

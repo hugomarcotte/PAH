@@ -29,7 +29,9 @@ exports.index = function(req, res) {
 
 // Get a single pah
 exports.show = function(req, res) {
-    Pah.findOne({code:req.params.code}, function(err, pah) {
+    Pah.findOne({
+        code: req.params.code
+    }, function(err, pah) {
         if (err) {
             return handleError(res, err);
         }
@@ -72,9 +74,9 @@ exports.join = function(req, res) {
             code: code
         })
         .exec(function(err, game) {
-        	if (!game) {
-        		res.send(404);
-        	}
+            if (!game) {
+                res.send(404);
+            }
             if (err) {
                 console.log(err);
                 return handleError(res, err);
@@ -177,21 +179,21 @@ exports.judge = function(req, res) {
         // })
         // console.log(availableBlackCards);
         // console.log(pah.blackCard);
-				pah.discardedBlack.push(pah.blackCard.id);
-				// console.log(pah.discardedBlack);
-				//console.log(Math.floor(Math.random()*availableBlackCards.length));
+        pah.discardedBlack.push(pah.blackCard.id);
+        // console.log(pah.discardedBlack);
+        //console.log(Math.floor(Math.random()*availableBlackCards.length));
         pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
-				while(pah.discardedBlack.indexOf(pah.blackCard.id) >= 0) {
-				//console.log(Math.floor(Math.random()*availableBlackCards.length));
-        	pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
-				}
+        while (pah.discardedBlack.indexOf(pah.blackCard.id) >= 0) {
+            //console.log(Math.floor(Math.random()*availableBlackCards.length));
+            pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
+        }
         console.log(pah.blackCard);
 
         pah.cardsInPlay.length = 0;
 
         pah.markModified('users')
         pah.save(function(err, pah) {
-        		console.log(pah);
+            console.log(pah);
             if (err) {
                 return handleError(res, err);
             }
