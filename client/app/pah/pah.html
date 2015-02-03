@@ -46,8 +46,9 @@
           Phones Against Humanity
         </div>
         <div class="footer" style="text-align: center;">
-          <md-button class="md-raised" ng-click="drawCard()" ng-show="isJudge">Black Card</md-button>
+          <md-button class="md-raised" ng-click="drawBlackCard()" ng-show="isJudge">Black Card</md-button>
           <md-button class="md-raised" ng-click="drawCard()" ng-show="isJudge">Draw Hand</md-button>
+          <md-button class="md-raised" ng-click="submitCards()" ng-show="isJudge">Submit Cards</md-button>
         </div>
       </div>
       <div class="publicWhiteCards" style="margin-left:{{calculateMargin(whiteCards.length)}}px" flex="25">
@@ -60,7 +61,7 @@
 
     <div class="playersWhiteCardZone" flex="50">
 
-      <div class='card whiteCard' ng-repeat='whiteCard in privatePlayArea.hand'>
+      <div class='card whiteCard' ng-repeat='whiteCard in privatePlayArea.hand' ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}">
         {{whiteCard.text}}
       </div>
     </div>

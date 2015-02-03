@@ -33,10 +33,33 @@ angular.module('pahApp')
         //// }
 
 
-        $scope.privatePlayArea = CAHFactory.getPrivatePlayArea();
-        $scope.publicPLayArea = CAHFactory.getPublicPlayArea();
-        $scope.scoreboard = CAHFactory.getScoreboard();
-        $scope.currentPlayer = CAHFactory.getCurrentPlayer();
+    $scope.privatePlayArea = CAHFactory.getPrivatePlayArea();
+    $scope.publicPlayArea = CAHFactory.getPublicPlayArea();
+    $scope.scoreboard = CAHFactory.getScoreboard();
+    $scope.currentPlayer = CAHFactory.getCurrentPlayer();
+
+
+    $scope.selectWhiteCard = function(whiteCard) {
+      if (whiteCard.selected) {
+        whiteCard.selected = false;
+      } else {
+        whiteCard.selected = true;
+      }
+    };
+
+    $scope.submitCards = function() {
+      var submittedCards =[];
+      $scope.privatePlayArea.hand.forEach(function(card) {
+        if (card.selected) {
+          submittedCards.push(card)
+        }
+      });
+      console.log(submittedCards);
+    };
+
+    $scope.drawBlackCard = function () {
+      // draw a black card
+    }
 
 
 
