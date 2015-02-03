@@ -2,6 +2,8 @@
 
 var _ = require('lodash');
 var Pah = require('./pah.model');
+var config = require('../../config/environment')
+var twilo = require('twilio')(config.twilio.sid,config.twilio.auth);
 
 var decks = {
     master: require('../../decks/cards_against_humanity/master_cards'),
@@ -29,7 +31,9 @@ exports.index = function(req, res) {
 
 // Get a single pah
 exports.show = function(req, res) {
-    Pah.findOne({code:req.params.code}, function(err, pah) {
+    Pah.findOne({
+        code: req.params.code
+    }, function(err, pah) {
         if (err) {
             return handleError(res, err);
         }
@@ -72,9 +76,9 @@ exports.join = function(req, res) {
             code: code
         })
         .exec(function(err, game) {
-        	if (!game) {
-        		res.send(404);
-        	}
+            if (!game) {
+                res.send(404);
+            }
             if (err) {
                 console.log(err);
                 return handleError(res, err);
@@ -177,21 +181,21 @@ exports.judge = function(req, res) {
         // })
         // console.log(availableBlackCards);
         // console.log(pah.blackCard);
-				pah.discardedBlack.push(pah.blackCard.id);
-				// console.log(pah.discardedBlack);
-				//console.log(Math.floor(Math.random()*availableBlackCards.length));
+        pah.discardedBlack.push(pah.blackCard.id);
+        // console.log(pah.discardedBlack);
+        //console.log(Math.floor(Math.random()*availableBlackCards.length));
         pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
-				while(pah.discardedBlack.indexOf(pah.blackCard.id) >= 0) {
-				//console.log(Math.floor(Math.random()*availableBlackCards.length));
-        	pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
-				}
+        while (pah.discardedBlack.indexOf(pah.blackCard.id) >= 0) {
+            //console.log(Math.floor(Math.random()*availableBlackCards.length));
+            pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
+        }
         console.log(pah.blackCard);
 
         pah.cardsInPlay.length = 0;
 
         pah.markModified('users')
         pah.save(function(err, pah) {
-        		console.log(pah);
+            console.log(pah);
             if (err) {
                 return handleError(res, err);
             }
@@ -239,6 +243,36 @@ exports.destroy = function(req, res) {
         });
     });
 };
+
+exports.invite = function(req, res) {
+		console.log(req.body);
+    var number = '+1'+req.body.phoneNumber;
+    var link = req.body.link;
+    // var link = 'http://192.168.1.15:9000/pah/e586';
+
+    //Send an SMS text message
+    twilo.sendMessage({
+
+        to: number, // Any number Twilio can deliver to
+        from: '+12034377953', // A number you bought from Twilio and can use for outbound communication
+        body: 'You\'ve been summoned for a game of Phones Against Humanity! Click to join lobby: ' + link // body of the SMS message
+
+    }, function(err, responseData) { //this function is executed when a response is received from Twilio
+    		console.log(arguments);
+        if (err) {
+            return handleError(res, err);
+        }
+        // "err" is an error received during the request, if any
+
+        // "responseData" is a JavaScript object containing data received from Twilio.
+        // A sample response from sending an SMS message is here (click "JSON" to see how the data appears in JavaScript):
+        // http://www.twilio.com/docs/api/rest/sending-sms#example-1
+
+        console.log(responseData.from); // outputs "+14506667788"
+        console.log(responseData.body); // outputs "word to your mother."
+        res.send(200);
+    });
+}
 
 function handleError(res, err) {
     return res.send(500, err);
