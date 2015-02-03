@@ -7,70 +7,87 @@
 <div layout="row" class="board" resize ng-style="style()">
 
 
-  <div layout="column" class="sideBar" flex="15" layout-align="space-between">
-    <div class="players">
-      <md-button class="md-raised" ng-click="" ng-show="!hasJoined">+ Join</md-button>
-      <div>
-        <div ng-repeat="user in state.users"  layout="row">
-          <div class="icon icon-social-white icon-social-white-ic_person_white_24dp" flex="15"></div>
-          <div ng-class='{judge: user.isJudge}' class="username" flex="50">
-            {{user.name}}
-          </div>
-          <div class="score" flex="35">
-            {{user.score}}
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="gameInfo">
-      <div class="text">
-        Use this code to join the game
-      </div>
-      <div class="code">
-        {{gameCode}}
-      </div>
-    </div>
-  </div>
 
-
-
-  <div layout="row" class="cardZone" flex="85">
-
-    <div class="blackCardZone" flex="50" layout="column">
-      <div class="card blackCard" flex="75" layout="column" ng-show="gameStarted">
-        <div class="text">
-          {{blackCard.text}}
+    <div layout="column" class="sideBar" flex="15" layout-align="space-between">
+        <div class="players">
+            <md-button class="md-raised" ng-click="" ng-show="!hasJoined">+ Join</md-button>
+            <md-button class="md-raised" ng-click="openLinkDialog()">Get/Text Join Link</md-button>
+            <div>
+                <div ng-repeat="user in state.users" layout="row">
+                    <div class="icon icon-social-white icon-social-white-ic_person_white_24dp" flex="15"></div>
+                    <div ng-class='{judge: user.isJudge}' class="username" flex="50">
+                        {{user.name}}
+                    </div>
+                    <div class="score" flex="35">
+                        {{user.score}}
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="footer">
-          Phones Against Humanity
+        <div class="gameInfo">
+            <div class="text">
+                Use this code to join the game
+            </div>
+            <div class="code">
+                {{gameCode}}
+            </div>
         </div>
-      </div>
-      <div class="card blackCard" flex="75" layout="column" ng-hide="gameStarted">
-        <div class="text">
-          Phones Against Humanity
-        </div>
-        <div class="footer" style="text-align: center;">
-          <md-button class="md-raised" ng-click="drawCard()" ng-show="isJudge">Black Card</md-button>
-          <md-button class="md-raised" ng-click="drawCard()" ng-show="isJudge">Draw Hand</md-button>
-        </div>
-      </div>
-      <div flex="25">
-        <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
-          {{whiteCard.text}}
-        </div>
-      </div>
     </div>
 
-    <div class="whiteCardZone" flex="50">
-    <!--   <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
+
+
+    <div layout="row" class="cardZone" flex="85">
+
+        <div class="blackCardZone" flex="50" layout="column">
+            <div class="card blackCard" flex="75" layout="column" ng-show="gameStarted">
+                <div class="text">
+                    {{blackCard.text}}
+                </div>
+                <div class="footer">
+                    Phones Against Humanity
+                </div>
+            </div>
+            <div class="card blackCard" flex="75" layout="column" ng-hide="gameStarted">
+                <div class="text">
+                    Phones Against Humanity
+                </div>
+                <div class="footer" style="text-align: center;">
+                    <md-button class="md-raised" ng-click="drawCard()" ng-show="isJudge">Black Card</md-button>
+                    <md-button class="md-raised" ng-click="drawCard()" ng-show="isJudge">Draw Hand</md-button>
+                </div>
+            </div>
+            <div flex="25">
+                <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
+                    {{whiteCard.text}}
+                </div>
+            </div>
+        </div>
+
+        <div class="whiteCardZone" flex="50">
+            <!--   <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
         Phones Against Humanity
       </div> -->
-      <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
-        {{whiteCard.text}}
-      </div>
+            <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
+                {{whiteCard.text}}
+            </div>
+        </div>
+
     </div>
 
-</div>
-
 
 </div>
+
+<script type="text/ng-template" id="getLinkDialog">
+    <div class="getLink">
+        <h1>Link your friends</h1>
+        <md-input-container>
+            <code>{{url}}</code>
+        </md-input-container>
+        <h1>Text the link</h1>
+        <md-input-container>
+            <input ng-model="phoneNumber" placeholder="XXXXXXXXXX"/>
+        </md-input-container>
+
+        <md-button class="md-raised" ng-click="sendText()">Text Link</md-button>
+    </div>
+</script>

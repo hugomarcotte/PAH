@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pahApp')
-    .controller('PahCtrl', function($scope, CAHFactory, $stateParams, $http, $location, socket, deck, $cookies) {
+    .controller('PahCtrl', function($scope, CAHFactory, ngDialog, $stateParams, $http, $location, socket, deck, $cookies) {
 
         // CAHFactory.init(playerName, callback)
         // if you include a playerName, init will also join you to the game
@@ -31,6 +31,8 @@ angular.module('pahApp')
         //   index: 4 // index in users array for display porpoises
         // }
 
+
+        $scope.url = $location.absUrl();
 
 
         // console.log($cookies.games);
@@ -102,7 +104,6 @@ angular.module('pahApp')
         }
 
 
-
         $scope.gameCode = $stateParams.code;
 
 
@@ -134,34 +135,22 @@ angular.module('pahApp')
             //console.log($scope.deck);
         })
 
-        $scope.awesomeThings = [];
-
-        $http.get('/api/things').success(function(awesomeThings) {
-            $scope.awesomeThings = awesomeThings;
-            socket.syncUpdates('thing', $scope.awesomeThings, function(event, item, array) {
-                // speak(item.text, function() {
-                //     console.log('done');
-                // })
+        $scope.openLinkDialog = function() {
+            console.log('hey');
+            ngDialog.open({
+                template: 'getLinkDialog',
+                controller: 'PahCtrl'
             });
-        });
-
-
-
-        $scope.addThing = function() {
-            if ($scope.newThing === '') {
-                return;
-            }
-            $http.post('/api/things', {
-                name: $scope.newThing
-            });
-            $scope.newThing = '';
         };
 
-        $scope.deleteThing = function(thing) {
-            $http.delete('/api/things/' + thing._id);
-        };
-
-        $scope.$on('$destroy', function() {
-            socket.unsyncUpdates('thing');
-        });
+        $scope.sendText = function() {
+            $http.post('/api/pahs/invite', {
+                    phoneNumber: $scope.phoneNumber,
+                    link: $scope.url
+                })
+                .success(function(data) {
+                    console.log('successfully texted');
+                    ngDialog.close();
+                })
+        }
     });
