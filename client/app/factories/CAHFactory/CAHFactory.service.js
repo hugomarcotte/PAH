@@ -24,7 +24,7 @@ angular.module('pahApp')
     var isPlayer = false;
 
 
-// we probably shouldn't use this if we can avoid it
+    // we probably shouldn't use this if we can avoid it
     factoryMethods.getState = function() {
       return gameState;
     };
@@ -80,13 +80,19 @@ angular.module('pahApp')
         });
     };
 
-    factoryMethods.draw = function(cardsWeDrew, gameId) {
-      $http.put('api/pahs/' + gameId + '/draw/', {
-        cardsWeDrew: cardsWeDrew
+    factoryMethods.draw = function(numCards) {
+      if (!numCards) numCards = 1;
+      console.log(gameState);
+      var drawInfo = deck.drawCard(gameState.discardedWhite, numCards);
+
+      $http.put('api/pahs/' + gameId + '/draw/' + currentPlayer.info._id, {
+        cardsWeDrew: drawInfo.cardsWeDrew
       }).success(function(data) {
+
+        privatePlayArea.hand.concat(drawInfo.cards);
         console.log(data);
       });
-    };
+    }
 
     factoryMethods.play = function(card, userId) {
       console.log('you just played card number: ', card);
@@ -146,7 +152,7 @@ angular.module('pahApp')
             }
           })
 
-          privatePlayArea.hand = []; 
+          privatePlayArea.hand = [];
           registerStateSocket();
         })
         .error(function(err) {
