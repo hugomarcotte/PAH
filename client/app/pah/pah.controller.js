@@ -37,68 +37,68 @@ angular.module('pahApp')
 
         // console.log($cookies.games);
         //console.log(JSON.parse($cookies.games));
-        var cookie = JSON.parse($cookies.games);
-        var userId = cookie[0].userId;
-        if (cookie[0].cards) {
-            $scope.whiteCards = cookie[0].cards;
-        }
+        // var cookie = JSON.parse($cookies.games);
+        // var userId = cookie[0].userId;
+        // if (cookie[0].cards) {
+        //     $scope.whiteCards = cookie[0].cards;
+        // }
 
         $scope.player = {};
         //console.log($stateParams, "STATE PARAMS");
 
 
 
-        CAHFactory.getGameByCode($stateParams.code, function(state) {
+        // CAHFactory.getGameByCode($stateParams.code, function(state) {
 
-            $scope.state = state;
-            state.users.forEach(function(user) {
-                // console.log("forEach got here!!!!!!!")
-                // console.log("userID is---", userId)
-                // console.log("otherUser---",user._id)
-                if (user._id === userId) {
-                    //console.log("got here!!!!!!!")
-                    $scope.player = user;
-                }
-            });
-            $scope.judge = state.users[state.currentJudge];
-            console.log("THIS IS THE STATE", $scope.state)
-            deck.getDeck("base", function(status) {
-                console.log(status);
-            });
-            state.users.forEach(function(user) {
-                if (user._id === userId) {
-                    $scope.player = user;
-                    cookie.forEach(function(game) {
-                        if (game.gameId === state._id && game.cards) {
-                            $scope.player.cards = game.cards;
-                        }
-                    });
-                }
-            });
-            $scope.judge = state.users[state.currentJudge];
-            // socket.socket.on('pah:' + state._id, function(newstate) {
-            //     $scope.state = state;
-            //     console.log(state, "STATE")
-            //     state.users.forEach(function(user) {
-            //         if (user.id === userId) {
-            //             $scope.player = user;
-            //         }
-            //     });
-            //     $scope.judge = state.users[state.currentJudge];
-            // });
-        })
+        //     $scope.state = state;
+        //     state.users.forEach(function(user) {
+        //         // console.log("forEach got here!!!!!!!")
+        //         // console.log("userID is---", userId)
+        //         // console.log("otherUser---",user._id)
+        //         if (user._id === userId) {
+        //             //console.log("got here!!!!!!!")
+        //             $scope.player = user;
+        //         }
+        //     });
+        //     $scope.judge = state.users[state.currentJudge];
+        //     console.log("THIS IS THE STATE", $scope.state)
+        //     deck.getDeck("base", function(status) {
+        //         console.log(status);
+        //     });
+        //     state.users.forEach(function(user) {
+        //         if (user._id === userId) {
+        //             $scope.player = user;
+        //             // cookie.forEach(function(game) {
+        //             //     if (game.gameId === state._id && game.cards) {
+        //             //         $scope.player.cards = game.cards;
+        //             //     }
+        //             // });
+        //         }
+        //     });
+        //     $scope.judge = state.users[state.currentJudge];
+        //     // socket.socket.on('pah:' + state._id, function(newstate) {
+        //     //     $scope.state = state;
+        //     //     console.log(state, "STATE")
+        //     //     state.users.forEach(function(user) {
+        //     //         if (user.id === userId) {
+        //     //             $scope.player = user;
+        //     //         }
+        //     //     });
+        //     //     $scope.judge = state.users[state.currentJudge];
+        //     // });
+        // })
 
         $scope.drawCard = function() {
             deck.drawCard($scope.state.discardedWhite, (10 - $scope.player.cards.length), function(data) {
                 $scope.whiteCards = $scope.player.cards.concat(data.cards);
-                var cookies = JSON.parse($cookies.games);
-                cookies.forEach(function(game) {
-                        if (game.gameId == $scope.state._id) {
-                            game.cards = $scope.whiteCards;
-                        }
-                    })
-                    // $scope.player.cards = playerCards;
-                $cookies.games = JSON.stringify(cookies);
+                // var cookies = JSON.parse($cookies.games);
+                // cookies.forEach(function(game) {
+                //         if (game.gameId == $scope.state._id) {
+                //             game.cards = $scope.whiteCards;
+                //         }
+                //     })
+                // $scope.player.cards = playerCards;
+                // $cookies.games = JSON.stringify(cookies);
                 CAHFactory.draw(data.cardsWeDrew, $scope.state._id);
             });
         }
@@ -148,9 +148,9 @@ angular.module('pahApp')
 
             //console.log(angular.element(document.querySelectorAll(".blackCardZone")[0])[0]);
             var screenSize = angular.element(document.querySelectorAll(".blackCardZone")[0])[0].clientWidth;
-            console.log(screenSize);
-            console.log(nbOfCards);
-            console.log(Math.ceil(((nbOfCards * 100) - screenSize) / (nbOfCards - 1)));
+            // console.log(screenSize);
+            // console.log(nbOfCards);
+            // console.log(Math.ceil(((nbOfCards * 100) - screenSize) / (nbOfCards - 1)));
             var test = Math.ceil(((nbOfCards * 100) - screenSize) / (nbOfCards - 1));
             var test2 = screenSize - test;
 

@@ -24,7 +24,7 @@ angular.module('pahApp')
     var isPlayer = false;
 
 
-// we probably shouldn't use this if we can avoid it
+    // we probably shouldn't use this if we can avoid it
     factoryMethods.getState = function() {
       return gameState;
     };
@@ -130,36 +130,68 @@ angular.module('pahApp')
       //console.log(arguments);
       if (!joinCode) {} // Do some stuff if you were the one to init
 
-
+      // check the cookie to see whether we rejoin or not
+      if (this.rejoin(joinCode)) {
+        console.log('rejoining...');
+        return callback(joinCode);
+      }
       $http.post('/api/pahs/' + joinCode, {
           'name': name
         })
         .success(function(data) {
           if (callback) callback(data);
-          gameId = data.state._id;
-          updatePlayArea(data.state);
 
-          gameState.users.forEach(function(user, index) {
-            if (user._id == data.playerId) {
-              currentPlayer.index = index;
-              currentPlayer.info = user;
-            }
-          })
-
-          privatePlayArea.hand = []; 
-          registerStateSocket();
+          joinHelper(data);
+          // Set the cookie for this player
+          $cookies.games = JSON.stringify([{
+            gameCode: joinCode,
+            userId: currentPlayer.info._id
+          }]);
+          callback(joinCode);
         })
         .error(function(err) {
           console.log('Failed to join game: ', err);
         });
     };
 
+    function joinHelper(data) {
+      gameId = data.state._id;
+      updatePlayArea(data.state);
+
+      gameState.users.forEach(function(user, index) {
+        if (user._id == data.playerId) {
+          currentPlayer.index = index;
+          currentPlayer.info = user;
+        }
+      })
+
+      privatePlayArea.hand = [];
+      registerStateSocket();
+    }
 
     // this shouldn't be externally facing,
     // should just get called when join finds that
     // you're already in the game
     factoryMethods.rejoin = function(joinCode) {
-      return;
+      if (!$cookies.games) return false;
+
+      /// parse it check it push it stringify it reset it
+      var cookies = JSON.parse($cookies.games);
+      var playerId;
+      cookies.forEach(function(game) {
+        if (joinCode === game.gameCode) {
+          playerId = game.userId;
+        }
+      })
+      if (!playerId) return false;
+
+      this.getGameByCode(joinCode, function(state) {
+        joinHelper({
+          state: state,
+          playerId: playerId
+        });
+      });
+      return true;
     };
 
     function registerStateSocket() {
