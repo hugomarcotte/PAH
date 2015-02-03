@@ -7,7 +7,7 @@
 <div layout="row" class="board" resize ng-style="style()">
   <div layout="column" class="sideBar" flex="15" layout-align="space-between">
     <div class="players">
-      <md-button class="md-raised" ng-click="" ng-show="!hasJoined">+ Join</md-button>
+      <md-button class="md-raised" ng-click="join()" ng-show="!hasJoined">+ Join</md-button>
       <md-button class="md-raised" ng-click="openLinkDialog()">Get/Text Join Link</md-button>
       <div>
         <div ng-repeat="user in state.users" layout="row">

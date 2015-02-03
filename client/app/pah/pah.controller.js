@@ -24,7 +24,7 @@ angular.module('pahApp')
         $scope.exampleScoreboard = CAHFactory.getScoreboard();
         // get the scoreboard, which includes the array of all players
 
-        $scope.exampleMe = CAHFactory.getCurrentPlayer();
+        $scope.exampleMe = CAHFactory.getCurrentPlayer($stateParams.code);
         // get the current player's info 
         // {
         //   info: {this is the player object},
@@ -106,6 +106,9 @@ angular.module('pahApp')
 
         $scope.gameCode = $stateParams.code;
 
+        $scope.join = function() {
+            CAHFactory.join('John', $scope.gameCode);
+        }
 
 
         // $scope.whiteCards =[{"id":12,"cardType":"A","text":"Puppies!","numAnswers":0,"expansion": "Base"},

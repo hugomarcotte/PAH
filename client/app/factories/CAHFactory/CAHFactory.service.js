@@ -4,7 +4,7 @@ angular.module('pahApp')
   .factory('CAHFactory', function($http, deck, $cookies, socket) {
     var gameId = '';
     var factoryMethods = {};
-    var gameState = {};
+    var gameState;
     var currentPlayer = {
       info: {},
       index: -1
@@ -41,7 +41,9 @@ angular.module('pahApp')
       return scoreboard;
     };
 
-    factoryMethods.getCurrentPlayer = function() {
+    factoryMethods.getCurrentPlayer = function(joinCode) {
+      if (gameState) return currentPlayer;
+      this.rejoin(joinCode);
       return currentPlayer;
     }
 
@@ -133,7 +135,8 @@ angular.module('pahApp')
       // check the cookie to see whether we rejoin or not
       if (this.rejoin(joinCode)) {
         console.log('rejoining...');
-        return callback(joinCode);
+        if (callback) return callback(joinCode);
+        return;
       }
       $http.post('/api/pahs/' + joinCode, {
           'name': name
@@ -147,7 +150,7 @@ angular.module('pahApp')
             gameCode: joinCode,
             userId: currentPlayer.info._id
           }]);
-          callback(joinCode);
+          if (callback) callback(joinCode);
         })
         .error(function(err) {
           console.log('Failed to join game: ', err);
