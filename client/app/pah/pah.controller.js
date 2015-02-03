@@ -143,6 +143,20 @@ angular.module('pahApp')
             });
         };
 
+
+        $scope.calculateMargin = function(nbOfCards) {
+
+            //console.log(angular.element(document.querySelectorAll(".blackCardZone")[0])[0]);
+            var screenSize = angular.element(document.querySelectorAll(".blackCardZone")[0])[0].clientWidth;
+            console.log(screenSize);
+            console.log(nbOfCards);
+            console.log(Math.ceil(((nbOfCards * 100) - screenSize) / (nbOfCards - 1)));
+            var test = Math.ceil(((nbOfCards * 100) - screenSize) / (nbOfCards - 1));
+            var test2 = screenSize - test;
+
+            return Math.ceil(((nbOfCards * 100) - test2) / (nbOfCards - 1));
+        };
+
         $scope.sendText = function() {
             $http.post('/api/pahs/invite', {
                     phoneNumber: $scope.phoneNumber,
@@ -152,5 +166,5 @@ angular.module('pahApp')
                     console.log('successfully texted');
                     ngDialog.close();
                 })
-        }
+        };
     });
