@@ -1,9 +1,9 @@
-<!-- <md-card style="height:500px;width:500px;">
-<p>Private: {{examplePrivatePlayArea}}</p>
-<p>Public: {{examplePublicPlayArea}}</p>
-<p>Scoreboard: {{exampleScoreboard}}</p>
-<p>Me: {{exampleMe}}</p>
-</md-card> -->
+<!--<md-card style="width:500px; color: white">-->
+<!--<p>Private: {{privatePlayArea.hand}}</p>-->
+<!--<p>Public: {{publicPlayArea}}</p>-->
+<!--<p>Scoreboard: {{scoreboard}}</p>-->
+<!--<p>Me: {{currentPlayer}}</p>-->
+<!--</md-card>-->
 <div layout="row" class="board" resize ng-style="style()">
   <div layout="column" class="sideBar" flex="15" layout-align="space-between">
     <div class="players">
@@ -31,7 +31,7 @@
     </div>
   </div>
   <div layout="row" class="cardZone" flex="85">
-    
+
     <div class="blackCardZone" flex="50" layout="column">
       <div class="card blackCard" flex="75" layout="column" ng-show="gameStarted">
         <div class="text">
@@ -59,8 +59,8 @@
 
 
     <div class="playersWhiteCardZone" flex="50">
-      
-      <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
+
+      <div class='card whiteCard' ng-repeat='whiteCard in privatePlayArea.hand'>
         {{whiteCard.text}}
       </div>
     </div>

@@ -3,33 +3,81 @@
 angular.module('pahApp')
     .controller('PahCtrl', function($scope, CAHFactory, ngDialog, $stateParams, $http, $location, socket, deck, $cookies) {
 
-        // CAHFactory.init(playerName, callback)
-        // if you include a playerName, init will also join you to the game
+        //// CAHFactory.init(playerName, callback)
+        //// if you include a playerName, init will also join you to the game
+        //
+        //// CAHFactory.join(playerName, code, callback)
+        //
+        //$scope.examplePrivatePlayArea = CAHFactory.getPrivatePlayArea();
+        //// access each card using exampleHand.hand[i], which is the full object
+        //
+        //$scope.examplePublicPlayArea = CAHFactory.getPublicPlayArea();
+        //// access the public play area (not the scoreboard)
+        ////
+        //// {
+        ////   blackCard: {},
+        ////   submittedCards: [],
+        ////   judgeMode: false,  // true if everyone has submitted a card?
+        ////   currentJudge: {} // user info of judge
+        //// }
+        //
+        //$scope.exampleScoreboard = CAHFactory.getScoreboard();
+        //// get the scoreboard, which includes the array of all players
+        //
+        //$scope.exampleMe = CAHFactory.getCurrentPlayer();
+        //console.log($scope.exampleMe);
+        //// get the current player's info
+        //// {
+        ////   info: {this is the player object},
+        ////   index: 4 // index in users array for display porpoises
+        //// }
 
-        // CAHFactory.join(playerName, code, callback)
 
-        $scope.examplePrivatePlayArea = CAHFactory.getPrivatePlayArea();
-        // access each card using exampleHand.hand[i], which is the full object
+        $scope.privatePlayArea = CAHFactory.getPrivatePlayArea();
+        $scope.publicPLayArea = CAHFactory.getPublicPlayArea();
+        $scope.scoreboard = CAHFactory.getScoreboard();
+        $scope.currentPlayer = CAHFactory.getCurrentPlayer();
 
-        $scope.examplePublicPlayArea = CAHFactory.getPublicPlayArea();
-        // access the public play area (not the scoreboard)
-        // 
-        // {
-        //   blackCard: {},
-        //   submittedCards: [],
-        //   judgeMode: false,  // true if everyone has submitted a card?
-        //   currentJudge: {} // user info of judge
-        // }
 
-        $scope.exampleScoreboard = CAHFactory.getScoreboard();
-        // get the scoreboard, which includes the array of all players
 
-        $scope.exampleMe = CAHFactory.getCurrentPlayer();
-        // get the current player's info 
-        // {
-        //   info: {this is the player object},
-        //   index: 4 // index in users array for display porpoises
-        // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         $scope.url = $location.absUrl();
@@ -90,7 +138,7 @@ angular.module('pahApp')
 
         $scope.drawCard = function() {
             console.log('drawing card...');
-            CAHFactory.draw(10-$scope.examplePrivatePlayArea.hand.length);
+            CAHFactory.draw(10-$scope.privatePlayArea.hand.length);
         };
 
         $scope.oldDrawCard = function() {

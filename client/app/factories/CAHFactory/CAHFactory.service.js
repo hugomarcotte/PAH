@@ -89,7 +89,8 @@ angular.module('pahApp')
         cardsWeDrew: drawInfo.cardsWeDrew
       }).success(function(data) {
 
-        privatePlayArea.hand.concat(drawInfo.cards);
+        privatePlayArea.hand = privatePlayArea.hand.concat(drawInfo.cards);
+        console.log(privatePlayArea.hand, "LOOK AT THIS");
         console.log(data);
       });
     }
