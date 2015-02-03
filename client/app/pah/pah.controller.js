@@ -89,6 +89,11 @@ angular.module('pahApp')
         })
 
         $scope.drawCard = function() {
+            console.log('drawing card...');
+            CAHFactory.draw(10-$scope.examplePrivatePlayArea.hand.length);
+        };
+
+        $scope.oldDrawCard = function() {
             deck.drawCard($scope.state.discardedWhite, (10 - $scope.player.cards.length), function(data) {
                 $scope.whiteCards = $scope.player.cards.concat(data.cards);
                 var cookies = JSON.parse($cookies.games);
@@ -148,9 +153,9 @@ angular.module('pahApp')
 
             //console.log(angular.element(document.querySelectorAll(".blackCardZone")[0])[0]);
             var screenSize = angular.element(document.querySelectorAll(".blackCardZone")[0])[0].clientWidth;
-            console.log(screenSize);
-            console.log(nbOfCards);
-            console.log(Math.ceil(((nbOfCards * 100) - screenSize) / (nbOfCards - 1)));
+            // console.log(screenSize);
+            // console.log(nbOfCards);
+            // console.log(Math.ceil(((nbOfCards * 100) - screenSize) / (nbOfCards - 1)));
             var test = Math.ceil(((nbOfCards * 100) - screenSize) / (nbOfCards - 1));
             var test2 = screenSize - test;
 

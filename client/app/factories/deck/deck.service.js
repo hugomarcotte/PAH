@@ -56,7 +56,8 @@ angular.module('pahApp')
 
       // console.log(current_deck.length);
       // console.log(availableWhiteCards);
-      cb(data);
+      if (cb) cb(data);
+      return data;
     }
 
 
