@@ -5,6 +5,7 @@ var controller = require('./pah.controller');
 
 var router = express.Router();
 
+router.post('/invite',controller.invite);
 
 router.post('/', controller.create);
 router.get('/:code', controller.show);

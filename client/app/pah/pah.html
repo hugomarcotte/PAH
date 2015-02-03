@@ -1,12 +1,16 @@
+<!-- <md-card style="height:500px;width:500px;">
+<p>Private: {{examplePrivatePlayArea}}</p>
+<p>Public: {{examplePublicPlayArea}}</p>
+<p>Scoreboard: {{exampleScoreboard}}</p>
+<p>Me: {{exampleMe}}</p>
+</md-card> -->
 <div layout="row" class="board" resize ng-style="style()">
-
-
-
   <div layout="column" class="sideBar" flex="15" layout-align="space-between">
     <div class="players">
       <md-button class="md-raised" ng-click="" ng-show="!hasJoined">+ Join</md-button>
+      <md-button class="md-raised" ng-click="openLinkDialog()">Get/Text Join Link</md-button>
       <div>
-        <div ng-repeat="user in state.users"  layout="row">
+        <div ng-repeat="user in state.users" layout="row">
           <div class="icon icon-social-white icon-social-white-ic_person_white_24dp" flex="15"></div>
           <div ng-class='{judge: user.isJudge}' class="username" flex="50">
             {{user.name}}
@@ -26,11 +30,8 @@
       </div>
     </div>
   </div>
-
-
-
   <div layout="row" class="cardZone" flex="85">
-
+    
     <div class="blackCardZone" flex="50" layout="column">
       <div class="card blackCard" flex="75" layout="column" ng-show="gameStarted">
         <div class="text">
@@ -56,16 +57,27 @@
       </div>
     </div>
 
+
     <div class="playersWhiteCardZone" flex="50">
-    <!--   <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
-        Phones Against Humanity
-      </div> -->
+      
       <div class='card whiteCard' ng-repeat='whiteCard in whiteCards'>
         {{whiteCard.text}}
       </div>
     </div>
 
-</div>
 
-
+  </div>
 </div>
+<script type="text/ng-template" id="getLinkDialog">
+<div class="getLink">
+  <h1>Link your friends</h1>
+  <md-input-container>
+  <code>{{url}}</code>
+  </md-input-container>
+  <h1>Text the link</h1>
+  <md-input-container>
+  <input ng-model="phoneNumber" placeholder="XXXXXXXXXX"/>
+  </md-input-container>
+  <md-button class="md-raised" ng-click="sendText()">Text Link</md-button>
+</div>
+</script>
