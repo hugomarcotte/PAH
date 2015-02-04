@@ -1,7 +1,7 @@
 <md-card style="width:500px; color: white">
 <p>Private: {{privatePlayArea.hand}}</p>
 <p>Public: {{publicPlayArea}}</p>
-<p>Scoreboard: {{scoreboard}}</p>
+<p>Scoreboard: {{scoreboard.users[0].name}}</p>
 <p>Me: {{currentPlayer}}</p>
 </md-card>
 <div layout="row" class="board" resize ng-style="style()">
@@ -10,8 +10,10 @@
       <md-button class="md-raised" ng-click="join()" ng-show="!hasJoined">+ Join</md-button>
       <md-button class="md-raised" ng-click="openLinkDialog()">Get/Text Join Link</md-button>
       <div>
-        <div ng-repeat="user in state.users" layout="row">
-          <div class="icon icon-social-white icon-social-white-ic_person_white_24dp" flex="15"></div>
+        <div ng-repeat="user in scoreboard.users" layout="row">
+          <div class="icon icon-social-white icon-social-white-ic_person_white_24dp" flex="17"></div>
+
+
           <div ng-class='{judge: user.isJudge}' class="username" flex="50">
             {{user.name}}
           </div>

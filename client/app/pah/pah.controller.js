@@ -36,6 +36,7 @@ angular.module('pahApp')
     $scope.privatePlayArea = CAHFactory.getPrivatePlayArea();
     $scope.publicPlayArea = CAHFactory.getPublicPlayArea();
     $scope.scoreboard = CAHFactory.getScoreboard();
+    console.log($scope.scoreboard);
     $scope.currentPlayer = CAHFactory.getCurrentPlayer($stateParams.code);
 
 
@@ -218,7 +219,7 @@ angular.module('pahApp')
       // +1 at the end is a mystery but seems to be working with any number of Cards
       return Math.floor(((nbOfCards * 100) - screenSize) / (nbOfCards - 1))+1;
     };
-    
+
 
         $scope.sendText = function() {
             $http.post('/api/pahs/invite', {
