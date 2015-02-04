@@ -181,19 +181,16 @@ angular.module('pahApp')
         };
 
 
-<<<<<<< HEAD
+
     $scope.calStackCardsMargin = function(nbOfCards) {
-      var screenSize = angular.element(document.querySelectorAll(".blackCardZone")[0])[0].clientWidth;
+      var screenSize = angular.element(document.querySelectorAll(".leftSide")[0])[0].clientWidth;
+
+      //Remove padding;
+      screenSize = screenSize -20;
       // +1 at the end is a mystery but seems to be working with any number of Cards
       return Math.floor(((nbOfCards * 100) - screenSize) / (nbOfCards - 1))+1;
     };
-=======
-        $scope.calStackCardsMargin = function(nbOfCards) {
-            var screenSize = angular.element(document.querySelectorAll(".blackCardZone")[0])[0].clientWidth;
-            // +1 at the end is a mystery but seems to be working with any number of Cards
-            return Math.floor(((nbOfCards * 100) - screenSize) / (nbOfCards - 1)) + 1;
-        };
->>>>>>> 62d7b0c8ecb4471817f1826021208ad3e7d2629f
+
 
 
         $scope.sendText = function() {
