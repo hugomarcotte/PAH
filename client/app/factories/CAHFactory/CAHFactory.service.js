@@ -176,7 +176,7 @@ angular.module('pahApp')
         }
       })
 
-      privatePlayArea.hand = [];
+      privatePlayArea.hand = deck.populate(currentPlayer.info.cards);
       registerStateSocket();
     }
 
@@ -210,7 +210,7 @@ angular.module('pahApp')
     }
 
     function updatePlayArea(newState) {
-      console.log(newState);
+      console.log('updating with: ', newState);
       gameState = newState;
       currentPlayer.info = newState.users[currentPlayer.index];
       publicPlayArea.blackCard = newState.blackCard;
