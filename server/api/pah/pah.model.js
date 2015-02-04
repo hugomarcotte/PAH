@@ -10,6 +10,7 @@ var PahSchema = new Schema({
   active: Boolean,
   host: String,
   currentJudge: {type:Number, default:0},
+  currentDrawingUser: {type:Number, default:-1},
   users: Array,
   discardedWhite: Array,
   discardedBlack: Array,

@@ -33,65 +33,34 @@ angular.module('pahApp')
         //// }
 
 
-    $scope.privatePlayArea = CAHFactory.getPrivatePlayArea();
-    $scope.publicPlayArea = CAHFactory.getPublicPlayArea();
-    $scope.scoreboard = CAHFactory.getScoreboard();
-    $scope.currentPlayer = CAHFactory.getCurrentPlayer($stateParams.code);
+        $scope.privatePlayArea = CAHFactory.getPrivatePlayArea();
+        $scope.publicPlayArea = CAHFactory.getPublicPlayArea();
+        $scope.scoreboard = CAHFactory.getScoreboard();
+        $scope.currentPlayer = CAHFactory.getCurrentPlayer($stateParams.code);
 
 
-    $scope.selectWhiteCard = function(whiteCard) {
-      if (whiteCard.selected) {
-        whiteCard.selected = false;
-      } else {
-        whiteCard.selected = true;
-      }
-    };
+        $scope.selectWhiteCard = function(whiteCard) {
+            if (whiteCard.selected) {
+                whiteCard.selected = false;
+            } else {
+                whiteCard.selected = true;
+            }
+        };
 
-    $scope.submitCards = function() {
-      var submittedCards =[];
-      $scope.privatePlayArea.hand.forEach(function(card) {
-        if (card.selected) {
-          submittedCards.push(card)
+        $scope.submitCards = function() {
+            var submittedCards = [];
+            $scope.privatePlayArea.hand.forEach(function(card) {
+                if (card.selected) {
+                    submittedCards.push(card)
+                }
+            });
+            console.log($scope.currentPlayer);
+            CAHFactory.play(submittedCards[0], $scope.currentPlayer.info._id); //CAHFactory.play should be rewritten to accet an array of card objects
+        };
+
+        $scope.startRound = function() {
+            CAHFactory.startRound();
         }
-      });
-      CAHFactory.play(submittedCards[0], $scope.currentPlayer._id);  //CAHFactory.play should be rewritten to accet an array of card objects
-    };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         $scope.url = $location.absUrl();
 
@@ -151,7 +120,7 @@ angular.module('pahApp')
 
         $scope.drawCard = function() {
             console.log('drawing card...');
-            CAHFactory.draw(10-$scope.privatePlayArea.hand.length);
+            CAHFactory.draw(10 - $scope.privatePlayArea.hand.length);
         };
 
         $scope.oldDrawCard = function() {
@@ -213,12 +182,12 @@ angular.module('pahApp')
         };
 
 
-    $scope.calStackCardsMargin = function(nbOfCards) {
-      var screenSize = angular.element(document.querySelectorAll(".blackCardZone")[0])[0].clientWidth;
-      // +1 at the end is a mystery but seems to be working with any number of Cards
-      return Math.floor(((nbOfCards * 100) - screenSize) / (nbOfCards - 1))+1;
-    };
-    
+        $scope.calStackCardsMargin = function(nbOfCards) {
+            var screenSize = angular.element(document.querySelectorAll(".blackCardZone")[0])[0].clientWidth;
+            // +1 at the end is a mystery but seems to be working with any number of Cards
+            return Math.floor(((nbOfCards * 100) - screenSize) / (nbOfCards - 1)) + 1;
+        };
+
 
         $scope.sendText = function() {
             $http.post('/api/pahs/invite', {
