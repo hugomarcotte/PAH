@@ -214,11 +214,14 @@ angular.module('pahApp')
 
 
     $scope.calStackCardsMargin = function(nbOfCards) {
-      var screenSize = angular.element(document.querySelectorAll(".blackCardZone")[0])[0].clientWidth;
+      var screenSize = angular.element(document.querySelectorAll(".leftSide")[0])[0].clientWidth;
+
+      //Remove padding;
+      screenSize = screenSize -20;
       // +1 at the end is a mystery but seems to be working with any number of Cards
       return Math.floor(((nbOfCards * 100) - screenSize) / (nbOfCards - 1))+1;
     };
-    
+
 
         $scope.sendText = function() {
             $http.post('/api/pahs/invite', {
