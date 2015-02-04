@@ -6,8 +6,7 @@ angular.module('pahApp')
     var factoryMethods = {};
     var gameState;
     var currentPlayer = {
-      info: {},
-      index: -1
+      info: {}
     };
     var privatePlayArea = {
       hand: []
@@ -158,7 +157,7 @@ angular.module('pahApp')
             userId: currentPlayer.info._id
           }]);
           if (callback) callback(joinCode);
-     
+
         })
         .error(function(err) {
           console.log('Failed to join game: ', err);
@@ -169,9 +168,9 @@ angular.module('pahApp')
       gameId = data.state._id;
       updatePlayArea(data.state);
 
-      gameState.users.forEach(function(user, index) {
+      gameState.users.forEach(function(user) {
         if (user._id == data.playerId) {
-          currentPlayer.index = index;
+          currentPlayer.index = user.index;
           currentPlayer.info = user;
         }
       })
@@ -217,7 +216,28 @@ angular.module('pahApp')
       publicPlayArea.submittedCards = newState.cardsInPlay;
       publicPlayArea.currentJudge = newState.users[newState.currentJudge];
       scoreboard.users = newState.users;
+      if (newState.currentDrawingUser == currentPlayer.index) {
+        factoryMethods.draw(10 - privatePlayArea.hand.length);
+      }
     }
+
+
+    // only one person calls this?
+    factoryMethods.startRound = function() {
+      // players draw cards in order
+      $http.put('/api/pahs/' + gameId + '/start', {})
+        .success(function(data) {
+          console.log('Did the thing');
+        })
+        .error(function(err) {
+          console.log('Didnt do the thing: ', err);
+        });
+      // optionally start timer
+
+
+
+    }
+
 
 
     // Public API here

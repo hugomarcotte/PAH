@@ -97,7 +97,8 @@ exports.join = function(req, res) {
                     isJudge: isJudge
                 }
 
-                game.users.push(player);
+                var index = game.users.push(player) - 1;
+                game.users[index].index = index;
                 game.save(function(err, game) {
                     console.log('SAVED GAME', game);
                     if (err) {
@@ -126,6 +127,10 @@ exports.draw = function(req, res) {
                 user.cards = user.cards.concat(req.body.cardsWeDrew);
             }
         })
+        pah.currentDrawingUser++;
+        if (pah.currentDrawingUser == pah.users.length) {
+            pah.currentDrawingUser = -1;
+        }
         pah.markModified('users');
         pah.save(function(err, pah) {
             if (err) {
@@ -143,7 +148,6 @@ exports.submit = function(req, res) {
         }
         var card = req.body.card;
         card.userId = req.params.user;
-
         pah.cardsInPlay.push(card);
         pah.save(function(err, pah) {
             if (err) {
@@ -163,6 +167,8 @@ exports.judge = function(req, res) {
             return handleError(res, err);
         }
         console.log(pah);
+        pah.currentDrawingUser = 0;
+
         //MAYBE MARK MODIFIED.
         pah.users.forEach(function(user) {
             if (user._id === winning_user) {
@@ -281,7 +287,27 @@ exports.invite = function(req, res) {
         console.log(responseData.body); // outputs "word to your mother."
         res.send(200);
     });
-}
+};
+
+exports.startRound = function(req, res) {
+    console.log('pah: ', req.params);
+
+    Pah.findById(req.params.id, function(err, pah) {
+        if (err) {
+            return handleError(res, err);
+        }
+        if (!pah) {
+            return res.send(404);
+        }
+        pah.currentDrawingUser = 0;
+        pah.save(function(err) {
+            if (err) {
+                return handleError(res, err);
+            }
+            return res.json(200);
+        });
+    });
+};
 
 function handleError(res, err) {
     return res.send(500, err);
