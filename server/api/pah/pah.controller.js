@@ -149,6 +149,13 @@ exports.submit = function(req, res) {
         var card = req.body.card;
         card.userId = req.params.user;
         pah.cardsInPlay.push(card);
+        pah.users.forEach(function(user){
+            if (user._id === card.userId){
+                var userHand=user.cards
+                userHand.splice(userHand.indexOf(card.id), 1)
+            } 
+        })
+        pah.markModified('users');
         pah.save(function(err, pah) {
             if (err) {
                 return handleError(res, err);
@@ -309,6 +316,7 @@ exports.startRound = function(req, res) {
         pah.discardedBlack.push(pah.blackCard.id);
 
         pah.currentDrawingUser = 0;
+        pah.cardsInPlay=[];
         pah.save(function(err) {
             if (err) {
                 return handleError(res, err);

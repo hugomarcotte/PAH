@@ -37,13 +37,25 @@ angular.module('pahApp')
         $scope.publicPlayArea = CAHFactory.getPublicPlayArea();
         $scope.scoreboard = CAHFactory.getScoreboard();
         $scope.currentPlayer = CAHFactory.getCurrentPlayer($stateParams.code);
+        $scope.cardOrder = []
+
+        
 
 
         $scope.selectWhiteCard = function(whiteCard) {
+            var cardArray=$scope.cardOrder
             if (whiteCard.selected) {
                 whiteCard.selected = false;
+                cardArray.splice(cardArray.indexOf(whiteCard), 1)
+                whiteCard.order=0;
+                cardArray.forEach(function(card, i){
+                    card.order=i+1
+                })
             } else {
                 whiteCard.selected = true;
+                cardArray.push(whiteCard)
+                console.log("CARD ARRAY", cardArray);
+                whiteCard.order=cardArray.length
             }
         };
 

@@ -70,6 +70,7 @@
 
       <div class='card whiteCard' ng-repeat='whiteCard in privatePlayArea.hand' ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}">
         {{whiteCard.text}}
+        {{whiteCard.order}}
       </div>
     </div>
 
