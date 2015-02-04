@@ -51,7 +51,7 @@ exports.create = function(req, res) {
         users: [],
         discardedWhite: [],
         discardedBlack: [],
-        blackCard: availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)]
+        blackCard: {}
     });
     var id = pah._id.toString();
 
@@ -196,15 +196,15 @@ exports.judge = function(req, res) {
         // })
         // console.log(availableBlackCards);
         // console.log(pah.blackCard);
-        pah.discardedBlack.push(pah.blackCard.id);
-        // console.log(pah.discardedBlack);
-        //console.log(Math.floor(Math.random()*availableBlackCards.length));
-        pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
-        while (pah.discardedBlack.indexOf(pah.blackCard.id) >= 0) {
-            //console.log(Math.floor(Math.random()*availableBlackCards.length));
-            pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
-        }
-        console.log(pah.blackCard);
+        // pah.discardedBlack.push(pah.blackCard.id);
+        // // console.log(pah.discardedBlack);
+        // //console.log(Math.floor(Math.random()*availableBlackCards.length));
+        // pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
+        // while (pah.discardedBlack.indexOf(pah.blackCard.id) >= 0) {
+        //     //console.log(Math.floor(Math.random()*availableBlackCards.length));
+        //     pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
+        // }
+        // console.log(pah.blackCard);
 
         pah.cardsInPlay.length = 0;
 
@@ -290,7 +290,6 @@ exports.invite = function(req, res) {
 };
 
 exports.startRound = function(req, res) {
-    console.log('pah: ', req.params);
 
     Pah.findById(req.params.id, function(err, pah) {
         if (err) {
@@ -299,6 +298,16 @@ exports.startRound = function(req, res) {
         if (!pah) {
             return res.send(404);
         }
+
+        // console.log(pah.discardedBlack);
+        //console.log(Math.floor(Math.random()*availableBlackCards.length));
+        pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
+        while (pah.discardedBlack.indexOf(pah.blackCard.id) >= 0) {
+            //console.log(Math.floor(Math.random()*availableBlackCards.length));
+            pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
+        }
+        pah.discardedBlack.push(pah.blackCard.id);
+
         pah.currentDrawingUser = 0;
         pah.save(function(err) {
             if (err) {
