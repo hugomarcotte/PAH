@@ -42,7 +42,7 @@ angular.module('pahApp')
 
     factoryMethods.getCurrentPlayer = function(joinCode, cb) {
       if (gameState) {
-        cb(currentPlayer);
+        if (cb) cb(currentPlayer);
         return currentPlayer;
       }
       this.rejoin(joinCode, cb);
@@ -136,8 +136,10 @@ angular.module('pahApp')
       if (!joinCode) {} // Do some stuff if you were the one to init
       isPlayer = false;
       $http.get('/api/pahs/' + joinCode)
-        .success(function(data) {
-          if (callback) callback(data);
+        .success(function(state) {
+          if (callback) callback(state);
+          updatePlayArea(state);
+          registerStateSocket();
         })
     };
 
@@ -224,12 +226,13 @@ angular.module('pahApp')
     function updatePlayArea(newState) {
       console.log('updating with: ', newState);
       gameState = newState;
-      currentPlayer.info = newState.users[currentPlayer.index];
+      if (isPlayer) currentPlayer.info = newState.users[currentPlayer.index];
       publicPlayArea.blackCard = newState.blackCard;
       publicPlayArea.submittedCards = newState.cardsInPlay;
       publicPlayArea.currentJudge = newState.users[newState.currentJudge];
+      publicPlayArea.judgeMode = newState.judgeMode;
       scoreboard.users = newState.users;
-      if (newState.currentDrawingUser == currentPlayer.index) {
+      if (isPlayer && newState.currentDrawingUser == currentPlayer.index) {
         factoryMethods.draw(10 - privatePlayArea.hand.length);
       }
     }
