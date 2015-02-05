@@ -51,9 +51,9 @@
           {{publicPlayArea.blackCard.text}}
         </div>
         <div class="footer" style="text-align: center;">
-          <md-button class="md-raised" ng-click="drawBlackCard()" ng-show="isJudge">Black Card</md-button>
-          <md-button class="md-raised" ng-click="drawCard()" ng-show="isJudge">Draw Hand</md-button>
-          <md-button class="md-raised" ng-click="startRound()" ng-show="isJudge">Start Round</md-button>
+<!--           <md-button class="md-raised" ng-click="drawBlackCard()" ng-show="isJudge">Black Card</md-button>
+          <md-button class="md-raised" ng-click="drawCard()" ng-show="isJudge">Draw Hand</md-button> -->
+          <md-button class="md-raised" ng-click="startRound()" ng-show="currentPlayer.info.isJudge">Start Game</md-button>
         </div>
       </div>
 
@@ -70,13 +70,17 @@
 
     <div class="rightSide" layout="column">
       <div class="whiteCardZone" flex="75">
-         <div class='card whiteCard' ng-repeat='whiteCard in privatePlayArea.hand' ng-hide="currentPlayer.info.isJudge" ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}">
+      <div style="text-align: center; padding-top: 15px;" ng-show="currentPlayer.info.isJudge && !publicPlayArea.judgeMode && scoreboard.users[0].cards.length > 0">
+        <img ng-src="{{gif}}"/>
+        <p style="text-align: center">Waiting for all players to submit cards</p> 
+      </div>
+      <div style="text-align: center; padding-top: 15px;" ng-hide="scoreboard.users[0].cards.length > 0">
+        <img ng-src="{{gif}}"/>
+        <p style="text-align: center">Waiting for the Big Kahuna to start the game</p> 
+      </div>
+      <div class='card whiteCard' ng-repeat='whiteCard in privatePlayArea.hand' ng-hide="currentPlayer.info.isJudge" ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}">
         {{whiteCard.text}}
         {{whiteCard.order}}
-        </div>
-          <div layout-align="center center" ng-show="currentPlayer.info.isJudge"> Waiting for all players to submit cards 
-        </div>
-
       </div>
       <div class="buttonZone" flex="25" layout="row" layout-align="center center">
         <md-button class="md-raised prevNextBtn" ng-click="submitCards()" ng-show="currentPlayer.info.isJudge && publicPlayArea.judgeMode"> << Previous</md-button>
@@ -84,9 +88,7 @@
         <md-button class="md-raised prevNextBtn" ng-click="submitCards()" ng-show="currentPlayer.info.isJudge && publicPlayArea.judgeMode">Next >></md-button>
         <md-button class="md-raised" ng-click="submitCards()" ng-hide="(currentPlayer.info.isJudge || (currentPlayer.info.cards.length === 0) || submitted)">Submit Cards</md-button>
         <md-button class="md-raised" ng-show="submitted">Waiting for other players to submit cards</md-button>
-    </div>
-
-
+      </div>
   </div>
 </div>
 <script type="text/ng-template" id="getLinkDialog">
