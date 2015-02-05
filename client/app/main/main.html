@@ -33,14 +33,12 @@
 <script type="text/ng-template" id="joinGameDialog">
 <div class="joinDialog">
   <h1>Join a game</h1>
-  
   <md-input-container>
     <form name="enterGameCode" ng-submit="joinGame()">
       <label>Enter 4 digit game code</label>
-      <input ng-model="gameCode" minlength="4" md-maxlength="4" autofocus/>
+      <input ng-model="gameCode" minlength="4" md-maxlength="4" autofocus>
     <form>
   </md-input-container>
-
   <md-button class="md-raised" ng-click="joinGame()">go</md-button>
 </div>
 </script>
