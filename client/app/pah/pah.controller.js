@@ -39,6 +39,8 @@ angular.module('pahApp')
         $scope.scoreboard = CAHFactory.getScoreboard();
         $scope.currentPlayer = CAHFactory.getCurrentPlayer($stateParams.code);
         $scope.cardOrder = []
+        $scope.submitted = false;
+
 
         $scope.openJoin = function() {
             ngDialog.open({
@@ -48,16 +50,20 @@ angular.module('pahApp')
           
         };
 
-        $scope.logPlayer = function (player) {
-            var cookies = JSON.parse($cookies.games);
-            cookies.forEach(function(game){
-                if(game.gameCode === $stateParams.code) {
+        $scope.findPlayer = function (player) {
+            if (!$cookies.games) {
+                $scope.openJoin();
+            } else {
+                var cookies = JSON.parse($cookies.games);
+                cookies.forEach(function(game){
+                    if(game.gameCode === $stateParams.code) {
 
-                } else {
-                    $scope.openJoin();
-                }
-            })
-            console.log(cookies);
+                    } else {
+                        $scope.openJoin();
+                    }
+                })
+                console.log(cookies);                
+            }
         };
 
         
@@ -86,6 +92,7 @@ angular.module('pahApp')
         };
 
         $scope.submitCards = function() {
+            $scope.submitted = true;
             var submittedCards = [];
             $scope.privatePlayArea.hand.forEach(function(card) {
                 if (card.selected) {
@@ -93,6 +100,7 @@ angular.module('pahApp')
                 }
             });
             console.log($scope.currentPlayer);
+            $scope.submitted = true;
             CAHFactory.play(submittedCards[0], $scope.currentPlayer.info._id); //CAHFactory.play should be rewritten to accet an array of card objects
         };
 

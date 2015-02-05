@@ -108,7 +108,8 @@ angular.module('pahApp')
         .success(function(data) {
           var hand =privatePlayArea.hand
           hand.splice(hand.indexOf(card), 1)
-          console.log('Played card', card);
+          // console.log('Played card', card);
+          factoryMethods.draw(10 - hand.length);
         })
         .error(function(err) {
           console.log('Failed to join game: ', err);
