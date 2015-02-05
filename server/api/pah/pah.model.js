@@ -15,7 +15,7 @@ var PahSchema = new Schema({
   discardedWhite: Array,
   discardedBlack: Array,
   cardsInPlay: Array,
-  blackCard: Object
+  blackCard: Object 
 });
 
 module.exports = mongoose.model('Pah', PahSchema);

@@ -40,15 +40,19 @@ angular.module('pahApp')
       return scoreboard;
     };
 
-    factoryMethods.getCurrentPlayer = function(joinCode) {
-      if (gameState) return currentPlayer;
-      this.rejoin(joinCode);
+    factoryMethods.getCurrentPlayer = function(joinCode, cb) {
+      if (gameState) { 
+        cb(currentPlayer);
+        return currentPlayer; 
+      }
+      this.rejoin(joinCode, cb);
       return currentPlayer;
     }
 
     factoryMethods.getPlayers = function() {
       return this.getScoreboard();
     }
+    
     factoryMethods.init = function(playerName, callback) {
       var self = this;
 
@@ -104,7 +108,8 @@ angular.module('pahApp')
         .success(function(data) {
           var hand =privatePlayArea.hand
           hand.splice(hand.indexOf(card), 1)
-          console.log('Played card', card);
+          // console.log('Played card', card);
+          factoryMethods.draw(10 - hand.length);
         })
         .error(function(err) {
           console.log('Failed to join game: ', err);
@@ -184,8 +189,10 @@ angular.module('pahApp')
     // this shouldn't be externally facing,
     // should just get called when join finds that
     // you're already in the game
-    factoryMethods.rejoin = function(joinCode) {
-      if (!$cookies.games) return false;
+    factoryMethods.rejoin = function(joinCode, cb) {
+      if (!$cookies.games) {
+        return false;
+      } 
 
       /// parse it check it push it stringify it reset it
       var cookies = JSON.parse($cookies.games);
@@ -195,13 +202,18 @@ angular.module('pahApp')
           playerId = game.userId;
         }
       })
-      if (!playerId) return false;
+      if (!playerId) {
+        return false;
+      } 
 
       this.getGameByCode(joinCode, function(state) {
         joinHelper({
           state: state,
           playerId: playerId
         });
+        if (cb) {
+          cb(currentPlayer);
+        }
       });
       return true;
     };

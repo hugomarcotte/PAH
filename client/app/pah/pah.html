@@ -1,17 +1,19 @@
-<md-card style="width:500px; color: white">
+<!-- <md-card style="width:500px; color: white">
 <p>Private: {{privatePlayArea.hand}}</p>
 <p>Public: {{publicPlayArea}}</p>
 <p>Scoreboard: {{scoreboard}}</p>
-<p>Me: {{currentPlayer}}</p>
-</md-card>
-<div layout="row" class="board" resize ng-style="style()">
+<p>Me: {{currentPlayer.info.isJudge}}</p>
+</md-card> -->
+<div layout="row" class="board" resize ng-style="style()" ng-init="findPlayer(currentPlayer)">
   <div layout="column" class="sideBar" flex="15" layout-align="space-between">
     <div class="players">
-      <md-button class="md-raised" ng-click="join()" ng-show="!hasJoined">+ Join</md-button>
+      <md-button class="md-raised" ng-click="openJoin()" ng-show="!hasJoined">+ Join</md-button>
       <md-button class="md-raised" ng-click="openLinkDialog()">Get/Text Join Link</md-button>
       <div>
-        <div ng-repeat="user in state.users" layout="row">
-          <div class="icon icon-social-white icon-social-white-ic_person_white_24dp" flex="15"></div>
+        <div ng-repeat="user in scoreboard.users" layout="row">
+          <div class="icon icon-social-white icon-social-white-ic_person_white_24dp" flex="17"></div>
+
+
           <div ng-class='{judge: user.isJudge}' class="username" flex="50">
             {{user.name}}
           </div>
@@ -30,9 +32,12 @@
       </div>
     </div>
   </div>
+
+
+
   <div layout="row" class="cardZone" flex="85">
 
-    <div class="blackCardZone" flex="50" layout="column">
+    <div class="leftSide" layout="column">
       <div class="card blackCard" flex="75" layout="column" ng-show="gameStarted">
         <div class="text">
           {{blackCard.text}}
@@ -48,30 +53,37 @@
         <div class="footer" style="text-align: center;">
           <md-button class="md-raised" ng-click="drawBlackCard()" ng-show="isJudge">Black Card</md-button>
           <md-button class="md-raised" ng-click="drawCard()" ng-show="isJudge">Draw Hand</md-button>
-          <md-button class="md-raised" ng-click="submitCards()" ng-show="isJudge">Submit Cards</md-button>
           <md-button class="md-raised" ng-click="startRound()" ng-show="isJudge">Start Round</md-button>
         </div>
       </div>
 
-      <div class="publicWhiteCards" style="margin-left:{{calStackCardsMargin(publicwhiteCards.length)}}px" flex="25">
-        <div class='card whiteCard' ng-show="!show{{whiteCard.id}}" ng-click="show(whiteCard.id)" style="margin-left:-{{calStackCardsMargin(publicwhiteCards.length)}}px" ng-repeat='whiteCard in publicPlayArea.submittedCards'>
-
+      <div class="publicWhiteCards" style="margin-left:{{calStackCardsMargin(publicPlayArea.submittedCards.length)}}px" flex="25">
+        <div class='card whiteCard' style="margin-left:-{{calStackCardsMargin(publicPlayArea.submittedCards.length)}}px" ng-repeat='whiteCard in publicPlayArea.submittedCards'>
           Phones Against Humanity
         </div>
-        <div class='card whiteCard' ng-show="show{{whiteCard.id}}" ng-click="show(whiteCard.id)" style="margin-left:-{{calStackCardsMargin(publicwhiteCards.length)}}px" ng-repeat='whiteCard in publicPlayArea.submittedCards'>
+        <!-- <div class='card whiteCard' ng-show="show{{whiteCard.id}}" ng-click="show(whiteCard.id)" style="margin-left:-{{calStackCardsMargin(publicwhiteCards.length)}}px" ng-repeat='whiteCard in publicPlayArea.submittedCards'>
           {{whiteCard.text}}
-        </div>
+        </div> -->
       </div>
     </div>
 
 
-    <div class="playersWhiteCardZone" flex="50">
-
-
-      <div class='card whiteCard' ng-repeat='whiteCard in privatePlayArea.hand' ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}">
+    <div class="rightSide" layout="column">
+      <div class="whiteCardZone" flex="75">
+         <div class='card whiteCard' ng-repeat='whiteCard in privatePlayArea.hand' ng-hide="currentPlayer.info.isJudge" ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}">
         {{whiteCard.text}}
         {{whiteCard.order}}
+        </div>
+          <div layout-align="center center" ng-show="currentPlayer.info.isJudge"> Waiting for all players to submit cards 
+        </div>
+
       </div>
+      <div class="buttonZone" flex="25" layout="row" layout-align="center center">
+        <md-button class="md-raised prevNextBtn" ng-click="submitCards()" ng-show="currentPlayer.info.isJudge && publicPlayArea.judgeMode"> << Previous</md-button>
+        <md-button class="md-raised winnerBtn" ng-click="submitCards()" ng-show="currentPlayer.info.isJudge && publicPlayArea.judgeMode" ng-disabled="!allCardsViewed">Winner</md-button>
+        <md-button class="md-raised prevNextBtn" ng-click="submitCards()" ng-show="currentPlayer.info.isJudge && publicPlayArea.judgeMode">Next >></md-button>
+        <md-button class="md-raised" ng-click="submitCards()" ng-hide="(currentPlayer.info.isJudge || (currentPlayer.info.cards.length === 0) || submitted)">Submit Cards</md-button>
+        <md-button class="md-raised" ng-show="submitted">Waiting for other players to submit cards</md-button>
     </div>
 
 
@@ -88,5 +100,15 @@
   <input ng-model="phoneNumber" placeholder="XXXXXXXXXX"/>
   </md-input-container>
   <md-button class="md-raised" ng-click="sendText()">Text Link</md-button>
+</div>
+</script>
+<script type="text/ng-template" id="joinGameDialog">
+<div class="joinDialog">
+  <h1>Enter name to join game.</h1>
+  <md-input-container>
+    <label>ex("Thom", "Hugonaught", "The Rizza", "Dr. Kibbles")</label>
+    <textarea ng-model="playerName" md-maxlength="12"></textarea>
+  </md-input-container>
+  <md-button class="md-raised" ng-click="join(playerName)">go</md-button>
 </div>
 </script>
