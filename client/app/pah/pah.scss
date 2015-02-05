@@ -6,9 +6,19 @@
   height: 700px;
   padding: 20px;
 
+  .sideBarInside {
+    height:100%;
+  }
+  .navButton {
+    cursor: pointer;
+  }
+  md-sidenav.md-locked-open {
+    min-width: 200px;
+    width:200px;
+  }
+
   .sideBar {
-    padding-right: 20px;
-    height: 100%;
+    background-color: #232323;
 
     .players {
 
@@ -17,6 +27,7 @@
         margin-bottom: 10px;
       }
       .username {
+
         line-height:24px;
       }
       .score{
@@ -44,6 +55,7 @@
   }
 
   .cardZone {
+    padding-left: 20px;
     height: 100%;
 
     .card {
@@ -175,8 +187,17 @@ $medium-and-down: "only screen and (max-width : #{$medium-screen})";
 
 $medium-only: "only screen and (min-width : #{$small-screen}) and (max-width : #{$medium-screen})";
 
-@media only screen and (min-width : 992px) {
+@media only screen and (min-width: 1400px) {
+  .sideBarInside {
+    padding:0px;
+  }
+  .navButton {
+    display: none;
+  }
+}
 
+@media only screen and (max-width : 1400) {
+  
 }
 @media only screen and (max-width : 1100px) {
 

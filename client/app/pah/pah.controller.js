@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pahApp')
-    .controller('PahCtrl', function($scope, CAHFactory, ngDialog, $stateParams, $http, $location, socket, deck, $cookies) {
+    .controller('PahCtrl', function($scope, CAHFactory, ngDialog, $stateParams, $http, $location, socket, deck, $cookies, $mdSidenav) {
 
         //// CAHFactory.init(playerName, callback)
         //// if you include a playerName, init will also join you to the game
@@ -32,7 +32,7 @@ angular.module('pahApp')
         ////   index: 4 // index in users array for display porpoises
         //// }
 
-     
+
 
         $scope.privatePlayArea = CAHFactory.getPrivatePlayArea();
         $scope.publicPlayArea = CAHFactory.getPublicPlayArea();
@@ -47,7 +47,7 @@ angular.module('pahApp')
             template: 'joinGameDialog',
             controller: 'PahCtrl'
           });
-          
+
         };
 
         $scope.findPlayer = function (player) {
@@ -62,14 +62,14 @@ angular.module('pahApp')
                         $scope.openJoin();
                     }
                 })
-                console.log(cookies);                
+                console.log(cookies);
             }
         };
 
-        
 
 
-       
+
+
 
 
 
@@ -208,7 +208,7 @@ angular.module('pahApp')
 
         $scope.gameCode = $stateParams.code;
 
-        
+
 
 
         // $scope.whiteCards =[{"id":12,"cardType":"A","text":"Puppies!","numAnswers":0,"expansion": "Base"},
@@ -290,5 +290,7 @@ angular.module('pahApp')
         }
 
         $scope.playerSubmission = [{text:'first card'},{text:'second card'},{text:'third card'}];
-
+        $scope.openSidenav = function() {
+          $mdSidenav('left').toggle();
+        }
     });
