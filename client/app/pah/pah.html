@@ -1,13 +1,13 @@
 <!-- <md-card style="width:500px; color: white">
 <p>Private: {{privatePlayArea.hand}}</p>
 <p>Public: {{publicPlayArea}}</p>
-<p>Scoreboard: {{scoreboard.users[0].name}}</p>
-<p>Me: {{currentPlayer}}</p>
+<p>Scoreboard: {{scoreboard}}</p>
+<p>Me: {{currentPlayer.index}}</p>
 </md-card> -->
-<div layout="row" class="board" resize ng-style="style()">
+<div layout="row" class="board" resize ng-style="style()" ng-init="logPlayer(currentPlayer)">
   <div layout="column" class="sideBar" flex="15" layout-align="space-between">
     <div class="players">
-      <md-button class="md-raised" ng-click="join()" ng-show="!hasJoined">+ Join</md-button>
+      <md-button class="md-raised" ng-click="openJoin()" ng-show="!hasJoined">+ Join</md-button>
       <md-button class="md-raised" ng-click="openLinkDialog()">Get/Text Join Link</md-button>
       <div>
         <div ng-repeat="user in scoreboard.users" layout="row">
@@ -59,7 +59,6 @@
 
       <div class="publicWhiteCards" style="margin-left:{{calStackCardsMargin(publicPlayArea.submittedCards.length)}}px" flex="25">
         <div class='card whiteCard' style="margin-left:-{{calStackCardsMargin(publicPlayArea.submittedCards.length)}}px" ng-repeat='whiteCard in publicPlayArea.submittedCards'>
-
           Phones Against Humanity
         </div>
         <!-- <div class='card whiteCard' ng-show="show{{whiteCard.id}}" ng-click="show(whiteCard.id)" style="margin-left:-{{calStackCardsMargin(publicwhiteCards.length)}}px" ng-repeat='whiteCard in publicPlayArea.submittedCards'>
@@ -100,5 +99,15 @@
   <input ng-model="phoneNumber" placeholder="XXXXXXXXXX"/>
   </md-input-container>
   <md-button class="md-raised" ng-click="sendText()">Text Link</md-button>
+</div>
+</script>
+<script type="text/ng-template" id="joinGameDialog">
+<div class="joinDialog">
+  <h1>Enter name to join game.</h1>
+  <md-input-container>
+    <label>ex("Thom", "Hugonaught", "The Rizza", "Dr. Kibbles")</label>
+    <textarea ng-model="playerName" md-maxlength="12"></textarea>
+  </md-input-container>
+  <md-button class="md-raised" ng-click="join(playerName)">go</md-button>
 </div>
 </script>

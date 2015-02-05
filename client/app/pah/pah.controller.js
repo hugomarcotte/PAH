@@ -32,10 +32,37 @@ angular.module('pahApp')
         ////   index: 4 // index in users array for display porpoises
         //// }
 
+     
+
         $scope.privatePlayArea = CAHFactory.getPrivatePlayArea();
         $scope.publicPlayArea = CAHFactory.getPublicPlayArea();
         $scope.scoreboard = CAHFactory.getScoreboard();
-        $scope.currentPlayer = CAHFactory.getCurrentPlayer($stateParams.code);
+        $scope.currentPlayer = CAHFactory.getCurrentPlayer($stateParams.code, function(currentPlayer) {
+            
+        });
+
+        $scope.openJoin = function() {
+            ngDialog.open({
+            template: 'joinGameDialog',
+            controller: 'PahCtrl'
+          });
+          
+        };
+
+        $scope.logPlayer = function (player) {
+            var cookies = JSON.parse($cookies.games);
+            cookies.forEach(function(game){
+                if(game.gameCode === $stateParams.code) {
+
+                } else {
+                    $scope.openJoin();
+                }
+            })
+            console.log(cookies);
+        };
+
+        
+
 
 
         $scope.selectWhiteCard = function(whiteCard) {
@@ -62,6 +89,27 @@ angular.module('pahApp')
         }
 
         $scope.url = $location.absUrl();
+
+
+
+
+        $scope.join = function(playerName) {
+            console.log("got here");
+            CAHFactory.join(playerName, $scope.gameCode);
+            ngDialog.close();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         // console.log($cookies.games);
@@ -140,9 +188,7 @@ angular.module('pahApp')
 
         $scope.gameCode = $stateParams.code;
 
-        $scope.join = function() {
-            CAHFactory.join('John', $scope.gameCode);
-        }
+        
 
 
         // $scope.whiteCards =[{"id":12,"cardType":"A","text":"Puppies!","numAnswers":0,"expansion": "Base"},
