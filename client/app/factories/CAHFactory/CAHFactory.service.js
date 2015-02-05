@@ -106,6 +106,8 @@ angular.module('pahApp')
           card: card
         })
         .success(function(data) {
+          var hand =privatePlayArea.hand
+          hand.splice(hand.indexOf(card), 1)
           console.log('Played card', card);
         })
         .error(function(err) {

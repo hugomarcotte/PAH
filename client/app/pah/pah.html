@@ -80,7 +80,13 @@
         <md-button class="md-raised winnerBtn" ng-click="submitCards()" ng-show="isJudge" ng-disabled="!allCardsViewed">Winner</md-button>
         <md-button class="md-raised prevNextBtn" ng-click="submitCards()" ng-show="isJudge">Next >></md-button>
 
+
         <md-button class="md-raised" ng-click="submitCards()" ng-show="!isJudge">Submit Cards</md-button>
+
+      <div class='card whiteCard' ng-repeat='whiteCard in privatePlayArea.hand' ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}">
+        {{whiteCard.text}}
+        {{whiteCard.order}}
+
       </div>
 
     </div>
