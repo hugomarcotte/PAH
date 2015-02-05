@@ -144,6 +144,9 @@ exports.submit = function(req, res) {
         var card = req.body.card;
         card.userId = req.params.user;
         pah.cardsInPlay.push(card);
+        if (pah.cardsInPlay.length -1 === pah.users.length) {
+            pah.judgeMode = true;
+        }
         pah.users.forEach(function(user){
             if (user._id === card.userId){
                 var userHand=user.cards
@@ -170,6 +173,7 @@ exports.judge = function(req, res) {
         }
         console.log(pah);
         pah.currentDrawingUser = 0;
+        pah.judgeMode = false;
 
         //MAYBE MARK MODIFIED.
         pah.users.forEach(function(user) {
