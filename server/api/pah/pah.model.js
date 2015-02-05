@@ -14,7 +14,7 @@ var PahSchema = new Schema({
   discardedWhite: {type:Array, default:[]},
   discardedBlack: {type:Array, default:[]},
   cardsInPlay: {type:Array, default:[]},
-  blackCard: {type: Object, default:{}}
+  blackCard: {type: Object, default:{}},
   judgeMode: {type:Boolean, default:false}
 });
 
