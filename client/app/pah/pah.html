@@ -1,20 +1,18 @@
-<md-card style="width:500px; color: white">
+<!-- <md-card style="width:500px; color: white">
 <p>Private: {{privatePlayArea.hand}}</p>
 <p>Public: {{publicPlayArea}}</p>
 <p>Scoreboard: {{scoreboard}}</p>
 <p>Me: {{currentPlayer}}</p>
-</md-card>
+</md-card> -->
 
 <div layout="row" class="board" resize ng-style="style()" ng-init="findPlayer(currentPlayer)">
   <div layout="column" class="sideBar" flex="15" layout-align="space-between">
     <div class="players">
-      <md-button class="md-raised" ng-click="openJoin()" ng-show="!hasJoined">+ Join</md-button>
-      <md-button class="md-raised" ng-click="openLinkDialog()">Get/Text Join Link</md-button>
+      <md-button class="md-raised" ng-click="openJoin()" ng-show="noPlayer">+ Join</md-button>
+      <md-button class="md-raised" ng-click="openLinkDialog()">Invite Link</md-button>
       <div>
         <div ng-repeat="user in scoreboard.users" layout="row">
           <div class="icon icon-social-white icon-social-white-ic_person_white_24dp" flex="17"></div>
-
-
           <div ng-class='{judge: user.isJudge}' class="username" flex="50">
             {{user.name}}
           </div>
@@ -33,11 +31,7 @@
       </div>
     </div>
   </div>
-
-
-
   <div layout="row" class="cardZone" flex="85">
-
     <div class="leftSide" layout="column">
       <div class="card blackCard" flex="75" layout="column" ng-show="gameStarted">
         <div class="text">
@@ -54,7 +48,7 @@
         <div class="footer" style="text-align: center;">
 <!--           <md-button class="md-raised" ng-click="drawBlackCard()" ng-show="isJudge">Black Card</md-button>
           <md-button class="md-raised" ng-click="drawCard()" ng-show="isJudge">Draw Hand</md-button> -->
-          <md-button class="md-raised" ng-click="startRound()" ng-show="currentPlayer.info.isJudge">Start Game</md-button>
+          <md-button class="md-raised" ng-click="startRound()" ng-show="currentPlayer.info.isJudge && (scoreboard.users[0].cards.length === 0)">Start Game</md-button>
         </div>
       </div>
 
@@ -67,8 +61,6 @@
         </div> -->
       </div>
     </div>
-
-
     <div class="rightSide" layout="column">
       <div class="whiteCardZone" flex="75">
       <div style="text-align: center; padding-top: 15px;" ng-show="currentPlayer.info.isJudge && !publicPlayArea.judgeMode && (scoreboard.users[0].cards.length > 0) && !noPlayer">
