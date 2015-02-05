@@ -15,7 +15,8 @@ var PahSchema = new Schema({
   discardedWhite: Array,
   discardedBlack: Array,
   cardsInPlay: Array,
-  blackCard: Object 
+  blackCard: Object,
+  judgeMode: {type:Boolean, default:false}
 });
 
 module.exports = mongoose.model('Pah', PahSchema);
