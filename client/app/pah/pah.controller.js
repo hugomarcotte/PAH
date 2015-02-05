@@ -73,7 +73,7 @@ angular.module('pahApp')
             if (whiteCard.selected) {
                 whiteCard.selected = false;
                 cardArray.splice(cardArray.indexOf(whiteCard), 1)
-                whiteCard.order=0;
+                whiteCard.order= undefined;
                 cardArray.forEach(function(card, i){
                     card.order=i+1
                 })
