@@ -11,7 +11,10 @@ angular.module('pahApp')
         	resolveDeck: function(deck) {
         		// get the promise
         		return deck.getDeck();
-        	}
+        	},
+          resolveState: function(CAHFactory, $stateParams){
+            return CAHFactory.spectate($stateParams.code);
+          }
         }
       });
   });
