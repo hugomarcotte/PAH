@@ -47,11 +47,6 @@ exports.show = function(req, res) {
 // Creates a new pah in the DB.
 exports.create = function(req, res) {
     var pah = new Pah({
-        host: '',
-        users: [],
-        discardedWhite: [],
-        discardedBlack: [],
-        blackCard: {}
     });
     var id = pah._id.toString();
 
