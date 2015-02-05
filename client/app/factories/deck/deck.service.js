@@ -15,17 +15,18 @@ angular.module('pahApp')
       populate: populate
     };
 
-    function getDeck(type, cb) {
+    function getDeck(type) {
       var param = '';
+      if (!type) type = 'base';
       if (type) param = '/?expansion=' + type;
-      $http.get('/api/decks/CAH' + param)
+      return $http.get('/api/decks/CAH' + param)
         .success(function(deck) {
           current_deck = deck;
-          cb(200);
+          // cb(200);
         })
         .error(function(err) {
           console.log(err);
-          cb(404);
+          // cb(404);
         });
     }
 

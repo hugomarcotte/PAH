@@ -1,9 +1,10 @@
-<!-- <md-card style="width:500px; color: white">
+<md-card style="width:500px; color: white">
 <p>Private: {{privatePlayArea.hand}}</p>
 <p>Public: {{publicPlayArea}}</p>
 <p>Scoreboard: {{scoreboard}}</p>
 <p>Me: {{currentPlayer}}</p>
-</md-card> -->
+</md-card>
+
 <div layout="row" class="board" resize ng-style="style()" ng-init="findPlayer(currentPlayer)">
   <div layout="column" class="sideBar" flex="15" layout-align="space-between">
     <div class="players">
@@ -108,8 +109,10 @@
 <div class="joinDialog">
   <h1>Enter name to join game.</h1>
   <md-input-container>
+  <form name="submitName" ng-submit="join(playerName)">
     <label>ex("Thom", "Hugonaught", "The Rizza", "Dr. Kibbles")</label>
-    <textarea ng-model="playerName" md-maxlength="12"></textarea>
+    <input ng-model="playerName" md-maxlength="12" autofocus>
+  </form>
   </md-input-container>
   <md-button class="md-raised" ng-click="join(playerName)">go</md-button>
 </div>

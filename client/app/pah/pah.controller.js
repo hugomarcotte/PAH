@@ -33,9 +33,6 @@ angular.module('pahApp')
         //// }
 
 
-
-     
-
         $scope.privatePlayArea = CAHFactory.getPrivatePlayArea();
         $scope.publicPlayArea = CAHFactory.getPublicPlayArea();
         $scope.scoreboard = CAHFactory.getScoreboard();
@@ -49,17 +46,18 @@ angular.module('pahApp')
 
         $scope.openJoin = function() {
             ngDialog.open({
-            template: 'joinGameDialog',
-            controller: 'PahCtrl'
-          });
-          
+                template: 'joinGameDialog',
+                controller: 'PahCtrl'
+            });
+
         };
 
-        $scope.findPlayer = function (player) {
+        $scope.findPlayer = function(player) {
             if (!$cookies.games) {
                 $scope.openJoin();
             } else {
                 var cookies = JSON.parse($cookies.games);
+
                 cookies.forEach(function(game){
                     if(game.gameCode === $stateParams.code) {
                         $scope.noPlayer = false;
@@ -67,34 +65,23 @@ angular.module('pahApp')
                         $scope.openJoin();
                     }
                 })
-                console.log(cookies);                
             }
         };
 
-
-
-        
-
-
-       
-
-
-
-
         $scope.selectWhiteCard = function(whiteCard) {
-            var cardArray=$scope.cardOrder
+            var cardArray = $scope.cardOrder
             if (whiteCard.selected) {
                 whiteCard.selected = false;
                 cardArray.splice(cardArray.indexOf(whiteCard), 1)
-                whiteCard.order= undefined;
-                cardArray.forEach(function(card, i){
-                    card.order=i+1
+                whiteCard.order = undefined;
+                cardArray.forEach(function(card, i) {
+                    card.order = i + 1
                 })
             } else {
                 whiteCard.selected = true;
                 cardArray.push(whiteCard)
                 console.log("CARD ARRAY", cardArray);
-                whiteCard.order=cardArray.length
+                whiteCard.order = cardArray.length
             }
         };
 
@@ -120,13 +107,13 @@ angular.module('pahApp')
 
 
 
-
         $scope.join = function(playerName) {
             console.log("got here");
             CAHFactory.join(playerName, $scope.gameCode);
             ngDialog.close();
             $scope.noPlayer = false;
         }
+
 
 
 
@@ -236,7 +223,6 @@ angular.module('pahApp')
 
         $scope.gameCode = $stateParams.code;
 
-        
 
 
         // $scope.whiteCards =[{"id":12,"cardType":"A","text":"Puppies!","numAnswers":0,"expansion": "Base"},
@@ -276,14 +262,14 @@ angular.module('pahApp')
 
 
 
-    $scope.calStackCardsMargin = function(nbOfCards) {
-      var screenSize = angular.element(document.querySelectorAll(".leftSide")[0])[0].clientWidth;
+        $scope.calStackCardsMargin = function(nbOfCards) {
+            var screenSize = angular.element(document.querySelectorAll(".leftSide")[0])[0].clientWidth;
 
-      //Remove padding;
-      screenSize = screenSize -20;
-      // +1 at the end is a mystery but seems to be working with any number of Cards
-      return Math.floor(((nbOfCards * 100) - screenSize) / (nbOfCards - 1))+1;
-    };
+            //Remove padding;
+            screenSize = screenSize - 20;
+            // +1 at the end is a mystery but seems to be working with any number of Cards
+            return Math.floor(((nbOfCards * 100) - screenSize) / (nbOfCards - 1)) + 1;
+        };
 
 
 

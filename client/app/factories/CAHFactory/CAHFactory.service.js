@@ -41,9 +41,9 @@ angular.module('pahApp')
     };
 
     factoryMethods.getCurrentPlayer = function(joinCode, cb) {
-      if (gameState) { 
+      if (gameState) {
         cb(currentPlayer);
-        return currentPlayer; 
+        return currentPlayer;
       }
       this.rejoin(joinCode, cb);
       return currentPlayer;
@@ -52,7 +52,7 @@ angular.module('pahApp')
     factoryMethods.getPlayers = function() {
       return this.getScoreboard();
     }
-    
+
     factoryMethods.init = function(playerName, callback) {
       var self = this;
 
@@ -106,9 +106,9 @@ angular.module('pahApp')
           card: card
         })
         .success(function(data) {
-          var hand =privatePlayArea.hand
+          var hand = privatePlayArea.hand
           hand.splice(hand.indexOf(card), 1)
-          // console.log('Played card', card);
+            // console.log('Played card', card);
           factoryMethods.draw(10 - hand.length);
         })
         .error(function(err) {
@@ -181,7 +181,6 @@ angular.module('pahApp')
           currentPlayer.info = user;
         }
       })
-
       privatePlayArea.hand = deck.populate(currentPlayer.info.cards);
       registerStateSocket();
     }
@@ -192,7 +191,7 @@ angular.module('pahApp')
     factoryMethods.rejoin = function(joinCode, cb) {
       if (!$cookies.games) {
         return false;
-      } 
+      }
 
       /// parse it check it push it stringify it reset it
       var cookies = JSON.parse($cookies.games);
@@ -204,7 +203,7 @@ angular.module('pahApp')
       })
       if (!playerId) {
         return false;
-      } 
+      }
 
       this.getGameByCode(joinCode, function(state) {
         joinHelper({
