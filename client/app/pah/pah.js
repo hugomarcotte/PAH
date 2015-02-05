@@ -6,6 +6,12 @@ angular.module('pahApp')
       .state('pah', {
         url: '/pah/:code',
         templateUrl: 'app/pah/pah.html',
-        controller: 'PahCtrl'
+        controller: 'PahCtrl',
+        resolve: {
+        	resolveDeck: function(deck) {
+        		// get the promise
+        		return deck.getDeck();
+        	}
+        }
       });
   });
