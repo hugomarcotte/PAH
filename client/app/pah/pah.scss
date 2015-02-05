@@ -30,6 +30,9 @@
     }
 
     .gameInfo{
+      .md-button {
+        width:100%;
+      }
       .text {
         font-size: 1em;
       }
@@ -97,8 +100,8 @@
 
       .whiteCardZone {
         height:100%;
-        margin-top: -10px;
-        margin-left: -10px;
+        // margin-top: -10px;
+        // margin-left: -10px;
         min-width: 580px;
 
         .whiteCard {
@@ -110,12 +113,23 @@
           overflow-wrap: break-word;
         }
 
+        .submittedCards {
+          font-size: 1em;
+          height: 150px;
+          width: 125px;
+          float: left;
+          margin: 10px;
+          overflow-wrap: break-word;
+
+        }
+
         .cardHighlighted {
           border: 5px solid #008000;
         }
       }
 
       .buttonZone {
+        height:100%;
         padding-top: 40px;
 
         .md-button {
@@ -126,6 +140,15 @@
         }
         .winnerBtn {
           width: 230px;
+        }
+
+        .msg {
+          height: 50%;
+          text-align:center;
+
+        }
+        .button {
+          height: 50%;
         }
       }
 

@@ -269,4 +269,26 @@ angular.module('pahApp')
                     ngDialog.close();
                 })
         };
+
+        ///////////////////////////////////////////////////////////
+        // TEMP for FRONTEND
+        $scope.currentCard = {text:'this is a white card'};
+        $scope.currentCardIndex = 0;
+
+        $scope.showPrevCard = function() {
+
+          $scope.currentCardIndex = $scope.currentCardIndex -1
+          $scope.currentCard = {text:'this is card index:' +$scope.currentCardIndex};
+
+        }
+
+        $scope.showNextCard = function() {
+
+          $scope.currentCardIndex = $scope.currentCardIndex +1
+          $scope.currentCard = {text:'this is card index:' +$scope.currentCardIndex};
+
+        }
+
+        $scope.playerSubmission = [{text:'first card'},{text:'second card'},{text:'third card'}];
+
     });
