@@ -32,12 +32,16 @@ angular.module('pahApp')
         ////   index: 4 // index in users array for display porpoises
         //// }
 
+
         $scope.privatePlayArea = CAHFactory.getPrivatePlayArea();
         $scope.publicPlayArea = CAHFactory.getPublicPlayArea();
         $scope.scoreboard = CAHFactory.getScoreboard();
         $scope.currentPlayer = CAHFactory.getCurrentPlayer($stateParams.code);
         $scope.cardOrder = []
         $scope.submitted = false;
+        $scope.noPlayer = true;
+
+
 
 
         $scope.openJoin = function() {
@@ -53,16 +57,16 @@ angular.module('pahApp')
                 $scope.openJoin();
             } else {
                 var cookies = JSON.parse($cookies.games);
-                cookies.forEach(function(game) {
-                    if (game.gameCode === $stateParams.code) {
 
+                cookies.forEach(function(game){
+                    if(game.gameCode === $stateParams.code) {
+                        $scope.noPlayer = false;
                     } else {
                         $scope.openJoin();
                     }
                 })
             }
         };
-
 
         $scope.selectWhiteCard = function(whiteCard) {
             var cardArray = $scope.cardOrder
@@ -95,6 +99,7 @@ angular.module('pahApp')
         };
 
         $scope.startRound = function() {
+            $scope.getGif();
             CAHFactory.startRound();
         }
 
@@ -106,7 +111,39 @@ angular.module('pahApp')
             console.log("got here");
             CAHFactory.join(playerName, $scope.gameCode);
             ngDialog.close();
+            $scope.noPlayer = false;
         }
+
+
+
+
+        $scope.waitingGifs = [
+        {img:'http://www.ohmagif.com/wp-content/uploads/2012/11/hello-there-im-still-waiting.gif'},
+        {img:'http://i108.photobucket.com/albums/n28/MikeD202/newrickroll.gif'},
+        {img:'http://media.tumblr.com/tumblr_lv1kkvgkuH1qzbcrro1_500.gif'},
+        {img:'http://www.gamervescent.com/wp-content/uploads/2014/11/princess-bride-waiting.gif'},
+        {img:'http://i1359.photobucket.com/albums/q799/snugglyoranges/gifs/tumblr_masvr2XHyl1qcdac2o3_500.gif'},
+        {img:'http://media.tumblr.com/tumblr_m02cf9dNh01qdj7w9.gif'},
+        {img:'http://static.tumblr.com/00fd85d5547265fee4d0145808eb1049/ykxenm9/gHOmiuijm/tumblr_static_be_waiting.gif'},
+        {img:'http://wac.450f.edgecastcdn.net/80450F/thefw.com/files/2012/09/honey-boo-boo-gif.gif'},
+        {img:'http://24.media.tumblr.com/tumblr_mdl5kiCvZS1rhebako1_500.gif'},
+         ];
+
+         $scope.gif = ''; 
+         $scope.getGif = function () {
+            var item = $scope.waitingGifs[Math.floor(Math.random()*$scope.waitingGifs.length)];
+            $scope.gif = item.img;
+         }
+         $scope.getGif();
+
+
+
+
+
+
+
+
+
 
 
 

@@ -174,6 +174,7 @@ angular.module('pahApp')
     };
 
     function joinHelper(data) {
+      isPlayer = true;
       gameId = data.state._id;
       updatePlayArea(data.state);
 
