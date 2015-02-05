@@ -134,10 +134,10 @@ angular.module('pahApp')
 
     factoryMethods.spectate = function(joinCode, callback) {
       if (!joinCode) {} // Do some stuff if you were the one to init
-      isPlayer = false;
       $http.get('/api/pahs/' + joinCode)
         .success(function(state) {
           if (callback) callback(state);
+          gameId = state._id;
           updatePlayArea(state);
           registerStateSocket();
         })
@@ -174,7 +174,7 @@ angular.module('pahApp')
     };
 
     function joinHelper(data) {
-      gameId = data.state._id;
+      //gameId = data.state._id;
       updatePlayArea(data.state);
 
       gameState.users.forEach(function(user) {
@@ -184,7 +184,7 @@ angular.module('pahApp')
         }
       })
       privatePlayArea.hand = deck.populate(currentPlayer.info.cards);
-      registerStateSocket();
+      //registerStateSocket();
     }
 
     // this shouldn't be externally facing,
