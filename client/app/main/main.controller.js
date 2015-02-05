@@ -3,12 +3,6 @@
 angular.module('pahApp')
   .controller('MainCtrl', function($scope, CAHFactory, ngDialog, $http, $location, socket, deck, $cookies) {
 
-    // CAHFactory.init(playerName, callback)
-    // if you include a playerName, init will also join you to the game
-
-    // CAHFactory.join(playerName, code, callback)
-
-
     $scope.openJoinDialog = function() {
       ngDialog.open({
         template: 'joinGameDialog',
@@ -16,38 +10,12 @@ angular.module('pahApp')
       });
     };
 
-
-    // $scope.createNewGame = function() {
-    //   CAHFactory.init();
-    //   $location.path('/pah/1234');
-    //   ngDialog.close();
-    // };
-
-    // $scope.joinGame = function() {
-    //   if ($scope.gameCode && $scope.playerName) {
-    //     CAHFactory.join($scope.playerName, $scope.gameCode);
-    //     $location.path('/pah/1234');
-    //     ngDialog.close();
-    //   }
-    // };
     $scope.createNewGame = function() {
       return $scope.createOrJoin();
       CAHFactory.init();
       $location.path('/pah/1234');
       ngDialog.close();
     };
-
-    //         $scope.joinGame = function() {
-    //         	return $scope.createOrJoin();
-    //                 if ($scope.gameCode && $scope.playerName) {
-    //                 CAHFactory.join($scope.playerName, $scope.gameCode);
-    //                  $location.path('/pah/1234');
-    //                 ngDialog.close();
-    //           }
-    //         };
-
-    //         /////
-
 
     $scope.startNow = function() {
       ngDialog.open({
@@ -60,48 +28,15 @@ angular.module('pahApp')
 
     $scope.joinGame = function() {
       if ($scope.gameCode && $scope.playerName) {
-
         CAHFactory.join($scope.playerName, $scope.gameCode, function(code) {
-          //ngDialog.close();
-          // if ($cookies.games) {
-
-          //   /// parse it push it stringify it reset it
-          //   var cookies = JSON.parse($cookies.games);
-          //   cookies.push({
-          //     gameId: game.state.code,
-          //     userId: game.playerId
-          //   });
-          //   $cookies.games = JSON.stringify(cookies);
-          // } else {
-          //   console.log("Doing this!!!!!!!!")
-          //     /// [{gameid: fdsaf, playerId: fdsafds}] /// stringify and set
-          //   $cookies.games = JSON.stringify([{
-          //     gameId: game.state._id,
-          //     userId: game.playerId
-          //   }]);
-          // }
-
           $location.path('/pah/' + code);
-
         });
-
-
-
-        // $cookies.games = JSON.stringify([{gameId: $scope.gameCode, userId: $scope.playerName}]);
-        // console.log(JSON.parse($cookies.games));
-        // CAHFactory.join($scope.playerName, $scope.gameCode);
-        // $location.path('/pah/1234');
         ngDialog.close();
       }
-
-
     };
 
 
     $scope.createOrJoin = function() {
-
-
-
       // Join as player
       if ($scope.gameCode && $scope.playerName) {
         CAHFactory.join($scope.playerName, $scope.gameCode, function(game) {
@@ -122,9 +57,7 @@ angular.module('pahApp')
               userId: game.playerId
             }]);
           }
-
           $location.path('/backend_sandbox/' + game.state.code);
-
         });
       }
 
