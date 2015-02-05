@@ -2,7 +2,7 @@
 <p>Private: {{privatePlayArea.hand}}</p>
 <p>Public: {{publicPlayArea}}</p>
 <p>Scoreboard: {{scoreboard}}</p>
-<p>Me: {{currentPlayer.info.isJudge}}</p>
+<p>Me: {{currentPlayer}}</p>
 </md-card> -->
 <div layout="row" class="board" resize ng-style="style()" ng-init="findPlayer(currentPlayer)">
   <div layout="column" class="sideBar" flex="15" layout-align="space-between">
@@ -70,11 +70,11 @@
 
     <div class="rightSide" layout="column">
       <div class="whiteCardZone" flex="75">
-      <div style="text-align: center; padding-top: 15px;" ng-show="currentPlayer.info.isJudge && !publicPlayArea.judgeMode && scoreboard.users[0].cards.length > 0">
+      <div style="text-align: center; padding-top: 15px;" ng-show="currentPlayer.info.isJudge && !publicPlayArea.judgeMode && (scoreboard.users[0].cards.length > 0) && !noPlayer">
         <img ng-src="{{gif}}"/>
-        <p style="text-align: center">Waiting for all players to submit cards</p> 
+        <p style="text-align: center">You are the judge!<br>Waiting for these LAZY F%$#&@(!)s to submit their *$)*$&%ing cards.</p> 
       </div>
-      <div style="text-align: center; padding-top: 15px;" ng-hide="scoreboard.users[0].cards.length > 0">
+      <div style="text-align: center; padding-top: 15px;" ng-hide="(scoreboard.users[0].cards.length > 0) || noPlayer">
         <img ng-src="{{gif}}"/>
         <p style="text-align: center">Waiting for the Big Kahuna to start the game</p> 
       </div>
@@ -86,7 +86,7 @@
         <md-button class="md-raised prevNextBtn" ng-click="submitCards()" ng-show="currentPlayer.info.isJudge && publicPlayArea.judgeMode"> << Previous</md-button>
         <md-button class="md-raised winnerBtn" ng-click="submitCards()" ng-show="currentPlayer.info.isJudge && publicPlayArea.judgeMode" ng-disabled="!allCardsViewed">Winner</md-button>
         <md-button class="md-raised prevNextBtn" ng-click="submitCards()" ng-show="currentPlayer.info.isJudge && publicPlayArea.judgeMode">Next >></md-button>
-        <md-button class="md-raised" ng-click="submitCards()" ng-hide="(currentPlayer.info.isJudge || (currentPlayer.info.cards.length === 0) || submitted)">Submit Cards</md-button>
+        <md-button class="md-raised" ng-click="submitCards()" ng-hide="(currentPlayer.info.isJudge || (currentPlayer.info.cards.length === 0) || submitted || noPlayer)">Submit Cards</md-button>
         <md-button class="md-raised" ng-show="submitted">Waiting for other players to submit cards</md-button>
       </div>
   </div>

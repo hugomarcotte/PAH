@@ -42,6 +42,7 @@ angular.module('pahApp')
         $scope.currentPlayer = CAHFactory.getCurrentPlayer($stateParams.code);
         $scope.cardOrder = []
         $scope.submitted = false;
+        $scope.noPlayer = true;
 
 
 
@@ -61,7 +62,7 @@ angular.module('pahApp')
                 var cookies = JSON.parse($cookies.games);
                 cookies.forEach(function(game){
                     if(game.gameCode === $stateParams.code) {
-
+                        $scope.noPlayer = false;
                     } else {
                         $scope.openJoin();
                     }
@@ -111,6 +112,7 @@ angular.module('pahApp')
         };
 
         $scope.startRound = function() {
+            $scope.getGif();
             CAHFactory.startRound();
         }
 
@@ -123,6 +125,7 @@ angular.module('pahApp')
             console.log("got here");
             CAHFactory.join(playerName, $scope.gameCode);
             ngDialog.close();
+            $scope.noPlayer = false;
         }
 
 
@@ -140,12 +143,10 @@ angular.module('pahApp')
          ];
 
          $scope.gif = ''; 
-
          $scope.getGif = function () {
             var item = $scope.waitingGifs[Math.floor(Math.random()*$scope.waitingGifs.length)];
             $scope.gif = item.img;
          }
-
          $scope.getGif();
 
 
