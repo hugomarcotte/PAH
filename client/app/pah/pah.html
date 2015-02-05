@@ -70,9 +70,11 @@
 
     <div class="rightSide" layout="column">
       <div class="whiteCardZone" flex="75">
-        <div class='card whiteCard' ng-repeat='whiteCard in privatePlayArea.hand' ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}">
-          {{whiteCard.text}}
-        </div>
+         <div class='card whiteCard' ng-repeat='whiteCard in privatePlayArea.hand' ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}">
+        {{whiteCard.text}}
+        {{whiteCard.order}}
+      </div>
+
       </div>
       <div class="buttonZone" flex="25" layout="row" layout-align="center center">
 
@@ -83,11 +85,7 @@
 
         <md-button class="md-raised" ng-click="submitCards()" ng-show="!isJudge">Submit Cards</md-button>
 
-      <div class='card whiteCard' ng-repeat='whiteCard in privatePlayArea.hand' ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}">
-        {{whiteCard.text}}
-        {{whiteCard.order}}
-
-      </div>
+     
 
     </div>
 
