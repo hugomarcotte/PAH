@@ -39,6 +39,7 @@ angular.module('pahApp')
         $scope.publicPlayArea = CAHFactory.getPublicPlayArea();
         $scope.scoreboard = CAHFactory.getScoreboard();
         $scope.currentPlayer = CAHFactory.getCurrentPlayer();
+        $scope.judgeViewIndex = 0;
         
         // if ($scope.privatePlayArea) console.log($scope.privatePlayArea, "privatePlayArea");
         // if ($scope.publicPlayArea) console.log($scope.publicPlayArea, "publicPlayArea");
@@ -71,14 +72,23 @@ angular.module('pahApp')
         $scope.gif = ''; 
         $scope.player = {};
         $scope.gameCode = $stateParams.code;
-        $scope.blackCard = {
-            "id": 12,
-            "cardType": "A",
-            "text": "As part of his daily regimen, Anderson Cooper sets aside 15 minutes for ___________",
-            "numAnswers": 0,
-            "expansion": "Base"
-        };
-        $scope.isJudge = true;
+       
+
+        $scope.decrementJudgeViewIndex = function () {
+            if ($scope.judgeViewIndex === 0) {
+                $scope.judgeViewIndex = $scope.publicPlayArea.submittedCards.length - 1; 
+            } else {
+                $scope.judgeViewIndex--;
+            }
+        }
+
+        $scope.incrementJudgeViewIndex = function () {
+            if ($scope.judgeViewIndex === $scope.publicPlayArea.submittedCards.length - 1) {
+                $scope.judgeViewIndex = 0; 
+            } else {
+                $scope.judgeViewIndex++;
+            }
+        }
 
 
         $scope.openJoin = function() {
@@ -203,11 +213,8 @@ angular.module('pahApp')
             }   
         };
 
-        $scope.showSubmitCardsButton = function () {
-            if ($scope.currentPlayer.info && $scope.publicPlayArea) {
-                return !$scope.currentPlayer.info.isJudge && ($scope.currentPlayer.info.cards === []) && !$scope.publicPlayArea.judgeMode;
-            }
-        }
+        // $scope.showSubmitCardsButton = !$scope.currentPlayer.info.isJudge && $scope.currentPlayer.info.cards && !$scope.publicPlayArea.judgeMode;
+        
 
         $scope.hideWhiteCards = function () {
             if ($scope.currentPlayer.info && $scope.publicPlayArea) {
@@ -234,14 +241,14 @@ angular.module('pahApp')
 
 
 
-    $scope.calStackCardsMargin = function(nbOfCards) {
-      var screenSize = angular.element(document.querySelectorAll(".leftSide")[0])[0].clientWidth;
+        $scope.calStackCardsMargin = function(nbOfCards) {
+          var screenSize = angular.element(document.querySelectorAll(".leftSide")[0])[0].clientWidth;
 
-      //Remove padding;
-      screenSize = screenSize -20;
-      // +1 at the end is a mystery but seems to be working with any number of Cards
-      return Math.floor(((nbOfCards * 100) - screenSize) / (nbOfCards - 1))+1;
-    };
+          //Remove padding;
+          screenSize = screenSize -20;
+          // +1 at the end is a mystery but seems to be working with any number of Cards
+          return Math.floor(((nbOfCards * 100) - screenSize) / (nbOfCards - 1))+1;
+        };
 
 
 
@@ -256,28 +263,23 @@ angular.module('pahApp')
                 })
         };
 
-        /////////////////////////////////////////////////////////
-        // TEMP for FRONTEND
-        $scope.currentCard = {text:'this is a white card'};
-        $scope.currentCardIndex = 0;
+ 
 
-        $scope.showPrevCard = function() {
 
-          $scope.currentCardIndex = $scope.currentCardIndex -1
-          $scope.currentCard = {text:'this is card index:' +$scope.currentCardIndex};
-
+        $scope.openSidenav = function() {
+          $mdSidenav('left').toggle();
         }
 
-        $scope.showNextCard = function() {
-
-          $scope.currentCardIndex = $scope.currentCardIndex +1
-          $scope.currentCard = {text:'this is card index:' +$scope.currentCardIndex};
-
+        $scope.selectWinner = function (submission) {
+            console.log(submission);
+            CAHFactory.judge(submission);
         }
 
-    //     $scope.playerSubmission = [{text:'first card'},{text:'second card'},{text:'third card'}];
-    //     $scope.openSidenav = function() {
-    //       $mdSidenav('left').toggle();
-    //     }
+
+        $scope.submissions = [
+        [{text: "fuck hugo", order: 1}, {text:"Hugo Sucks", order: 2}, {text:"hugo is really bad", order: 3}],
+        [{text: "fuck ben", order: 1}, {text:"Ben Sucks", order: 2}, {text:"ben is really bad", order: 3}],
+        [{text: "fgriffen ben", order: 1}, {text:" griffen ncks", order: 2}, {text:"egriffen really bad", order: 3}]
+        ]
  });
 
