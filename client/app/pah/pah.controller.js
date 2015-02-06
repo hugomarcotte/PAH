@@ -135,8 +135,7 @@ angular.module('pahApp')
             });
             console.log(submittedCards);
             console.log($scope.currentPlayer);
-            $scope.submitted = true;
-            CAHFactory.play(submittedCards[0], $scope.currentPlayer.info._id); //CAHFactory.play should be rewritten to accet an array of card objects
+            CAHFactory.play(submittedCards, $scope.currentPlayer.info._id); //CAHFactory.play should be rewritten to accet an array of card objects
         };
 
         $scope.startRound = function() {

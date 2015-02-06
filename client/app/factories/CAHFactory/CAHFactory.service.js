@@ -94,16 +94,18 @@ angular.module('pahApp')
       });
     }
 
-    factoryMethods.play = function(card, userId) {
-      console.log('you just played card number: ', card);
+    factoryMethods.play = function(cards, userId) {
+      console.log('you just played card number: ', cards);
       $http.put('/api/pahs/' + gameId + '/submit/' + userId + '', {
-          card: card
+          cards: cards
         })
         .success(function(data) {
           var hand = privatePlayArea.hand
-          hand.splice(hand.indexOf(card), 1)
+          cards.forEach(function(card){
+          hand.splice(hand.indexOf(card), 1)  
+          })
             // console.log('Played card', card);
-          factoryMethods.draw(10 - hand.length);
+          //factoryMethods.draw(10 - hand.length);
         })
         .error(function(err) {
           console.log('Failed to join game: ', err);
@@ -111,13 +113,13 @@ angular.module('pahApp')
       return;
     };
 
-    factoryMethods.judge = function(card) {
+    factoryMethods.judge = function(cards) {
       console.log('the player who played card ', card, ' is the winner!');
       $http.put('/api/pahs/' + gameId + '/judge/', {
-          card_id: card._id,
-          user_id: card.userId
+          cards: cards
         })
         .success(function(data) {
+          this.startRound();
           console.log('Judged this card as the winner:', card);
         })
         .error(function(err) {
