@@ -96,7 +96,7 @@
                     <md-button class="md-raised prevNextBtn" ng-click="decrementJudgeViewIndex()" ng-show="publicPlayArea.judgeMode"><< Previous</md-button>
                     <md-button class="md-raised winnerBtn" ng-click="selectWinner(publicPlayArea.submittedCards[judgeViewIndex])" ng-show="currentPlayer.info.isJudge && publicPlayArea.judgeMode">Winner</md-button>
                     <md-button class="md-raised prevNextBtn" ng-click="incrementJudgeViewIndex()" ng-show="publicPlayArea.judgeMode">Next >></md-button>
-                    <md-button class="md-raised" ng-click="submitCards()" ng-hide="currentPlayer.info.isJudge || publicPlayArea.judgeMode || privatePlayArea.hand.length < 10">Submit Cards</md-button>
+                    <md-button class="md-raised" ng-click="submitCards()" ng-hide="currentPlayer.info.isJudge || publicPlayArea.judgeMode || privatePlayArea.hand.length < 10" ng-disabled="noSubmit()">Submit Cards</md-button>
                 </div>
             </div>
         </div>

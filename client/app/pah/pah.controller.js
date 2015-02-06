@@ -264,8 +264,6 @@ angular.module('pahApp')
                 })
         };
 
- 
-
 
         $scope.openSidenav = function() {
           $mdSidenav('left').toggle();
@@ -275,6 +273,22 @@ angular.module('pahApp')
             console.log(submission);
             CAHFactory.judge(submission);
         }
+
+        $scope.noSubmit = function() {
+            if ($scope.privatePlayArea.hand && $scope.publicPlayArea.blackCard) {
+                var submitedCards = [];
+                $scope.privatePlayArea.hand.forEach(function(card) {
+                    if (card.selected) {
+                        submitedCards.push(card);
+                    }
+                 });
+                if ($scope.publicPlayArea.blackCard.numAnswers === submitedCards.length) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        };
 
  });
 
