@@ -144,8 +144,8 @@ exports.submit = function(req, res) {
         var card = req.body.card;
         card.userId = req.params.user;
         pah.cardsInPlay.push(card);
-        if (pah.cardsInPlay.length -1 === pah.users.length) {
-            pah.judgeMode = true;
+        if (pah.cardsInPlay.length  === pah.users.length - 1) {
+          pah.judgeMode = true;  
         }
         pah.users.forEach(function(user){
             if (user._id === card.userId){
