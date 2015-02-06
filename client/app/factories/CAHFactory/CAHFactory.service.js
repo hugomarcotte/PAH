@@ -114,12 +114,11 @@ angular.module('pahApp')
     };
 
     factoryMethods.judge = function(cards) {
-      console.log('the player who played card ', card, ' is the winner!');
       $http.put('/api/pahs/' + gameId + '/judge/', {
           cards: cards
         })
         .success(function(data) {
-          this.startRound();
+          factoryMethods.startRound();
           console.log('Judged this card as the winner:', card);
         })
         .error(function(err) {
