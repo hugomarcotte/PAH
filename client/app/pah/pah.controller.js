@@ -52,7 +52,7 @@ angular.module('pahApp')
         };
 
         $scope.findPlayer = function(player) {
-            if (!$scope.currentPlayer) {
+            if (!$scope.currentPlayer.info) {
                 $scope.openJoin();
             } else {
                 $scope.noPlayer = false;
