@@ -5,9 +5,7 @@ angular.module('pahApp')
     var gameId = '';
     var factoryMethods = {};
     var gameState;
-    var currentPlayer = {
-      info: {}
-    };
+    var currentPlayer = {};
     var privatePlayArea = {
       hand: []
     }
@@ -41,7 +39,6 @@ angular.module('pahApp')
     };
 
     factoryMethods.getCurrentPlayer = function() {
-      if (!isPlayer) return undefined;
       return currentPlayer;
     }
 
@@ -169,18 +166,20 @@ angular.module('pahApp')
     factoryMethods.join = function(name, joinCode, callback) {
       //console.log(arguments);
 
+      console.log('am I here?');
+
       // check the cookie to see whether we rejoin or not
       // if (this.rejoin(joinCode)) {
       //     console.log('rejoining...');
       //     if (callback) return callback(joinCode);
       //     return;
       // }
-      $http.post('/api/pahs/' + joinCode, {
+      $http.post('/api/pahs/' + gameState.code, {
           'name': name
         })
         .success(function(data) {
           if (callback) callback(data);
-
+console.log('success!');
           joinHelper(data);
 
           if ($cookies.games) {
@@ -217,6 +216,7 @@ angular.module('pahApp')
           currentPlayer.info = user;
         }
       })
+      console.log('currentPlayer: ', currentPlayer);
       privatePlayArea.hand = deck.populate(currentPlayer.info.cards);
       //registerStateSocket();
     }
