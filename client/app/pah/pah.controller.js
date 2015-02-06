@@ -111,7 +111,6 @@ angular.module('pahApp')
             } else {
                 whiteCard.selected = true;
                 cardArray.push(whiteCard)
-                console.log("CARD ARRAY", cardArray);
                 whiteCard.order = cardArray.length
             }
         };
@@ -188,7 +187,6 @@ angular.module('pahApp')
             $rootScope.$broadcast('playerJoined', {});
             CAHFactory.join(playerName, $scope.gameCode);
             ngDialog.close();
-
         };
 
 
@@ -206,8 +204,8 @@ angular.module('pahApp')
         };
 
         $scope.showSubmitCardsButton = function () {
-            if ($scope.currentPlayer.info) {
-                return !($scope.currentPlayer.info.isJudge || $scope.publicPlayArea.judgeMode)
+            if ($scope.currentPlayer.info && $scope.publicPlayArea) {
+                return !$scope.currentPlayer.info.isJudge && ($scope.currentPlayer.info.cards === []) && !$scope.publicPlayArea.judgeMode;
             }
         }
 
