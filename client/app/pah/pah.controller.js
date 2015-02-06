@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('pahApp')
-    .controller('PahCtrl', function($scope, CAHFactory, ngDialog, $stateParams, $http, $location, socket, deck, $cookies, $rootScope) {
+    .controller('PahCtrl', function($scope, CAHFactory, ngDialog, $stateParams, $http, $location, socket, deck, $cookies, $mdSidenav, $rootScope) {
+
 
         //// CAHFactory.init(playerName, callback)
         //// if you include a playerName, init will also join you to the game
@@ -31,6 +32,7 @@ angular.module('pahApp')
         ////   info: {this is the player object},
         ////   index: 4 // index in users array for display porpoises
         //// }
+
 
 
         $scope.privatePlayArea = CAHFactory.getPrivatePlayArea();
@@ -81,9 +83,10 @@ angular.module('pahApp')
 
         $scope.openJoin = function() {
             ngDialog.open({
-                template: 'joinGameDialog',
-                controller: 'PahCtrl'
-            });
+            template: 'joinGameDialog',
+            controller: 'PahCtrl'
+          });
+
 
         };
 
@@ -91,6 +94,7 @@ angular.module('pahApp')
             if (!$scope.currentPlayer.info) {
                 $scope.openJoin();
             } else {
+
                 $scope.noPlayer = false;
             }
         };
@@ -107,7 +111,6 @@ angular.module('pahApp')
             } else {
                 whiteCard.selected = true;
                 cardArray.push(whiteCard)
-                console.log("CARD ARRAY", cardArray);
                 whiteCard.order = cardArray.length
             }
         };
@@ -184,7 +187,6 @@ angular.module('pahApp')
             $rootScope.$broadcast('playerJoined', {});
             CAHFactory.join(playerName, $scope.gameCode);
             ngDialog.close();
-
         };
 
 
@@ -202,8 +204,8 @@ angular.module('pahApp')
         };
 
         $scope.showSubmitCardsButton = function () {
-            if ($scope.currentPlayer.info) {
-                return !($scope.currentPlayer.info.isJudge || $scope.publicPlayArea.judgeMode)
+            if ($scope.currentPlayer.info && $scope.publicPlayArea) {
+                return !$scope.currentPlayer.info.isJudge && ($scope.currentPlayer.info.cards === []) && !$scope.publicPlayArea.judgeMode;
             }
         }
 
@@ -213,16 +215,69 @@ angular.module('pahApp')
             }     
         }
 
+        $scope.isJudge = true;
 
 
 
-        // $scope.whiteCards =[{"id":12,"cardType":"A","text":"Puppies!","numAnswers":0,"expansion": "Base"},
-        // {"id":13,"cardType":"A","text":"A windmill full of corpses.","numAnswers":0,"expansion": "Base"},
-        // {"id":14,"cardType":"A","text":"Guys who don't call.","numAnswers":0,"expansion": "Base"},
-        // {"id":15,"cardType":"A","text":"Racially-biased SAT questions.","numAnswers":0,"expansion": "Base"},
-        // {"id":16,"cardType":"A","text":"Dying.","numAnswers":0,"expansion": "Base"},{"id":12,"cardType":"A","text":"Puppies!","numAnswers":0,"expansion": "Base"},
-        // {"id":13,"cardType":"A","text":"A windmill full of corpses.","numAnswers":0,"expansion": "Base"},
-        // {"id":14,"cardType":"A","text":"Guys who don't call.","numAnswers":0,"expansion": "Base"},
-        // {"id":14,"cardType":"A","text":"Guys who don't call.","numAnswers":0,"expansion": "Base"},
-        // {"id":14,"cardType":"A","text":"Guys who don't call.","numAnswers":0,"expansion": "Base"}]
-});
+        deck.getDeck('base', function() {
+            $scope.deck = deck.getCurrentDeck();
+            //console.log($scope.deck);
+        })
+
+        $scope.openLinkDialog = function() {
+            console.log('hey');
+            ngDialog.open({
+                template: 'getLinkDialog',
+                controller: 'PahCtrl'
+            });
+        };
+
+
+
+    $scope.calStackCardsMargin = function(nbOfCards) {
+      var screenSize = angular.element(document.querySelectorAll(".leftSide")[0])[0].clientWidth;
+
+      //Remove padding;
+      screenSize = screenSize -20;
+      // +1 at the end is a mystery but seems to be working with any number of Cards
+      return Math.floor(((nbOfCards * 100) - screenSize) / (nbOfCards - 1))+1;
+    };
+
+
+
+        $scope.sendText = function() {
+            $http.post('/api/pahs/invite', {
+                    phoneNumber: $scope.phoneNumber,
+                    link: $scope.url
+                })
+                .success(function(data) {
+                    console.log('successfully texted');
+                    ngDialog.close();
+                })
+        };
+
+        /////////////////////////////////////////////////////////
+        // TEMP for FRONTEND
+        $scope.currentCard = {text:'this is a white card'};
+        $scope.currentCardIndex = 0;
+
+        $scope.showPrevCard = function() {
+
+          $scope.currentCardIndex = $scope.currentCardIndex -1
+          $scope.currentCard = {text:'this is card index:' +$scope.currentCardIndex};
+
+        }
+
+        $scope.showNextCard = function() {
+
+          $scope.currentCardIndex = $scope.currentCardIndex +1
+          $scope.currentCard = {text:'this is card index:' +$scope.currentCardIndex};
+
+        }
+
+    //     $scope.playerSubmission = [{text:'first card'},{text:'second card'},{text:'third card'}];
+    //     $scope.openSidenav = function() {
+    //       $mdSidenav('left').toggle();
+    //     }
+ });
+
