@@ -80,8 +80,14 @@
                     {{whiteCard.text}}
                     {{whiteCard.order}}
                 </div>
-                <div class='card whiteCard' ng-show="publicPlayArea.judgeMode" ng-repeat='submission in publicPlayArea.submittedCards[judgeViewIndex]'>
+                <div class='card whiteCard' ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length" ng-repeat='submission in publicPlayArea.submittedCards[judgeViewIndex]'>
                     {{submission.text}}
+                </div>
+                <div ng-show='publicPlayArea.mostRecentWin.length'>
+                <h1>Winner!</h1>
+                <div class='card whiteCard' ng-show="publicPlayArea.judgeMode" ng-repeat='winner in publicPlayArea.mostRecentWin'>
+                    {{winner.text}}
+                </div>
                 </div>
                 <div layout-align="center center" ng-show="judgeWaiting()">
                     <img ng-src="{{gif}}" style="width:100%" />
@@ -96,7 +102,7 @@
                 <div class="msg">
                     <span>{{msgToUser}}</span>
                 </div>
-                <div class="button" layout="row" layout-align="center center" ng-show="publicPlayArea.mostRecentWin.length">
+                <div class="button" layout="row" layout-align="center center" ng-show="publicPlayArea.mostRecentWin.length && currentPlayer.info.isJudge">
                     <md-button class="md-raised winnerBtn" ng-click="startRound()">Start Next Round</md-button>
                 </div>
                 <div class="button" layout="row" layout-align="center center" ng-hide="publicPlayArea.mostRecentWin.length">
