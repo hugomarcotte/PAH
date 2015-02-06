@@ -96,7 +96,7 @@ angular.module('pahApp')
             }
             // Join as spectator
             else if ($scope.gameCode) {
-                CAHFactory.spectate($scope.gameCode);
+                // CAHFactory.spectate($scope.gameCode);
             }
             // Create and join as player
             else if ($scope.playerName) {
