@@ -1,173 +1,117 @@
-.board {
+body {
   font-size: 1em;
   color: white;
   background-color: #232323;
   font-weight: bold;
-  height: 700px;
-  padding: 20px;
+}
 
-  .sideBarInside {
-    height:100%;
+.judge {
+  color: gold;
+}
+
+md-sidenav {
+  background-color: #232323;
+}
+
+md-content.md-default-theme {
+  background-color: #232323;
+}
+
+md-toolbar.md-default-theme {
+  background-color: #232323;
+}
+
+.navButton {
+  cursor: pointer;
+}
+
+.card {
+  font-size: 3em;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.76), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+
+
+
+.whiteCard {
+  background-color: #FFF;
+  color: #000;
+  font-weight: bold;
+  padding: 10px;
+  font-size: 1em;
+  height: 150px;
+  width: 125px;
+  float: left;
+  margin: 10px;
+  overflow-wrap: break-word;
+}
+
+
+
+
+
+.sideBarContent {
+  .button {
+    width: 100%;
   }
-  .navButton {
-    cursor: pointer;
-  }
-  md-sidenav.md-locked-open {
-    min-width: 200px;
-    width:200px;
-  }
+}
 
-  .sideBar {
-    background-color: #232323;
+.leftSide {
+  min-height: 500px;
 
-    .players {
-
-      .md-button {
-        width: 100%;
-        margin-bottom: 10px;
-      }
-      .username {
-
-        line-height:24px;
-      }
-      .score{
-        line-height:24px;
-        text-align: right;
-      }
-
-      .judge{
-        color: orange;
-      }
+  .blackCard {
+    background-color: #000;
+    color: #FFF;
+    padding: 35px;
+    min-height: 500px;
+    overflow:auto;
+    .text {
+      overflow:auto;
     }
-
-    .gameInfo{
-      .md-button {
-        width:100%;
-      }
-      .text {
-        font-size: 1em;
-      }
-      .code {
-        font-size: 2em;
-      }
+    .footer {
+      margin-top: 60px;
+      font-size: 0.5em;
     }
-
   }
 
-  .cardZone {
-    padding-left: 20px;
-    height: 100%;
-
-    .card {
-      font-size: 3em;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.76), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-    }
-
+  .publicWhiteCards {
 
     .whiteCard {
-      background-color: #FFF;
-      color: #000;
-      font-weight: bold;
-      padding: 10px;
-    }
-
-    .leftSide {
-      width: 50%;
-      height: 100%;
-      padding-right: 20px;
-
-      .blackCard {
-        background-color: #000;
-        color: #FFF;
-        padding: 35px;
-        height: 100%;
-
-        .text {
-          height: 90%;
-        }
-        .footer {
-          height: 10%;
-          font-size: 0.5em;
-        }
-      }
-
-      .publicWhiteCards {
-
-        padding-top: 20px;
-
-        .whiteCard {
-          font-size: 1em;
-          height: 150px;
-          width: 100px;
-          float: left;
-        }
-      }
-
-    }
-
-    .rightSide{
-      width: 50%;
-      height: 100%;
-
-      .whiteCardZone {
-        height:100%;
-        // margin-top: -10px;
-        // margin-left: -10px;
-        min-width: 580px;
-
-        .whiteCard {
-          font-size: 1em;
-          height: 150px;
-          width: 125px;
-          float: left;
-          margin: 10px;
-          overflow-wrap: break-word;
-        }
-
-        .submittedCards {
-          font-size: 1em;
-          height: 150px;
-          width: 125px;
-          float: left;
-          margin: 10px;
-          overflow-wrap: break-word;
-
-        }
-
-        .cardHighlighted {
-          border: 5px solid #008000;
-        }
-      }
-
-      .buttonZone {
-        height:100%;
-        padding-top: 40px;
-
-        .md-button {
-          height: 60px;
-        }
-        .prevNextBtn {
-          width: 130px;
-        }
-        .winnerBtn {
-          width: 230px;
-        }
-
-        .msg {
-          height: 50%;
-          text-align:center;
-
-        }
-        .button {
-          height: 50%;
-        }
-      }
-
-
+      width: 100px;
     }
   }
 }
+
+.rightSide {
+  min-height: 500px;
+
+  .buttonZone {
+    .md-button.md-default-theme.md-raised {
+      width: 115px;
+    }
+  }
+  .whiteCardZone {
+    min-height: 500px;
+  }
+
+  .cardHighlighted {
+    border: 5px solid #008000;
+  }
+
+  .submittedCards {
+    font-size: 1em;
+    height: 150px;
+    width: 125px;
+    float: left;
+    margin: 10px;
+    overflow-wrap: break-word;
+
+  }
+}
+
+
+
 
 
 ////////////////////////////////
@@ -187,17 +131,25 @@ $medium-and-down: "only screen and (max-width : #{$medium-screen})";
 
 $medium-only: "only screen and (min-width : #{$small-screen}) and (max-width : #{$medium-screen})";
 
-@media only screen and (min-width: 1400px) {
-  .sideBarInside {
-    padding:0px;
+@media only screen and (max-width: 960px) {
+  .leftSide {
+
+    .publicWhiteCards {
+      .whiteCard {
+        height: 100px;
+        width: 93px;
+      }
+    }
   }
+
+
+
+}
+
+@media only screen and (min-width: 1400px) {
   .navButton {
     display: none;
   }
-}
-
-@media only screen and (max-width : 1400) {
-  
 }
 @media only screen and (max-width : 1100px) {
 
