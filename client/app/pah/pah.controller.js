@@ -37,7 +37,12 @@ angular.module('pahApp')
         $scope.publicPlayArea = CAHFactory.getPublicPlayArea();
         $scope.scoreboard = CAHFactory.getScoreboard();
         $scope.currentPlayer = CAHFactory.getCurrentPlayer();
-        if ($scope.currentPlayer) console.log($scope.currentPlayer.index);
+        
+        if ($scope.privatePlayArea) console.log($scope.privatePlayArea);
+        if ($scope.publicPlayArea) console.log($scope.publicPlayArea);
+        if ($scope.scoreboard) console.log($scope.scoreboard);
+        if ($scope.currentPlayer) console.log($scope.currentPlayer);
+
         $scope.cardOrder = []
         $scope.submitted = false;
         $scope.noPlayer = true;
