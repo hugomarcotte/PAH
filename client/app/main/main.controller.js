@@ -27,12 +27,8 @@ angular.module('pahApp')
 
 
     $scope.joinGame = function() {
-      if ($scope.gameCode && $scope.playerName) {
-        CAHFactory.join($scope.playerName, $scope.gameCode, function(code) {
-          $location.path('/pah/' + code);
-        });
-        ngDialog.close();
-      }
+      $location.path('/pah/' + $scope.gameCode);
+      ngDialog.close();
     };
 
 
