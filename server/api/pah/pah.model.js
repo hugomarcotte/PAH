@@ -12,6 +12,8 @@ var PahSchema = new Schema({
   currentDrawingUser: {type:Number, default:-1},
   users: {type:Array, default:[]},
   discardedWhite: {type:Array, default:[]},
+  mostRecentWin: {type: Array, default:[]},
+  mostRecentBlack: {type: Object, default:{}},
   discardedBlack: {type:Array, default:[]},
   cardsInPlay: {type:Array, default:[]},
   blackCard: {type: Object, default:{}},
