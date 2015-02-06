@@ -13,7 +13,8 @@ angular.module('pahApp')
       blackCard: {},
       submittedCards: [],
       judgeMode: false,
-      currentJudge: {}
+      currentJudge: {},
+      mostRecentWin: []
     };
     var scoreboard = {
       users: []
@@ -101,11 +102,11 @@ angular.module('pahApp')
         })
         .success(function(data) {
           var hand = privatePlayArea.hand
-          cards.forEach(function(card){
-          hand.splice(hand.indexOf(card), 1)  
-          })
+          cards.forEach(function(card) {
+              hand.splice(hand.indexOf(card), 1)
+            })
             // console.log('Played card', card);
-          //factoryMethods.draw(10 - hand.length);
+            //factoryMethods.draw(10 - hand.length);
         })
         .error(function(err) {
           console.log('Failed to join game: ', err);
@@ -118,8 +119,8 @@ angular.module('pahApp')
           cards: cards
         })
         .success(function(data) {
-          factoryMethods.startRound();
-          console.log('Judged this card as the winner:', card);
+          //factoryMethods.startRound();
+          console.log('Judged this card as the winner:', cards);
         })
         .error(function(err) {
           console.log('Failed to join game: ', err);
@@ -265,6 +266,13 @@ angular.module('pahApp')
       publicPlayArea.currentJudge = newState.users[newState.currentJudge];
       publicPlayArea.judgeMode = newState.judgeMode;
       scoreboard.users = newState.users;
+
+      if (newState.mostRecentWin.length) {
+        publicPlayArea.mostRecentWin = newState.mostRecentWin;
+      } else {
+        publicPlayArea.mostRecentWin = [];
+      }
+
       if (isPlayer && newState.currentDrawingUser == currentPlayer.index) {
         factoryMethods.draw(10 - privatePlayArea.hand.length);
       }

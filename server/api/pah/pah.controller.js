@@ -150,11 +150,11 @@ exports.submit = function(req, res) {
             pah.judgeMode = true;
         }
         pah.users.forEach(function(user) {
-        var userHand = user.cards
+            var userHand = user.cards
             if (user._id === req.params.user) {
-                cards.forEach(function(card){
-                userHand.splice(userHand.indexOf(card.id), 1)
-                card.userId=req.params.user;
+                cards.forEach(function(card) {
+                    userHand.splice(userHand.indexOf(card.id), 1)
+                    card.userId = req.params.user;
                 })
             }
         })
@@ -179,9 +179,9 @@ exports.judge = function(req, res) {
         }
         console.log(pah);
 
-        pah.mostRecentWin=winning_cards;
-        pah.mostRecentBlack=pah.blackCard;
-       
+        pah.mostRecentWin = winning_cards;
+        // pah.mostRecentBlack = pah.blackCard;
+
 
         //MAYBE MARK MODIFIED.
         pah.users.forEach(function(user) {
@@ -284,6 +284,8 @@ exports.startRound = function(req, res) {
         if (!pah) {
             return res.send(404);
         }
+
+        pah.mostRecentWin = [];
 
         // console.log(pah.discardedBlack);
         //console.log(Math.floor(Math.random()*availableBlackCards.length));
