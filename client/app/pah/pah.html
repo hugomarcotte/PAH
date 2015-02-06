@@ -4,108 +4,108 @@
 <p>Scoreboard: {{scoreboard}}</p>
 <p>Me: {{currentPlayer}}</p>
 </md-card>
- -->
-
-
+-->
 <md-sidenav class="md-sidenav-left sideBar" md-component-id="left" md-is-locked-open="$media('min-width: 1400px')">
-  <md-toolbar>
-    <h1 class="md-toolbar-tools">Phones Against Humanity</h1>
-  </md-toolbar>
-  <md-content class="sideBarContent">
-    <md-button class="button md-raised" ng-click="openLinkDialog()">Invite Players</md-button>
-    <md-button class="button md-raised" ng-click="openJoin()" ng-show="noPlayer">+ Join</md-button>
-    <div>
-      <div ng-repeat="user in scoreboard.users" layout="row">
+<md-toolbar>
+<h1 class="md-toolbar-tools">Phones Against Humanity</h1>
+</md-toolbar>
+<md-content class="sideBarContent">
+<md-button class="button md-raised" ng-click="openLinkDialog()">Invite Players</md-button>
+<md-button class="button md-raised" ng-click="openJoin()" ng-show="noPlayer">+ Join</md-button>
+<div>
+    <div ng-repeat="user in scoreboard.users" layout="row">
         <div class="icon icon-social-white icon-social-white-ic_person_white_24dp" style="margin-right:10px;"></div>
         <div layout="row" flex>
-          <div ng-class='{judge: user.isJudge}' class="username" flex="50">
-            {{user.name}}
-          </div>
-          <div class="score" flex="50">
-            {{user.score}}
-          </div>
+            <div ng-class='{judge: user.isJudge}' class="username" flex="50">
+                {{user.name}}
+            </div>
+            <div class="score" flex="50">
+                {{user.score}}
+            </div>
         </div>
-      </div>
     </div>
-  </md-content>
-
+</div>
+</md-content>
 </md-sidenav>
-
 <div layout="column" layout-fill ng-init="findPlayer(currentPlayer)">
-  <md-toolbar>
+    <md-toolbar>
     <div class="md-toolbar-tools">
-      <div class="navButton icon icon-social-white icon-social-white-ic_person_white_24dp" ng-click="openSidenav()"></div>
-      <div layout="row" flex>
-        <div class="md-toolbar-item">
-
+        <div class="navButton icon icon-social-white icon-social-white-ic_person_white_24dp" ng-click="openSidenav()"></div>
+        <div layout="row" flex>
+            <div class="md-toolbar-item">
+            </div>
+            <span flex></span>
+            <div class="md-toolbar-item">
+                Game Code: {{gameCode}}
+            </div>
         </div>
-        <span flex></span>
-        <div class="md-toolbar-item">
-          Game Code: {{gameCode}}
-        </div>
-      </div>
     </div>
-  </md-toolbar>
-  <md-content class="md-padding" style="padding-top:0">
-
-      <div layout="row" layout-md="column" layout-sm="column" layout-align="space-between start" flex>
-
+    </md-toolbar>
+    <md-content class="md-padding" style="padding-top:0">
+    <div layout="row" layout-md="column" layout-sm="column" layout-align="space-between start" flex>
         <div class="leftSide" layout="column" flex="50" flex-md="100" flex-sm="100">
-          <div class="card blackCard" flex="75" layout="column" ng-show="waitingForStart()">
-            <div class="text">
-              All aboard @ssh0les! <br><br>
-              Waiting for the big kahuna to start the game!
+            <div class="card blackCard" flex="75" layout="column" ng-show="waitingForStart()">
+                <div class="text">
+                    All aboard @ssh0les! <br><br>
+                    Waiting for the big kahuna to start the game!
+                </div>
+                <div flex></div>
+                <div class="footer">
+                    Phones Against Humanity
+                </div>
             </div>
-            <div flex></div>
-            <div class="footer">
-              Phones Against Humanity
+            <div class="card blackCard" flex="75" layout="column" ng-hide="waitingForStart()">
+                <div class="text">
+                    {{publicPlayArea.blackCard.text}}
+                </div>
+                <div flex></div>
+                <div class="footer">
+                    Phones Against Humanity
+                </div>
             </div>
-
-          </div>
-          <div class="card blackCard" flex="75" layout="column" ng-hide="waitingForStart()">
-            <div class="text">
-              {{publicPlayArea.blackCard.text}}
+            <div class="publicWhiteCards" flex="25">
+                <div class='card whiteCard' ng-repeat='whiteCard in publicPlayArea.submittedCards'>
+                    <!--<div class="publicWhiteCards" style="margin-left:{{calStackCardsMargin(publicPlayArea.submittedCards.length)}}px" flex="25">-->
+                    <!--<div class='card whiteCard' style="margin-left:-{{calStackCardsMargin(publicPlayArea.submittedCards.length)}}px" ng-repeat='whiteCard in publicPlayArea.submittedCards'>-->
+                    Phones Against Humanity
+                </div>
+                <div class='card whiteCard' ng-show="show{{whiteCard.id}}" ng-click="show(whiteCard.id)" style="margin-left:-{{calStackCardsMargin(publicwhiteCards.length)}}px" ng-repeat='whiteCard in publicPlayArea.submittedCards'>
+                    {{whiteCard.text}}
+                </div>
             </div>
-            <div flex></div>
-            <div class="footer">
-              Phones Against Humanity
-            </div>
-          </div>
-          <div class="publicWhiteCards" flex="25">
-            <div class='card whiteCard' ng-repeat='whiteCard in publicPlayArea.submittedCards'>
-              <!--<div class="publicWhiteCards" style="margin-left:{{calStackCardsMargin(publicPlayArea.submittedCards.length)}}px" flex="25">-->
-                <!--<div class='card whiteCard' style="margin-left:-{{calStackCardsMargin(publicPlayArea.submittedCards.length)}}px" ng-repeat='whiteCard in publicPlayArea.submittedCards'>-->
-              Phones Against Humanity
-            </div>
-            <div class='card whiteCard' ng-show="show{{whiteCard.id}}" ng-click="show(whiteCard.id)" style="margin-left:-{{calStackCardsMargin(publicwhiteCards.length)}}px" ng-repeat='whiteCard in publicPlayArea.submittedCards'>
-              {{whiteCard.text}}
-            </div>
-          </div>
-
         </div>
         <div class="rightSide" layout="column" flex="50" flex-md="100" flex-sm="100">
             <div class="whiteCardZone" flex="75">
                 <div class='card whiteCard' ng-repeat='whiteCard in privatePlayArea.hand' ng-hide="currentPlayer.info.isJudge || publicPlayArea.judgeMode" ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}">
-                  {{whiteCard.text}}
-                  {{whiteCard.order}}
+                    {{whiteCard.text}}
+                    {{whiteCard.order}}
                 </div>
-                <div class='card whiteCard' ng-show="publicPlayArea.judgeMode" ng-repeat='submission in publicPlayArea.submittedCards[judgeViewIndex]'>
+                <div class='card whiteCard' ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length" ng-repeat='submission in publicPlayArea.submittedCards[judgeViewIndex]'>
                     {{submission.text}}
                 </div>
+                <div ng-show='publicPlayArea.mostRecentWin.length'>
+                <h1>Winner!</h1>
+                <div class='card whiteCard' ng-show="publicPlayArea.judgeMode" ng-repeat='winner in publicPlayArea.mostRecentWin'>
+                    {{winner.text}}
+                </div>
+                </div>
                 <div layout-align="center center" ng-show="judgeWaiting()">
-                  <img ng-src="{{gif}}" style="width:100%" />
-                  <p style="text-align: center">You are the judge!<br>Waiting for these LAZY F%$#&@(!)s to submit their *$)*$&%ing cards.</p>
+                    <img ng-src="{{gif}}" style="width:100%" />
+                    <p style="text-align: center">You are the judge!<br>Waiting for these LAZY F%$#&@(!)s to submit their *$)*$&%ing cards.</p>
                 </div>
                 <div layout-align="center center" ng-show="waitingForStart() ">
-                  <img ng-src="{{gif}}" style="width:100%"/>
-                  <p style="text-align: center">Waiting for the Big Kahuna to start the game</p>
+                    <img ng-src="{{gif}}" style="width:100%"/>
+                    <p style="text-align: center">Waiting for the Big Kahuna to start the game</p>
                 </div>
             </div>
             <div class="buttonZone" flex="25">
                 <div class="msg">
-                  <span>{{msgToUser}}</span>
+                    <span>{{msgToUser}}</span>
                 </div>
-                <div class="button" layout="row" layout-align="center center">
+                <div class="button" layout="row" layout-align="center center" ng-show="publicPlayArea.mostRecentWin.length && currentPlayer.info.isJudge">
+                    <md-button class="md-raised winnerBtn" ng-click="startRound()">Start Next Round</md-button>
+                </div>
+                <div class="button" layout="row" layout-align="center center" ng-hide="publicPlayArea.mostRecentWin.length">
                     <md-button class="md-raised" ng-click="startRound()" ng-show="currentPlayer.info.isJudge && waitingForStart()">Start Game</md-button>
                     <md-button class="md-raised prevNextBtn" ng-click="decrementJudgeViewIndex()" ng-show="publicPlayArea.judgeMode"><< Previous</md-button>
                     <md-button class="md-raised winnerBtn" ng-click="selectWinner(publicPlayArea.submittedCards[judgeViewIndex])" ng-show="currentPlayer.info.isJudge && publicPlayArea.judgeMode">Winner</md-button>
@@ -114,33 +114,30 @@
                 </div>
             </div>
         </div>
-      </div>
-  </md-content>
-</div>
-
-
-
-<script type="text/ng-template" id="getLinkDialog">
-    <div class="getLink">
-        <h1>Link your friends</h1>
-        <md-input-container>
-            <code>{{url}}</code>
-        </md-input-container>
-        <h1>Text the link</h1>
-        <md-input-container>
-            <input ng-model="phoneNumber" placeholder="XXXXXXXXXX" />
-        </md-input-container>
-        <md-button class="md-raised" ng-click="sendText()">Text Link</md-button>
     </div>
+    </md-content>
+</div>
+<script type="text/ng-template" id="getLinkDialog">
+<div class="getLink">
+    <h1>Link your friends</h1>
+    <md-input-container>
+    <code>{{url}}</code>
+    </md-input-container>
+    <h1>Text the link</h1>
+    <md-input-container>
+    <input ng-model="phoneNumber" placeholder="XXXXXXXXXX" />
+    </md-input-container>
+    <md-button class="md-raised" ng-click="sendText()">Text Link</md-button>
+</div>
 </script>
 <script type="text/ng-template" id="joinGameDialog">
-    <div class="joinDialog">
-        <h1>Enter name to join game.</h1>
-        <md-input-container>
-            <form name="submitName" ng-submit="join(playerName)">
-                <label>ex("Thom", "Hugonaught", "The Rizza", "Dr. Kibbles", "Fuzzylumpkins","ObamasMAMA" "KillaB", "FunkMSTR", "poopiepants", "Deathslayer", "GeorgeyB", "SonOfPAM", "Hiphopapotamus")</label>
-                <input ng-model="playerName" md-maxlength="25" autofocus>
-            </form>
-        </md-input-container>
-    </div>
+<div class="joinDialog">
+    <h1>Enter name to join game.</h1>
+    <md-input-container>
+    <form name="submitName" ng-submit="join(playerName)">
+        <label>ex("Thom", "Hugonaught", "The Rizza", "Dr. Kibbles", "Fuzzylumpkins","ObamasMAMA" "KillaB", "FunkMSTR", "poopiepants", "Deathslayer", "GeorgeyB", "SonOfPAM", "Hiphopapotamus")</label>
+        <input ng-model="playerName" md-maxlength="25" autofocus>
+    </form>
+    </md-input-container>
+</div>
 </script>
