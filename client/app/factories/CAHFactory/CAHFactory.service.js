@@ -118,8 +118,7 @@ angular.module('pahApp')
           cards: cards
         })
         .success(function(data) {
-          factoryMethods.startRound();
-          console.log('Judged this card as the winner:', card);
+          console.log('Judged this card as the winner:', cards);
         })
         .error(function(err) {
           console.log('Failed to join game: ', err);
@@ -262,9 +261,19 @@ angular.module('pahApp')
       if (isPlayer) currentPlayer.info = newState.users[currentPlayer.index];
       publicPlayArea.blackCard = newState.blackCard;
       publicPlayArea.submittedCards = newState.cardsInPlay;
+      console.log(publicPlayArea.submittedCards);
       publicPlayArea.currentJudge = newState.users[newState.currentJudge];
       publicPlayArea.judgeMode = newState.judgeMode;
       scoreboard.users = newState.users;
+      
+      if (newState.mostRecentWin.length) {
+        publicPlayArea.winner = newState.mostRecentWin;
+        publicPlayArea.lastBlack = newState.mostRecentBlack;
+      }  else {
+        publicPlayArea.winner = [];
+        publicPlayArea.lastBlack = null;
+      }
+
       if (isPlayer && newState.currentDrawingUser == currentPlayer.index) {
         factoryMethods.draw(10 - privatePlayArea.hand.length);
       }

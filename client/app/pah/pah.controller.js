@@ -39,13 +39,13 @@ angular.module('pahApp')
         $scope.publicPlayArea = CAHFactory.getPublicPlayArea();
         $scope.scoreboard = CAHFactory.getScoreboard();
         $scope.currentPlayer = CAHFactory.getCurrentPlayer();
-        $scope.judgeViewIndex = 0;
-        
-        // if ($scope.privatePlayArea) console.log($scope.privatePlayArea, "privatePlayArea");
-        // if ($scope.publicPlayArea) console.log($scope.publicPlayArea, "publicPlayArea");
-        // if ($scope.scoreboard) console.log($scope.scoreboard, "scoreboard");
-        // if ($scope.currentPlayer) console.log($scope.currentPlayer, "currentPlayer");
 
+        if ($scope.privatePlayArea) console.log($scope.privatePlayArea, "privatePlayArea");
+        if ($scope.publicPlayArea) console.log($scope.publicPlayArea, "publicPlayArea");
+        if ($scope.scoreboard) console.log($scope.scoreboard, "scoreboard");
+        if ($scope.currentPlayer) console.log($scope.currentPlayer, "currentPlayer");
+
+        $scope.judgeViewIndex = 0;
         $scope.cardOrder = []
         $scope.submitted = false;
         $scope.noPlayer = true;
@@ -69,33 +69,24 @@ angular.module('pahApp')
         }, {
             img: 'http://24.media.tumblr.com/tumblr_mdl5kiCvZS1rhebako1_500.gif'
         }, ];
-        $scope.gif = ''; 
+        $scope.gif = '';
         $scope.player = {};
         $scope.gameCode = $stateParams.code;
-       
-
-        $scope.decrementJudgeViewIndex = function () {
-            if ($scope.judgeViewIndex === 0) {
-                $scope.judgeViewIndex = $scope.publicPlayArea.submittedCards.length - 1; 
-            } else {
-                $scope.judgeViewIndex--;
-            }
-        }
-
-        $scope.incrementJudgeViewIndex = function () {
-            if ($scope.judgeViewIndex === $scope.publicPlayArea.submittedCards.length - 1) {
-                $scope.judgeViewIndex = 0; 
-            } else {
-                $scope.judgeViewIndex++;
-            }
-        }
+        $scope.blackCard = {
+            "id": 12,
+            "cardType": "A",
+            "text": "As part of his daily regimen, Anderson Cooper sets aside 15 minutes for ___________",
+            "numAnswers": 0,
+            "expansion": "Base"
+        };
+        $scope.isJudge = true;
 
 
         $scope.openJoin = function() {
             ngDialog.open({
-            template: 'joinGameDialog',
-            controller: 'PahCtrl'
-          });
+                template: 'joinGameDialog',
+                controller: 'PahCtrl'
+            });
 
 
         };
@@ -135,6 +126,7 @@ angular.module('pahApp')
             });
             console.log(submittedCards);
             console.log($scope.currentPlayer);
+            $scope.submitted = true;
             CAHFactory.play(submittedCards, $scope.currentPlayer.info._id); //CAHFactory.play should be rewritten to accet an array of card objects
         };
 
@@ -147,11 +139,11 @@ angular.module('pahApp')
             $scope.noPlayer = false;
         })
 
-         $scope.getGif = function () {
-            var item = $scope.waitingGifs[Math.floor(Math.random()*$scope.waitingGifs.length)];
+        $scope.getGif = function() {
+            var item = $scope.waitingGifs[Math.floor(Math.random() * $scope.waitingGifs.length)];
             $scope.gif = item.img;
-         }
-         $scope.getGif();
+        }
+        $scope.getGif();
 
 
         deck.getDeck('base', function() {
@@ -187,40 +179,43 @@ angular.module('pahApp')
                 })
         };
 
-            $scope.drawCard = function() {
+        $scope.drawCard = function() {
             console.log('drawing card...');
             CAHFactory.draw(10 - $scope.privatePlayArea.hand.length);
         };
 
         $scope.join = function(playerName) {
-            if (playerName){
+            if (playerName) {
                 $rootScope.$broadcast('playerJoined', {});
                 CAHFactory.join(playerName, $scope.gameCode);
                 ngDialog.close();
-            } 
+            }
         };
 
 
-        $scope.waitingForStart = function () {
-             if ($scope.scoreboard.users[0]) {
-                 return !(($scope.scoreboard.users[0].cards.length > 0) || $scope.noPlayer);
-             }
-            
+        $scope.waitingForStart = function() {
+            if ($scope.scoreboard.users[0]) {
+                return !(($scope.scoreboard.users[0].cards.length > 0) || $scope.noPlayer);
+            }
+
         }
 
-        $scope.judgeWaiting = function () {
-            if($scope.currentPlayer.info && $scope.scoreboard.users[0]) {
+        $scope.judgeWaiting = function() {
+            if ($scope.currentPlayer.info && $scope.scoreboard.users[0]) {
                 return $scope.currentPlayer.info.isJudge && !$scope.publicPlayArea.judgeMode && ($scope.scoreboard.users[0].cards.length > 0) && !$scope.noPlayer;
-            }   
+            }
         };
 
-        // $scope.showSubmitCardsButton = !$scope.currentPlayer.info.isJudge && $scope.currentPlayer.info.cards && !$scope.publicPlayArea.judgeMode;
-        
+        $scope.showSubmitCardsButton = function() {
+            if ($scope.currentPlayer.info && $scope.publicPlayArea) {
+                return !$scope.currentPlayer.info.isJudge && ($scope.currentPlayer.info.cards === []) && !$scope.publicPlayArea.judgeMode;
+            }
+        }
 
-        $scope.hideWhiteCards = function () {
+        $scope.hideWhiteCards = function() {
             if ($scope.currentPlayer.info && $scope.publicPlayArea) {
                 return $scope.currentPlayer.info.isJudge || $scope.publicPlayArea.judgeMode;
-            }     
+            }
         }
 
         $scope.isJudge = true;
@@ -243,12 +238,12 @@ angular.module('pahApp')
 
 
         $scope.calStackCardsMargin = function(nbOfCards) {
-          var screenSize = angular.element(document.querySelectorAll(".leftSide")[0])[0].clientWidth;
+            var screenSize = angular.element(document.querySelectorAll(".leftSide")[0])[0].clientWidth;
 
-          //Remove padding;
-          screenSize = screenSize -20;
-          // +1 at the end is a mystery but seems to be working with any number of Cards
-          return Math.floor(((nbOfCards * 100) - screenSize) / (nbOfCards - 1))+1;
+            //Remove padding;
+            screenSize = screenSize - 20;
+            // +1 at the end is a mystery but seems to be working with any number of Cards
+            return Math.floor(((nbOfCards * 100) - screenSize) / (nbOfCards - 1)) + 1;
         };
 
 
@@ -264,17 +259,50 @@ angular.module('pahApp')
                 })
         };
 
- 
+        /////////////////////////////////////////////////////////
+        // TEMP for FRONTEND
+        $scope.currentCard = {
+            text: 'this is a white card'
+        };
+        $scope.currentCardIndex = 0;
 
+        $scope.showPrevCard = function() {
 
-        $scope.openSidenav = function() {
-          $mdSidenav('left').toggle();
+            $scope.currentCardIndex = $scope.currentCardIndex - 1
+            $scope.currentCard = {
+                text: 'this is card index:' + $scope.currentCardIndex
+            };
+
         }
 
-        $scope.selectWinner = function (submission) {
-            console.log(submission);
-            CAHFactory.judge(submission);
+        $scope.showNextCard = function() {
+
+            $scope.currentCardIndex = $scope.currentCardIndex + 1
+            $scope.currentCard = {
+                text: 'this is card index:' + $scope.currentCardIndex
+            };
+
+        }
+        $scope.decrementJudgeViewIndex = function() {
+            if ($scope.judgeViewIndex === 0) {
+                $scope.judgeViewIndex = $scope.publicPlayArea.submittedCards.length - 1;
+            } else {
+                $scope.judgeViewIndex--;
+            }
         }
 
- });
+        $scope.incrementJudgeViewIndex = function() {
+            if ($scope.judgeViewIndex === $scope.publicPlayArea.submittedCards.length - 1) {
+                $scope.judgeViewIndex = 0;
+            } else {
+                $scope.judgeViewIndex++;
+            }
+        }
 
+
+        //     $scope.playerSubmission = [{text:'first card'},{text:'second card'},{text:'third card'}];
+        //     $scope.openSidenav = function() {
+        //       $mdSidenav('left').toggle();
+        //     }
+
+    });
