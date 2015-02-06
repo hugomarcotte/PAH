@@ -193,9 +193,11 @@ angular.module('pahApp')
         };
 
         $scope.join = function(playerName) {
-            $rootScope.$broadcast('playerJoined', {});
-            CAHFactory.join(playerName, $scope.gameCode);
-            ngDialog.close();
+            if (playerName){
+                $rootScope.$broadcast('playerJoined', {});
+                CAHFactory.join(playerName, $scope.gameCode);
+                ngDialog.close();
+            } 
         };
 
 
@@ -274,11 +276,5 @@ angular.module('pahApp')
             CAHFactory.judge(submission);
         }
 
-
-        $scope.submissions = [
-        [{text: "fuck hugo", order: 1}, {text:"Hugo Sucks", order: 2}, {text:"hugo is really bad", order: 3}],
-        [{text: "fuck ben", order: 1}, {text:"Ben Sucks", order: 2}, {text:"ben is really bad", order: 3}],
-        [{text: "fgriffen ben", order: 1}, {text:" griffen ncks", order: 2}, {text:"egriffen really bad", order: 3}]
-        ]
  });
 
