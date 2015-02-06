@@ -74,9 +74,9 @@
                         {{whiteCard.order}}
                 </div>
 
-                <div class='card whiteCard' ng-show="currentPlayer.info.isJudge && publicPlayArea.judgeMode" ng-repeat='submittedCard in publicPlayArea.submittedCards'>
-                    {{submittedCard.text}} 
-                    {{submittedCard.order}}
+                <div class='card whiteCard' ng-show="publicPlayArea.judgeMode" ng-repeat='submission in submissions[judgeViewIndex]'>
+                    {{submission.text}} 
+                    {{submission.order}}
                 </div>
 
             </div>
@@ -93,10 +93,10 @@
                   <span>{{msgToUser}}</span>
                 </div>
                 <div class="button" layout="row" layout-align="center center">
-                    <md-button class="md-raised prevNextBtn" ng-click="showPrevCard()" ng-disabled="currentCardIndex == 0" ng-show="publicPlayArea.judgeMode"><< Previous</md-button>
-                    <md-button class="md-raised winnerBtn" ng-click="submitCards()" ng-show="currentPlayer.info.isJudge && publicPlayArea.judgeMode" ng-disabled="!allCardsViewed">Winner</md-button>
-                    <md-button class="md-raised prevNextBtn" ng-click="showNextCard()" ng-show="publicPlayArea.judgeMode" ng-disabled="currentCardIndex == 10">Next >></md-button>
-                    <md-button class="md-raised" ng-click="submitCards()" ng-show="true">Submit Cards</md-button>
+                    <md-button class="md-raised prevNextBtn" ng-click="decrementJudgeViewIndex()" ng-show="publicPlayArea.judgeMode"><< Previous</md-button>
+                    <md-button class="md-raised winnerBtn" ng-click="selectWinner(submissions[judgeViewIndex])" ng-show="currentPlayer.info.isJudge && publicPlayArea.judgeMode">Winner</md-button>
+                    <md-button class="md-raised prevNextBtn" ng-click="incrementJudgeViewIndex()" ng-show="publicPlayArea.judgeMode">Next >></md-button>
+                    <md-button class="md-raised" ng-click="submitCards()" ng-hide="currentPlayer.info.isJudge || publicPlayArea.judgeMode || privatePlayArea.hand.length === 0">Submit Cards</md-button>
                 </div>
             </div>
         </div>
