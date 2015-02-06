@@ -38,10 +38,10 @@ angular.module('pahApp')
         $scope.scoreboard = CAHFactory.getScoreboard();
         $scope.currentPlayer = CAHFactory.getCurrentPlayer();
         
-        if ($scope.privatePlayArea) console.log($scope.privatePlayArea);
-        if ($scope.publicPlayArea) console.log($scope.publicPlayArea);
-        if ($scope.scoreboard) console.log($scope.scoreboard);
-        if ($scope.currentPlayer) console.log($scope.currentPlayer);
+        if ($scope.privatePlayArea) console.log($scope.privatePlayArea, "privatePlayArea");
+        if ($scope.publicPlayArea) console.log($scope.publicPlayArea, "publicPlayArea");
+        if ($scope.scoreboard) console.log($scope.scoreboard, "scoreboard");
+        if ($scope.currentPlayer) console.log($scope.currentPlayer, "currentPlayer");
 
         $scope.cardOrder = []
         $scope.submitted = false;
@@ -186,6 +186,35 @@ angular.module('pahApp')
             ngDialog.close();
 
         };
+
+
+        $scope.waitingForStart = function () {
+             if ($scope.scoreboard.users[0]) {
+                 return !(($scope.scoreboard.users[0].cards.length > 0) || $scope.noPlayer);
+             }
+            
+        }
+
+        $scope.judgeWaiting = function () {
+            if($scope.currentPlayer.info && $scope.scoreboard.users[0]) {
+                return $scope.currentPlayer.info.isJudge && !$scope.publicPlayArea.judgeMode && ($scope.scoreboard.users[0].cards.length > 0) && !$scope.noPlayer;
+            }   
+        };
+
+        $scope.showSubmitCardsButton = function () {
+            if ($scope.currentPlayer.info) {
+                return !($scope.currentPlayer.info.isJudge || $scope.publicPlayArea.judgeMode)
+            }
+        }
+
+        $scope.hideWhiteCards = function () {
+            if ($scope.currentPlayer.info && $scope.publicPlayArea) {
+                return $scope.currentPlayer.info.isJudge || $scope.publicPlayArea.judgeMode;
+            }     
+        }
+
+
+
 
         // $scope.whiteCards =[{"id":12,"cardType":"A","text":"Puppies!","numAnswers":0,"expansion": "Base"},
         // {"id":13,"cardType":"A","text":"A windmill full of corpses.","numAnswers":0,"expansion": "Base"},
