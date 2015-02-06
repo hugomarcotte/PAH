@@ -46,8 +46,7 @@ exports.show = function(req, res) {
 
 // Creates a new pah in the DB.
 exports.create = function(req, res) {
-    var pah = new Pah({
-    });
+    var pah = new Pah({});
     var id = pah._id.toString();
 
     pah.code = id.substring(id.length - 4);
@@ -113,6 +112,7 @@ exports.draw = function(req, res) {
         if (err) {
             return handleError(res, err);
         }
+        console.log('we drew: ', req.body.cardsWeDrew);
         pah.discardedWhite = pah.discardedWhite.concat(req.body.cardsWeDrew);
         pah.users.forEach(function(user) {
             if (user._id === req.params.user) {
@@ -126,6 +126,7 @@ exports.draw = function(req, res) {
         if (pah.currentDrawingUser == pah.users.length) {
             pah.currentDrawingUser = -1;
         }
+        console.log('current drawing user: ', pah.currentDrawingUser);
         pah.markModified('users');
         pah.save(function(err, pah) {
             if (err) {
@@ -144,14 +145,14 @@ exports.submit = function(req, res) {
         var card = req.body.card;
         card.userId = req.params.user;
         pah.cardsInPlay.push(card);
-        if (pah.cardsInPlay.length  === pah.users.length - 1) {
-          pah.judgeMode = true;  
+        if (pah.cardsInPlay.length === pah.users.length - 1) {
+            pah.judgeMode = true;
         }
-        pah.users.forEach(function(user){
-            if (user._id === card.userId){
-                var userHand=user.cards
+        pah.users.forEach(function(user) {
+            if (user._id === card.userId) {
+                var userHand = user.cards
                 userHand.splice(userHand.indexOf(card.id), 1)
-            } 
+            }
         })
         pah.markModified('users');
         pah.save(function(err, pah) {
@@ -182,20 +183,12 @@ exports.judge = function(req, res) {
                 user.score += 1000;
             }
         })
+        pah.users[pah.currentJudge].isJudge = false;
+        pah.currentJudge++;
+        if (pah.currentJudge === pah.users.length) pah.currentJudge = 0;
 
-        var judgeIndex;
-        pah.users.forEach(function(user, index) {
-            if (user.isJudge) {
-                judgeIndex = index;
-                user.isJudge = false;
-            }
-        })
 
-        if (judgeIndex === pah.users.length - 1) {
-            pah.users[0].isJudge = true;
-        } else {
-            pah.users[judgeIndex + 1].isJudge = true;
-        }
+        pah.users[pah.currentJudge].isJudge = true;
 
         // availableBlackCards = _.filter(availableBlackCards, function(card) {
         //     return card._id !== pah.blackCard._id;
@@ -315,7 +308,7 @@ exports.startRound = function(req, res) {
         pah.discardedBlack.push(pah.blackCard.id);
 
         pah.currentDrawingUser = 0;
-        pah.cardsInPlay=[];
+        pah.cardsInPlay = [];
         pah.save(function(err) {
             if (err) {
                 return handleError(res, err);

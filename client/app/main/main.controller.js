@@ -11,10 +11,17 @@ angular.module('pahApp')
     };
 
     $scope.createNewGame = function() {
-      return $scope.createOrJoin();
-      CAHFactory.init();
-      $location.path('/pah/1234');
+      console.log('initting')
+      CAHFactory.init(null, function(game) {
+       console.log('this is a game: ', game);
+        $location.path('/pah/' + game.code);
+      });
+      
       ngDialog.close();
+      // return $scope.createOrJoin();
+      // CAHFactory.init();
+      // $location.path('/pah/1234');
+      // ngDialog.close();
     };
 
     $scope.startNow = function() {
@@ -61,7 +68,7 @@ angular.module('pahApp')
 
       // Join as spectator
       else if ($scope.gameCode) {
-        CAHFactory.spectate($scope.gameCode);
+        //  CAHFactory.spectate($scope.gameCode);
       }
       // Create and join as player
       else if ($scope.playerName) {
@@ -75,7 +82,7 @@ angular.module('pahApp')
       else {
         CAHFactory.init(null, function(game) {
           // ngDialog.close();
-          console.log(game);
+          console.log('this is a game: ', game);
           $location.path('/pah/' + game.code);
         });
         //CAHFactory.spectate();
