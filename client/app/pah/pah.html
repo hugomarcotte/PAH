@@ -1,10 +1,10 @@
-<md-card style="width:500px; color: white">
+<!-- <md-card style="width:500px; color: white">
 <p>Private: {{privatePlayArea.hand}}</p>
 <p>Public: {{publicPlayArea}}</p>
 <p>Scoreboard: {{scoreboard}}</p>
 <p>Me: {{currentPlayer}}</p>
 </md-card>
-
+ -->
 <div layout="row" class="board" resize ng-style="style()" ng-init="findPlayer(currentPlayer)">
   <div layout="column" class="sideBar" flex="15" layout-align="space-between">
     <div class="players">
@@ -67,7 +67,7 @@
         <img ng-src="{{gif}}"/>
         <p style="text-align: center">You are the judge!<br>Waiting for these LAZY F%$#&@(!)s to submit their *$)*$&%ing cards.</p> 
       </div>
-      <div style="text-align: center; padding-top: 15px;" ng-hide="(scoreboard.users[0].cards.length > 0) || noPlayer">
+      <div style="text-align: center; padding-top: 15px;" ng-show="waitingForStart()">
         <img ng-src="{{gif}}"/>
         <p style="text-align: center">Waiting for the Big Kahuna to start the game</p> 
       </div>

@@ -216,7 +216,7 @@ console.log('success!');
           currentPlayer.info = user;
         }
       })
-      console.log('currentPlayer: ', currentPlayer);
+      // console.log('currentPlayer: ', currentPlayer);
       privatePlayArea.hand = deck.populate(currentPlayer.info.cards);
       //registerStateSocket();
     }
@@ -230,7 +230,7 @@ console.log('success!');
       }
 
       /// parse it check it push it stringify it reset it
-      console.log($cookies.games)
+      // console.log($cookies.games)
       var cookies = JSON.parse($cookies.games);
       var playerId;
       cookies.forEach(function(game) {
@@ -253,7 +253,8 @@ console.log('success!');
     }
 
     function updatePlayArea(newState) {
-      console.log('updating with: ', newState);
+      // console.log('updating with: ', newState);
+      console.log(newState);
       gameState = newState;
       if (isPlayer) currentPlayer.info = newState.users[currentPlayer.index];
       publicPlayArea.blackCard = newState.blackCard;
