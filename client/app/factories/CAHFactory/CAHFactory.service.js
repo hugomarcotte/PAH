@@ -55,7 +55,8 @@ angular.module('pahApp')
           if (playerName) {
             self.join(playerName, state.code, callback);
           } else {
-            self.spectate(state.code, callback);
+            if (callback) callback(state);
+            //self.spectate(state.code, callback);
           }
         })
         .error(function(err) {
@@ -79,7 +80,7 @@ angular.module('pahApp')
     };
 
     factoryMethods.draw = function(numCards) {
-      if (!numCards) numCards = 1;
+      if (numCards === null) numCards = 1;
       // console.log(gameState);
       var drawInfo = deck.drawCard(gameState.discardedWhite, numCards);
 
@@ -126,6 +127,7 @@ angular.module('pahApp')
     };
 
     factoryMethods.spectate = function(joinCode, callback) {
+      console.log('Im calling spectate');
       if (gameState && joinCode !== gameState.code) resetFactory();
       var self = this;
       return $http.get('/api/pahs/' + joinCode)
@@ -166,7 +168,7 @@ angular.module('pahApp')
     factoryMethods.join = function(name, joinCode, callback) {
       //console.log(arguments);
 
-      console.log('am I here?');
+      //console.log('am I here?');
 
       // check the cookie to see whether we rejoin or not
       // if (this.rejoin(joinCode)) {
@@ -179,7 +181,7 @@ angular.module('pahApp')
         })
         .success(function(data) {
           if (callback) callback(data);
-console.log('success!');
+          //console.log('success!');
           joinHelper(data);
 
           if ($cookies.games) {
@@ -211,12 +213,12 @@ console.log('success!');
       updatePlayArea(data.state);
 
       gameState.users.forEach(function(user) {
-        if (user._id == data.playerId) {
-          currentPlayer.index = user.index;
-          currentPlayer.info = user;
-        }
-      })
-      // console.log('currentPlayer: ', currentPlayer);
+          if (user._id == data.playerId) {
+            currentPlayer.index = user.index;
+            currentPlayer.info = user;
+          }
+        })
+        // console.log('currentPlayer: ', currentPlayer);
       privatePlayArea.hand = deck.populate(currentPlayer.info.cards);
       //registerStateSocket();
     }
@@ -253,7 +255,7 @@ console.log('success!');
     }
 
     function updatePlayArea(newState) {
-      // console.log('updating with: ', newState);
+      console.log('updating with: ', newState);
       // console.log(newState);
       gameState = newState;
       if (isPlayer) currentPlayer.info = newState.users[currentPlayer.index];
