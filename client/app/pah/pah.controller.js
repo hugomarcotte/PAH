@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pahApp')
-    .controller('PahCtrl', function($scope, CAHFactory, ngDialog, $stateParams, $http, $location, socket, deck, $cookies, $mdSidenav, $rootScope) {
+    .controller('PahCtrl', function($scope, CAHFactory, ngDialog, $stateParams, $http, $location, socket, deck, $cookies, $mdSidenav, $rootScope, $sce) {
 
 
         //// CAHFactory.init(playerName, callback)
@@ -108,6 +108,15 @@ angular.module('pahApp')
                 $scope.noPlayer = false;
             }
         };
+
+        // function unicodeToChar(text) {
+        //    return text.replace(/\\u[\dABCDEFabcdef][\dABCDEFabcdef][\dABCDEFabcdef][\dABCDEFabcdef]/g, 
+        //       function (match) {
+        //            return String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16));
+        //       });
+        // }
+
+
 
         $scope.selectWhiteCard = function(whiteCard) {
             var cardArray = $scope.cardOrder

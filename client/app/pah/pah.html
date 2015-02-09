@@ -81,6 +81,7 @@
                     {{whiteCard.order}}
                 </div>
                 <div class='card whiteCard' ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length" ng-repeat='submission in publicPlayArea.submittedCards[judgeViewIndex]'>
+                    
                     {{submission.text}}
                 </div>
                 <div ng-show='publicPlayArea.mostRecentWin.length && publicPlayArea.judgeMode'>
