@@ -156,7 +156,7 @@ angular.module('pahApp')
             publicPlayArea.submittedCards = [];
             publicPlayArea.judgeMode = false,
             publicPlayArea.currentJudge = {}
-            
+
             scoreboard.users = [];
             isPlayer = false;
         }
@@ -227,6 +227,7 @@ angular.module('pahApp')
         // should just get called when join finds that
         // you're already in the game
         factoryMethods.rejoin = function(joinCode, cb) {
+          console.log('cookies.games', $cookies.games);
             if (!$cookies.games) {
                 return false;
             }
@@ -235,6 +236,7 @@ angular.module('pahApp')
             // console.log($cookies.games)
             var cookies = JSON.parse($cookies.games);
             var playerId;
+          console.log('cookies array', cookies);
             cookies.forEach(function(game) {
                 if (joinCode === game.gameCode) {
                     playerId = game.userId;

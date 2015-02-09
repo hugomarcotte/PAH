@@ -277,7 +277,7 @@ exports.invite = function(req, res) {
     twilo.sendMessage({
 
         to: number, // Any number Twilio can deliver to
-        from: '+12034377953', // A number you bought from Twilio and can use for outbound communication
+        from: '+19178096527', // A number you bought from Twilio and can use for outbound communication
         body: 'You\'ve been summoned for a game of Phones Against Humanity! Click to join lobby: ' + link // body of the SMS message
 
     }, function(err, responseData) { //this function is executed when a response is received from Twilio
