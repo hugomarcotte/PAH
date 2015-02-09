@@ -109,15 +109,6 @@ angular.module('pahApp')
             }
         };
 
-        // function unicodeToChar(text) {
-        //    return text.replace(/\\u[\dABCDEFabcdef][\dABCDEFabcdef][\dABCDEFabcdef][\dABCDEFabcdef]/g, 
-        //       function (match) {
-        //            return String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16));
-        //       });
-        // }
-
-
-
         $scope.selectWhiteCard = function(whiteCard) {
             var cardArray = $scope.cardOrder
             if (whiteCard.selected) {
@@ -178,7 +169,6 @@ angular.module('pahApp')
 
         $scope.calStackCardsMargin = function(nbOfCards) {
             var screenSize = angular.element(document.querySelectorAll(".leftSide")[0])[0].clientWidth;
-
             //Remove padding;
             screenSize = screenSize - 20;
             // +1 at the end is a mystery but seems to be working with any number of Cards
