@@ -18,6 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/gif/gif.socket').register(socket);
   require('../api/pah/pah.socket').register(socket);
   require('../api/deck/deck.socket').register(socket);
   require('../api/game/game.socket').register(socket);

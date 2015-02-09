@@ -81,11 +81,11 @@
                     <div class='card whiteCard' ng-bind-html="winner.text" ng-show="publicPlayArea.judgeMode" ng-repeat='winner in publicPlayArea.mostRecentWin'></div>
                 </div>
                 <div layout-align="center center" ng-show="judgeWaiting()">
-                    <img ng-src="{{gif}}" style="width:100%" />
+                    <img ng-src="{{judgeGif}}" style="width:100%" />
                     <p style="text-align: center">You are the judge!<br>Waiting for these LAZY F%$#&@(!)s to submit their *$)*$&%ing cards.</p>
                 </div>
                 <div layout-align="center center" ng-show="waitingForStart() ">
-                    <img ng-src="{{gif}}" style="width:100%"/>
+                    <img ng-src="{{waitingGif}}" style="width:100%"/>
                     <p style="text-align: center">Waiting for the Big Kahuna to start the game</p>
                 </div>
             </div>
