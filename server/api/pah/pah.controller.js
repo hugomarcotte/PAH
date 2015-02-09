@@ -137,6 +137,26 @@ exports.draw = function(req, res) {
     })
 };
 
+function shuffle(array) {
+    var currentIndex = array.length,
+        temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
 exports.submit = function(req, res) {
     Pah.findById(req.params.id, function(err, pah) {
         if (err) {
@@ -148,6 +168,8 @@ exports.submit = function(req, res) {
         pah.cardsInPlay.push(cards);
         if (pah.cardsInPlay.length >= pah.users.length - 1) {
             pah.judgeMode = true;
+            pah.cardsInPlay = shuffle(pah.cardsInPlay);
+            console.log("cards in play", pah.cardsInPlay.length)
         }
         pah.users.forEach(function(user) {
             var userHand = user.cards
