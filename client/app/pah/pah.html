@@ -85,10 +85,10 @@
                     <div class='card whiteCard' ng-bind-html="winner.text"  ng-show="publicPlayArea.judgeMode" ng-repeat='winner in publicPlayArea.mostRecentWin'></div>
                 </div>
                 <div layout-align="center center" ng-show="judgeWaiting()">
-                    <img ng-src="{{gif}}" style="width:100%" />
+                    <img ng-src="{{judgeGif}}" style="width:100%" />
                 </div>
                 <div layout-align="center center" ng-show="waitingForStart()">
-                    <img ng-src="{{gif}}" style="width:100%"/>
+                    <img ng-src="{{{waitingGif}}" style="width:100%"/>
                 </div>
             </div>
             <div class="buttonZone" flex="25">
