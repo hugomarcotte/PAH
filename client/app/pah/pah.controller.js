@@ -90,6 +90,10 @@ angular.module('pahApp')
             }
         }
 
+        $rootScope.$on('$stateChangeStart', function(){
+            ngDialog.closeAll();
+        })
+
 
         $scope.openJoin = function() {
             ngDialog.open({
@@ -137,7 +141,7 @@ angular.module('pahApp')
             submittedCards.sort(function(a,b){
                 return a.order-b.order
             });
-            //console.log("SUBMITTED CARDS ORDER", submittedCards);
+            console.log("SUBMITTED CARDS ORDER", submittedCards);
             //console.log($scope.currentPlayer);
             CAHFactory.play(submittedCards, $scope.currentPlayer.info._id);
             $scope.cardOrder = []; //CAHFactory.play should be rewritten to accet an array of card objects

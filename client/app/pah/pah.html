@@ -11,7 +11,7 @@
 </md-toolbar>
 <md-content class="sideBarContent">
 <md-button class="button md-raised" ng-click="openLinkDialog()">Invite Players</md-button>
-<md-button class="button md-raised" ng-click="openJoin()" ng-show="noPlayer">+ Join</md-button>
+<md-button class="button md-raised" ng-click="openJoin()" ng-show="!currentPlayer.info">+ Join</md-button>
 <div>
     <div ng-repeat="user in scoreboard.users" layout="row">
         <div class="icon icon-social-white icon-social-white-ic_person_white_24dp" style="margin-right:10px;"></div>
