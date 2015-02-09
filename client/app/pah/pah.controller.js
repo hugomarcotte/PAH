@@ -68,7 +68,8 @@ angular.module('pahApp')
             img: 'http://wac.450f.edgecastcdn.net/80450F/thefw.com/files/2012/09/honey-boo-boo-gif.gif'
         }, {
             img: 'http://24.media.tumblr.com/tumblr_mdl5kiCvZS1rhebako1_500.gif'
-        }, ];
+        }, 
+        ];
         $scope.gif = ''; 
         $scope.player = {};
         $scope.gameCode = $stateParams.code;
