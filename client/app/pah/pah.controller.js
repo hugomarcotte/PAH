@@ -130,12 +130,17 @@ angular.module('pahApp')
             var submittedCards = [];
             $scope.privatePlayArea.hand.forEach(function(card) {
                 if (card.selected) {
+                    card.order=$scope.cardOrder.indexOf(card)
                     submittedCards.push(card)
                 }
             });
-            console.log(submittedCards);
-            console.log($scope.currentPlayer);
-            CAHFactory.play(submittedCards, $scope.currentPlayer.info._id); //CAHFactory.play should be rewritten to accet an array of card objects
+            submittedCards.sort(function(a,b){
+                return a.order-b.order
+            });
+            //console.log("SUBMITTED CARDS ORDER", submittedCards);
+            //console.log($scope.currentPlayer);
+            CAHFactory.play(submittedCards, $scope.currentPlayer.info._id);
+            $scope.cardOrder = []; //CAHFactory.play should be rewritten to accet an array of card objects
         };
 
         $scope.startRound = function() {
