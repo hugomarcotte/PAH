@@ -277,6 +277,9 @@ angular.module('pahApp')
         $scope.openSidenav = function() {
           $mdSidenav('left').toggle();
         }
+        $scope.closeSideNav = function() {
+          $mdSidenav('left').toggle();
+        }
 
         $scope.selectWinner = function (submission) {
             console.log(submission);

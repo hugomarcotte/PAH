@@ -32,6 +32,7 @@ md-toolbar.md-default-theme {
   cursor: pointer;
 }
 
+
 .card {
   font-size: 3em;
   border-radius: 10px;
@@ -65,7 +66,6 @@ md-toolbar.md-default-theme {
 }
 
 .leftSide {
-//  min-height: 500px;
 
   .blackCard {
     background-color: #000;
@@ -91,12 +91,15 @@ md-toolbar.md-default-theme {
 }
 
 .rightSide {
-//  min-height: 500px;
 
   .buttonZone {
-    padding-top: 20px;
+
+    margin: 50px 0;
     .md-button.md-default-theme.md-raised {
+      font-weight:bold;
       margin: 0 10px;
+      height: 50px;
+      min-width: 100px;
     }
   }
   .whiteCardZone {
@@ -162,9 +165,11 @@ $medium-only: "only screen and (min-width : #{$small-screen}) and (max-width : #
   }
 }
 
+
 @media only screen and (min-width: 1400px) {
   .navButton {
     display: none;
   }
+
 }
 
