@@ -55,8 +55,7 @@
                 </div>
             </div>
             <div class="card blackCard" flex="75" layout="column" ng-hide="waitingForStart()">
-                <div class="text">
-                    {{publicPlayArea.blackCard.text}}
+                <div class="text" ng-bind-html='publicPlayArea.blackCard.text | underscore'>
                 </div>
                 <div flex></div>
                 <div class="footer">
