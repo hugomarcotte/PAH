@@ -73,6 +73,10 @@ angular.module('pahApp')
         $scope.gif = ''; 
         $scope.player = {};
         $scope.gameCode = $stateParams.code;
+
+        $scope.winner = function() {
+            if ($scope.publicPlayArea.mostRecentWin.length && $scope.publicPlayArea.judgeMode) return $scope.publicPlayArea.mostRecentWin[0].userId.split('-')[0];   
+        }
        
 
         $scope.decrementJudgeViewIndex = function () {
