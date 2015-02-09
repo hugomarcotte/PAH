@@ -1,22 +1,25 @@
-<!-- <md-card style="width:500px; color: white">
-<p>Private: {{privatePlayArea.hand}}</p>
-<p>Public: {{publicPlayArea}}</p>
-<p>Scoreboard: {{scoreboard}}</p>
-<p>Me: {{currentPlayer}}</p>
-</md-card>
--->
-<md-sidenav class="md-sidenav-left sideBar" md-component-id="left" md-is-locked-open="$media('min-width: 1400px')">
+<!--<md-card style="width:500px; color: white">-->
+<!--<p>Private: {{privatePlayArea.hand}}</p>-->
+<!--<p>Public: {{publicPlayArea}}</p>-->
+<!--<p>Scoreboard: {{scoreboard}}</p>-->
+<!--<p>Me: {{currentPlayer}}</p>-->
+<!--</md-card>-->
+
+<md-sidenav class="md-sidenav-left sideBar" md-component-id="left" md-is-locked-open="$media('min-width: 1400px')" style="padding: 0 10px;">
 <md-toolbar>
-<h1 class="md-toolbar-tools">Phones Against Humanity</h1>
+<h1 class="md-toolbar-tools" style="padding:0;font-weight:bold;">
+  <a class="navButton" ng-click="closeSideNav()" style="margin-right:10px;">X</a>
+  Phones Against Humanity</h1>
 </md-toolbar>
 <md-content class="sideBarContent">
-<md-button class="button md-raised" ng-click="openLinkDialog()">Invite Players</md-button>
+<md-button class="button md-raised" ng-click="openLinkDialog()" style="margin-bottom: 20px;">Invite Players</md-button>
 <md-button class="button md-raised" ng-click="openJoin()" ng-show="!currentPlayer.info">+ Join</md-button>
 <div>
     <div ng-repeat="user in scoreboard.users" layout="row">
-        <div class="icon icon-social-white icon-social-white-ic_person_white_24dp" style="margin-right:10px;"></div>
+        <div ng-show="!user.isJudge" class="icon icon-social-white icon-social-white-ic_person_white_24dp" style="margin-right:10px;"></div>
+        <div ng-show="user.isJudge" class="icon icon-toggle-white icon-toggle-white-ic_star_white_24dp" style="margin-right:10px;"></div>
         <div layout="row" flex>
-            <div ng-class='{judge: user.isJudge}' class="username" flex="50">
+            <div ng-class='{judge: user.index === currentPlayer.info.index }' class="username" flex="50">
                 {{user.name}}
             </div>
             <div class="score" flex="50">
@@ -74,10 +77,12 @@
             <div class="whiteCardZone" flex="75">
 
                 <div class="msg">
-                  <h1 ng-show="waitingForStart()">Waiting for the Big Kahuna to start the game</h1>
-                  <h1 ng-show="judgeWaiting()">You are the judge! Waiting for players to submit their cards.</h1>
-                  <h1 ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length">Submitted cards</h1>
+                  <h1 ng-show="waitingForStart()">Waiting for the judge to start the game</h1>
+                  <h1 ng-show="judgeWaiting()">You are the judge! Waiting for players to submit their answers.</h1>
+                  <h1 ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length && !currentPlayer.info.isJudge">See all answers</h1>
+                  <h1 ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length && currentPlayer.info.isJudge">Select your favorite answer</h1>
                   <h1 ng-show="publicPlayArea.mostRecentWin.length && publicPlayArea.judgeMode">Winner!</h1>
+                  <h1 ng-hide="currentPlayer.info.isJudge || publicPlayArea.judgeMode">Select your answer</h1>
                 </div>
                 <div class='card whiteCard' ng-bind-html="whiteCard.text + whiteCard.order" ng-repeat='whiteCard in privatePlayArea.hand' ng-hide="currentPlayer.info.isJudge || publicPlayArea.judgeMode" ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}"></div>
                 <div class='card whiteCard' ng-bind-html="submission.text" ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length" ng-repeat='submission in publicPlayArea.submittedCards[judgeViewIndex]'></div>
@@ -85,10 +90,10 @@
                     <div class='card whiteCard' ng-bind-html="winner.text"  ng-show="publicPlayArea.judgeMode" ng-repeat='winner in publicPlayArea.mostRecentWin'></div>
                 </div>
                 <div layout-align="center center" ng-show="judgeWaiting()">
-                    <img ng-src="{{judgeGif}}" style="width:100%" />
+                    <img ng-src="{{judgeGif}}" style="max-width:375px; height:auto;" />
                 </div>
                 <div layout-align="center center" ng-show="waitingForStart()">
-                    <img ng-src="{{waitingGif}}" style="width:100%"/>
+                    <img ng-src="{{waitingGif}}" style="max-width:375px; height:auto;"/>
                 </div>
             </div>
             <div class="buttonZone" flex="25">
@@ -110,25 +115,30 @@
 </div>
 <script type="text/ng-template" id="getLinkDialog">
 <div class="getLink">
-    <h1>Link your friends</h1>
+    <h1>Copy the link</h1>
     <md-input-container>
     <code>{{url}}</code>
     </md-input-container>
-    <h1>Text the link</h1>
+    <h1>or text the link</h1>
     <md-input-container>
-    <input ng-model="phoneNumber" placeholder="XXXXXXXXXX" />
+    <input ng-model="phoneNumber" placeholder="Phone Number" />
     </md-input-container>
-    <md-button class="md-raised" ng-click="sendText()">Text Link</md-button>
+    <div style="text-align: center">
+      <md-button class="md-raised" ng-click="sendText()">Send text</md-button>
+    </div>
 </div>
 </script>
 <script type="text/ng-template" id="joinGameDialog">
 <div class="joinDialog">
-    <h1>Enter name to join game.</h1>
-    <md-input-container>
+    <h1>Enter game</h1>
     <form name="submitName" ng-submit="join(playerName)">
-        <label>ex("Thom", "Hugonaught", "The Rizza", "Dr. Kibbles", "Fuzzylumpkins","ObamasMAMA" "KillaB", "FunkMSTR", "poopiepants", "Deathslayer", "GeorgeyB", "SonOfPAM", "Hiphopapotamus")</label>
-        <input ng-model="playerName" md-maxlength="25" autofocus>
-    </form>
+    <md-input-container>
+      <label>Name</label>
+      <input ng-model="playerName" md-maxlength="25" autofocus>
     </md-input-container>
+    <div style="text-align: center">
+      <md-button class="md-raised" ng-click="join(playerName)" style="width:40%;">Enter</md-button>
+    </div>
+    </form>
 </div>
 </script>
