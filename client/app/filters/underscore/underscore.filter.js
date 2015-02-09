@@ -3,6 +3,7 @@
 angular.module('pahApp')
   .filter('underscore', function () {
     return function (input) {
-      return input.replace("_", "_______");
+  	if(!input) return "";
+      return input.replace(/_/g, "_______");
     };
   });

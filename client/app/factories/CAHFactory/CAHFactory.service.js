@@ -215,7 +215,11 @@ angular.module('pahApp')
                 }
             })
             // console.log('currentPlayer: ', currentPlayer);
+            if (privatePlayArea.hand.length)
             privatePlayArea.hand = deck.populate(currentPlayer.info.cards);
+          if(publicPlayArea.blackCard.text && !publicPlayArea.judgeMode){
+            factoryMethods.draw(10-privatePlayArea.hand.length);
+          }
             //registerStateSocket();
         }
 
