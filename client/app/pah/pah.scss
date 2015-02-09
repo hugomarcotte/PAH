@@ -9,6 +9,13 @@ body {
   color: gold;
 }
 
+.msg {
+  h1 {
+    color: gold;
+    margin-top: 0;
+  }
+}
+
 md-sidenav {
   background-color: #232323;
 }
@@ -58,7 +65,7 @@ md-toolbar.md-default-theme {
 }
 
 .leftSide {
-  min-height: 500px;
+//  min-height: 500px;
 
   .blackCard {
     background-color: #000;
@@ -84,15 +91,16 @@ md-toolbar.md-default-theme {
 }
 
 .rightSide {
-  min-height: 500px;
+//  min-height: 500px;
 
   .buttonZone {
+    padding-top: 20px;
     .md-button.md-default-theme.md-raised {
-      width: 115px;
+      margin: 0 10px;
     }
   }
   .whiteCardZone {
-    min-height: 500px;
+    text-align:center;
   }
 
   .cardHighlighted {
@@ -140,10 +148,18 @@ $medium-only: "only screen and (min-width : #{$small-screen}) and (max-width : #
         width: 93px;
       }
     }
+
+    .blackCard {
+      background-color: #000;
+      color: #FFF;
+      padding: 35px;
+      min-height: 0px;
+    }
   }
-
-
-
+  .rightSide {
+    padding-top: 40px;
+    width: 100%;
+  }
 }
 
 @media only screen and (min-width: 1400px) {
@@ -151,20 +167,4 @@ $medium-only: "only screen and (min-width : #{$small-screen}) and (max-width : #
     display: none;
   }
 }
-@media only screen and (max-width : 1100px) {
 
-}
-@media only screen and (max-width : 992) {
-
-}
-@media only screen and (max-width : 700px) {
-
-}
-
-@media only screen and (max-width : 500px) {
-
-}
-
-@media only screen and (max-width : 430px) {
-
-}
