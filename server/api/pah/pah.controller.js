@@ -92,6 +92,8 @@ exports.join = function(req, res) {
                 }
 
                 var index = game.users.push(player) - 1;
+                game.numActivePlayers++;
+
                 game.users[index].index = index;
                 game.save(function(err, game) {
                     console.log('SAVED GAME', game);
@@ -166,7 +168,7 @@ exports.submit = function(req, res) {
         console.log("THESE ARE CARDS", cards);
         //cards.userId = req.params.user;
         pah.cardsInPlay.push(cards);
-        if (pah.cardsInPlay.length >= pah.users.length - 1) {
+        if ((pah.cardsInPlay.length >= pah.numActivePlayers - 1 && !pah.users[pah.currentJudge].isInactive)||pah.cardsInPlay.length >= pah.numActivePlayers) {
             pah.judgeMode = true;
             pah.cardsInPlay = shuffle(pah.cardsInPlay);
             console.log("cards in play", pah.cardsInPlay.length)
@@ -216,6 +218,33 @@ exports.judge = function(req, res) {
         pah.currentJudge++;
         if (pah.currentJudge === pah.users.length) pah.currentJudge = 0;
         pah.users[pah.currentJudge].isJudge = true;
+        pah.markModified('users')
+        pah.save(function(err, pah) {
+            console.log(pah);
+            if (err) {
+                return handleError(res, err);
+            }
+            return res.json(200);
+        })
+    })
+};
+
+exports.deactivate = function(req, res) {
+
+    Pah.findById(req.params.id, function(err, pah) {
+        if (err) {
+            return handleError(res, err);
+        }
+        var userId = req.params.user;
+
+
+        //MAYBE MARK MODIFIED.
+        pah.users.forEach(function(user) {
+            if (user._id === userId) {
+                user.isInactive = true;
+                pah.numActivePlayers--;
+            }
+        })
         pah.markModified('users')
         pah.save(function(err, pah) {
             console.log(pah);

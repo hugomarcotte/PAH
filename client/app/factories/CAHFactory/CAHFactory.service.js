@@ -98,15 +98,15 @@ angular.module('pahApp')
         factoryMethods.play = function(cards, userId) {
             console.log('you just played card number: ', cards);
             $http.put('/api/pahs/' + gameId + '/submit/' + userId + '', {
-                cards: cards
-            })
+                    cards: cards
+                })
                 .success(function(data) {
                     var hand = privatePlayArea.hand
                     cards.forEach(function(card) {
-                        hand.splice(hand.indexOf(card), 1)
-                    })
-                    // console.log('Played card', card);
-                    //factoryMethods.draw(10 - hand.length);
+                            hand.splice(hand.indexOf(card), 1)
+                        })
+                        // console.log('Played card', card);
+                        //factoryMethods.draw(10 - hand.length);
                 })
                 .error(function(err) {
                     console.log('Failed to join game: ', err);
@@ -116,17 +116,23 @@ angular.module('pahApp')
 
         factoryMethods.judge = function(cards) {
             $http.put('/api/pahs/' + gameId + '/judge/', {
-                cards: cards
-            })
+                    cards: cards
+                })
                 .success(function(data) {
                     //factoryMethods.startRound();
                     console.log('Judged this card as the winner:', cards);
                 })
                 .error(function(err) {
-                    console.log('Failed to join game: ', err);
+                    console.log('Failed to judge: ', err);
                 });
             return;
         };
+
+        factoryMethods.randomJudge = function() {
+            // do some promise logic stuff to make sure it's judge mode when this executes
+            // Pick a random number
+            // call judge with that index of the array
+        }
 
         factoryMethods.spectate = function(joinCode, callback) {
             console.log('Im calling spectate');
@@ -142,7 +148,7 @@ angular.module('pahApp')
                         console.log('rejoining...');
                         if (callback) return callback(joinCode);
                     }
-                })
+                });
         };
 
         function resetFactory() {
@@ -155,7 +161,7 @@ angular.module('pahApp')
             publicPlayArea.blackCard = {}
             publicPlayArea.submittedCards = [];
             publicPlayArea.judgeMode = false,
-            publicPlayArea.currentJudge = {}
+                publicPlayArea.currentJudge = {}
 
             scoreboard.users = [];
             isPlayer = false;
@@ -173,8 +179,8 @@ angular.module('pahApp')
             //     return;
             // }
             $http.post('/api/pahs/' + gameState.code, {
-                'name': name
-            })
+                    'name': name
+                })
                 .success(function(data) {
                     if (callback) callback(data);
                     //console.log('success!');
@@ -202,6 +208,20 @@ angular.module('pahApp')
                 });
         };
 
+        factoryMethods.deactivateMe = function() {
+            return factoryMethods.deactivatePlayer(currentPlayer);
+        }
+
+        factoryMethods.deactivatePlayer = function(player) {
+            if (player.isJudge) {
+                this.randomJudge();
+            }
+            isPlayer = false;
+            $http.put('/api/pahs/' + gameId + '/deactivate/' + userId + '', {})
+                .success(function(data) {});
+
+        };
+
         function joinHelper(data) {
             //gameId = data.state._id;
             isPlayer = true;
@@ -209,17 +229,17 @@ angular.module('pahApp')
             updatePlayArea(data.state);
 
             gameState.users.forEach(function(user) {
-                if (user._id == data.playerId) {
-                    currentPlayer.index = user.index;
-                    currentPlayer.info = user;
-                }
-            })
-            // console.log('currentPlayer: ', currentPlayer);
+                    if (user._id == data.playerId) {
+                        currentPlayer.index = user.index;
+                        currentPlayer.info = user;
+                    }
+                })
+                // console.log('currentPlayer: ', currentPlayer);
             if (privatePlayArea.hand.length)
-            privatePlayArea.hand = deck.populate(currentPlayer.info.cards);
-          if(publicPlayArea.blackCard && publicPlayArea.blackCard.text && !publicPlayArea.judgeMode){
-            factoryMethods.draw(10-privatePlayArea.hand.length);
-          }
+                privatePlayArea.hand = deck.populate(currentPlayer.info.cards);
+            if (publicPlayArea.blackCard && publicPlayArea.blackCard.text && !publicPlayArea.judgeMode) {
+                factoryMethods.draw(10 - privatePlayArea.hand.length);
+            }
             //registerStateSocket();
         }
 
@@ -227,7 +247,7 @@ angular.module('pahApp')
         // should just get called when join finds that
         // you're already in the game
         factoryMethods.rejoin = function(joinCode, cb) {
-          console.log('cookies.games', $cookies.games);
+            console.log('cookies.games', $cookies.games);
             if (!$cookies.games) {
                 return false;
             }
@@ -236,7 +256,7 @@ angular.module('pahApp')
             // console.log($cookies.games)
             var cookies = JSON.parse($cookies.games);
             var playerId;
-          console.log('cookies array', cookies);
+            console.log('cookies array', cookies);
             cookies.forEach(function(game) {
                 if (joinCode === game.gameCode) {
                     playerId = game.userId;
@@ -260,7 +280,12 @@ angular.module('pahApp')
             console.log('updating with: ', newState);
             // console.log(newState);
             gameState = newState;
-            if (isPlayer) currentPlayer.info = newState.users[currentPlayer.index];
+            if (isPlayer) {
+                currentPlayer.info = newState.users[currentPlayer.index];
+                if (currentPlayer.info && currentPlayer.info.isInactive) {
+                    isPlayer = false;
+                }
+            }
             publicPlayArea.blackCard = newState.blackCard;
             publicPlayArea.submittedCards = newState.cardsInPlay;
             publicPlayArea.currentJudge = newState.users[newState.currentJudge];
