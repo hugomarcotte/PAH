@@ -127,10 +127,16 @@ angular.module('pahApp')
                 cardArray.forEach(function(card, i) {
                     card.order = i + 1
                 })
-            } else {
+            } else if (!(cardArray.length >= $scope.publicPlayArea.blackCard.numAnswers)) {
                 whiteCard.selected = true;
                 cardArray.push(whiteCard)
                 whiteCard.order = cardArray.length
+            } else {
+                whiteCard.selected = true;
+                cardArray[cardArray.length - 1].selected = false;
+                cardArray[cardArray.length - 1].order = undefined;
+                cardArray[cardArray.length - 1] = whiteCard;
+                whiteCard.order = cardArray.length;
             }
         };
 
