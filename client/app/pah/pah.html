@@ -21,6 +21,8 @@
         <div layout="row" flex>
             <div ng-class='{judge: user.index === currentPlayer.info.index }' class="username" flex="50">
                 {{user.name}}
+                <div ng-hide="user.isJudge" class="card-icon"></div>
+                <img class="spinner" ng-show="user.isJudge" src="http://i.giphy.com/hoVradJ4jL2kE.gif"/>
             </div>
             <div class="score" flex="50" style="text-align:right;">
                 {{user.score}}
@@ -53,6 +55,7 @@
           <div class="nameScore">
             <div class="username" ng-class='{judge: user.index === currentPlayer.info.index }' >
               {{user.name}}
+              <div ng-hide="user.isJudge" class="card-icon"></div>
             </div>
             <div class="score">
               {{user.score}}
