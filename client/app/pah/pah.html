@@ -1,7 +1,7 @@
 <!--<md-card style="width:500px; color: white">-->
 <!--<p>Private: {{privatePlayArea.hand}}</p>-->
 <!-- <p>Public: {{publicPlayArea}}</p> -->
-<!--<p>Scoreboard: {{scoreboard}}</p>-->
+<p>Scoreboard: {{scoreboard}}</p>
 <!-- <p>Me: {{currentPlayer}}</p> -->
 <!--</md-card>-->
 
@@ -15,14 +15,12 @@
 <md-button class="button md-raised" ng-click="openLinkDialog()" style="margin-bottom: 20px;">Invite Players</md-button>
 <md-button class="button md-raised" ng-click="openJoin()" ng-show="!currentPlayer.info">+ Join</md-button>
 <div>
-    <div ng-repeat="user in scoreboard.users" layout="row">
-        <div ng-show="!user.isJudge" class="icon icon-social-white icon-social-white-ic_person_white_24dp" style="margin-right:10px;"></div>
-        <div ng-show="user.isJudge" class="icon icon-toggle-white icon-toggle-white-ic_star_white_24dp" style="margin-right:10px;"></div>
+    <div ng-repeat="user in scoreboard.users" layout="row" style="margin-bottom: 10px;">
+        <img class="spinner" ng-show="user.isJudge" src="http://i.giphy.com/hoVradJ4jL2kE.gif"/>
+        <img class="spinner" ng-hide="user.isJudge" src="http://i.giphy.com/3kQqYPyzGSQ6I.gif"/>
         <div layout="row" flex>
             <div ng-class='{judge: user.index === currentPlayer.info.index }' class="username" flex="50">
                 {{user.name}}
-                <div ng-hide="user.isJudge" class="card-icon"></div>
-                <img class="spinner" ng-show="user.isJudge" src="http://i.giphy.com/hoVradJ4jL2kE.gif"/>
             </div>
             <div class="score" flex="50" style="text-align:right;">
                 {{user.score}}
@@ -46,16 +44,14 @@
       </div>
     </div>
     <div class="players">
-      <md-button class="button md-raised" ng-click="openLinkDialog()" style="margin-bottom: 20px;">Invite Players</md-button>
-      <md-button class="button md-raised" ng-click="openJoin()" ng-show="!currentPlayer.info">+ Join</md-button>
       <div>
-        <div ng-repeat="user in scoreboard.users" style="height:30px;">
-          <div ng-show="!user.isJudge" class="icon icon-social-white icon-social-white-ic_person_white_24dp" style="margin-right:10px;float:left;"></div>
-          <div ng-show="user.isJudge" class="icon icon-toggle-white icon-toggle-white-ic_star_white_24dp" style="margin-right:10px;float:left;"></div>
+        <div ng-repeat="user in scoreboard.users" style="margin-bottom: 10px">
           <div class="nameScore">
-            <div class="username" ng-class='{judge: user.index === currentPlayer.info.index }' >
+            <div class="username" style="margin-bottom: 10px"  ng-class='{judge: user.index === currentPlayer.info.index }' >
+              <img class="spinner-flat" ng-show="user.isJudge" src="http://i.giphy.com/hoVradJ4jL2kE.gif"/> <!-- not submit-->
+              <img class="spinner-flat" ng-show="user.isJudge" src="http://i.giphy.com/mXuPwvlDnmR9BEYXq8.gif"/> <!-- judge -->
+              <img class="spinner-flat" ng-hide="user.isJudge" src="http://i.giphy.com/3kQqYPyzGSQ6I.gif"/> <!-- submit -->
               {{user.name}}
-              <div ng-hide="user.isJudge" class="card-icon"></div>
             </div>
             <div class="score">
               {{user.score}}
