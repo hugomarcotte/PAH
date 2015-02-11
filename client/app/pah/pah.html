@@ -14,17 +14,20 @@
 <md-content class="sideBarContent">
 <md-button class="button md-raised" ng-click="openLinkDialog()" style="margin-bottom: 20px;">Invite Players</md-button>
 <md-button class="button md-raised" ng-click="openJoin()" ng-show="!currentPlayer.info">+ Join</md-button>
+
 <div>
     <div ng-repeat="user in scoreboard.users" layout="row">
         <div ng-show="!user.isJudge" class="icon icon-social-white icon-social-white-ic_person_white_24dp" style="margin-right:10px;"></div>
         <div ng-show="user.isJudge" class="icon icon-toggle-white icon-toggle-white-ic_star_white_24dp" style="margin-right:10px;"></div>
         <div layout="row" flex>
-            <div ng-class='{judge: user.index === currentPlayer.info.index }' class="username" flex="50">
+            <div ng-class='{judge: user.index === currentPlayer.info.index, inactive: user.isInactive }' class="username" flex="50">
                 {{user.name}}
+                <md-button class="button md-raised" ng-show="currentPlayer.info.isJudge&&!user.hasSubmitted&&!user.isJudge&&!user.isInactive" ng-click="deactivatePlayer(user)">X</md-button>
             </div>
             <div class="score" flex="50" style="text-align:right;">
                 {{user.score}}
             </div>
+
         </div>
     </div>
 </div>
@@ -51,8 +54,9 @@
           <div ng-show="!user.isJudge" class="icon icon-social-white icon-social-white-ic_person_white_24dp" style="margin-right:10px;float:left;"></div>
           <div ng-show="user.isJudge" class="icon icon-toggle-white icon-toggle-white-ic_star_white_24dp" style="margin-right:10px;float:left;"></div>
           <div class="nameScore">
-            <div class="username" ng-class='{judge: user.index === currentPlayer.info.index }' >
+            <div class="username" ng-class='{judge: user.index === currentPlayer.info.index, inactive: user.isInactive  }' >
               {{user.name}}
+              <md-button class="button md-raised" ng-show="currentPlayer.info.isJudge&&!user.hasSubmitted&&!user.isJudge&&!user.isInactive" ng-click="deactivatePlayer(user)">X</md-button> 
             </div>
             <div class="score">
               {{user.score}}
@@ -107,6 +111,7 @@
                         <div ng-bind-html="whiteCard.text"></div>
                     </div> 
                 </div>
+
                 <div class='card whiteCard' ng-bind-html="submission.text" ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length" ng-repeat='submission in publicPlayArea.submittedCards[judgeViewIndex]'></div>
                 
                 <div ng-show='publicPlayArea.mostRecentWin.length && publicPlayArea.judgeMode'>
