@@ -141,6 +141,9 @@ angular.module('pahApp')
         };
 
         $scope.submitCards = function() {
+            var cardArray = $scope.cardOrder;
+            if (cardArray.length !== $scope.publicPlayArea.blackCard.numAnswers) return false;
+            
             $scope.submitted = true;
             var submittedCards = [];
             $scope.privatePlayArea.hand.forEach(function(card) {
