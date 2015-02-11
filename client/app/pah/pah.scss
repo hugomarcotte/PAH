@@ -28,6 +28,55 @@ md-toolbar.md-default-theme {
   background-color: #232323;
 }
 
+.topBar {
+  height: 55px;
+  line-height: 55px;
+  padding: 0 10px;
+  .gameCode {
+    width: calc(100% - 24px);
+    text-align:right;
+  }
+  div {
+    float:left;
+
+  }
+}
+.players {
+  padding: 0 10px;
+  width: 190px;
+  float:left;
+  display:none;
+  .md-button {
+    width:100%;
+  }
+
+  .icon {
+    float:left;
+  }
+  .nameScore {
+    float:left;
+    width: 80%;
+    .username {
+      width:75%;
+      float:left;
+    }
+    .score {
+      width:25%;
+      float: left;
+      text-align:right;
+    }
+  }
+
+}
+
+.board {
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  float:none;
+}
+
+
 .navButton {
   cursor: pointer;
 }
@@ -71,7 +120,6 @@ md-toolbar.md-default-theme {
     background-color: #000;
     color: #FFF;
     padding: 35px;
-    min-height: 500px;
     overflow:auto;
     .text {
       overflow:auto;
@@ -91,10 +139,11 @@ md-toolbar.md-default-theme {
 }
 
 .rightSide {
-
+  padding-top: 30px;
+  padding-bottomw: 30px;
   .buttonZone {
-
-    margin: 50px 0;
+    padding-top: 20px;
+    text-align:center;
     .md-button.md-default-theme.md-raised {
       font-weight:bold;
       margin: 0 10px;
@@ -104,6 +153,11 @@ md-toolbar.md-default-theme {
   }
   .whiteCardZone {
     text-align:center;
+
+    .gif{
+      width: 370px;
+      height: auto;
+    }
   }
 
   .cardHighlighted {
@@ -121,12 +175,48 @@ md-toolbar.md-default-theme {
   }
 }
 
+.submit-button {
+  width: 400px !important;
+  height: 60px;
+  background-color: #008000 !important;
+  border-radius: 1%;
+  color: black !important;
+}
+
+.disabled {
+  cursor: default;
+  opacity:0.3;
+  -o-transition-property: none !important;
+ -moz-transition-property: none !important;
+ -ms-transition-property: none !important;
+ -webkit-transition-property: none !important;
+ transition-property: none !important;
+ -o-transform: none !important;
+ -moz-transform: none !important;
+ -ms-transform: none !important;
+ -webkit-transform: none !important;
+ transform: none !important;
+ -webkit-animation: none !important;
+ -moz-animation: none !important;
+ -o-animation: none !important;
+ -ms-animation: none !important;
+ animation: none !important;
+}
+
+.order-badge {
+  margin-top: -25px;
+  margin-left: -25px;
+  background-color: #008000;
+  color: white;
+  border-radius: 100%;
+  font-size: 15px;
+  height: 25px;
+  width: 25px;
+  line-height: 25px;
+}
 .inactive {
   color:red;
 }
-
-
-
 
 
 ////////////////////////////////
@@ -146,34 +236,44 @@ $medium-and-down: "only screen and (max-width : #{$medium-screen})";
 
 $medium-only: "only screen and (min-width : #{$small-screen}) and (max-width : #{$medium-screen})";
 
-@media only screen and (max-width: 960px) {
-  .leftSide {
-
-    .publicWhiteCards {
-      .whiteCard {
-        height: 100px;
-        width: 93px;
-      }
-    }
-
-    .blackCard {
-      background-color: #000;
-      color: #FFF;
-      padding: 35px;
-      min-height: 0px;
-    }
-  }
-  .rightSide {
-    padding-top: 40px;
-    width: 100%;
-  }
-}
 
 
-@media only screen and (min-width: 1400px) {
+@media only screen and (min-width: 900px) {
   .navButton {
     display: none;
   }
+  .players {
+    float:left;
+    display:block;
+  }
+  .board {
+    width: calc(100% - 190px);
+    float:left;
+  }
+
+  .topBar {
+    .gameCode {
+      width: 100%;
+    }
+  }
 
 }
+
+
+
+
+
+@media only screen and (max-width: 400px) {
+  .rightSide {
+
+    .whiteCardZone {
+      .gif{
+        width: 355px;
+        height: auto;
+      }
+    }
+
+  }
+}
+
 
