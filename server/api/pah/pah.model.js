@@ -18,7 +18,8 @@ var PahSchema = new Schema({
   cardsInPlay: {type:Array, default:[]},
   blackCard: {type: Object, default:{}},
   judgeMode: {type:Boolean, default:false},
-  numActivePlayers: {type:Number, default:0}
+  numActivePlayers: {type:Number, default:0},
+  currentRound: {type:Number, default:0}
 });
 
 module.exports = mongoose.model('Pah', PahSchema);

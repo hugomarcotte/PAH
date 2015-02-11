@@ -75,6 +75,8 @@ angular.module('pahApp')
         $scope.gameCode = $stateParams.code;
 
         $scope.deactivateMe = CAHFactory.deactivateMe;
+        $scope.deactivatePlayer = CAHFactory.deactivatePlayer;
+        $scope.reactivateMe = CAHFactory.reactivateMe;
 
         $scope.winner = function() {
             if ($scope.publicPlayArea.mostRecentWin.length && $scope.publicPlayArea.judgeMode) return $scope.publicPlayArea.mostRecentWin[0].userId.split('-')[0];   

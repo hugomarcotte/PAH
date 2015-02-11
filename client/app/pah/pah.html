@@ -14,7 +14,7 @@
 <md-content class="sideBarContent">
 <md-button class="button md-raised" ng-click="openLinkDialog()" style="margin-bottom: 20px;">Invite Players</md-button>
 <md-button class="button md-raised" ng-click="openJoin()" ng-show="!currentPlayer.info">+ Join</md-button>
-<md-button class="button md-raised" ng-click="deactivateMe()" ng-show="currentPlayer.info">Deactivate</md-button>
+
 <div>
     <div ng-repeat="user in scoreboard.users" layout="row">
         <div ng-show="!user.isJudge" class="icon icon-social-white icon-social-white-ic_person_white_24dp" style="margin-right:10px;"></div>
@@ -22,10 +22,12 @@
         <div layout="row" flex>
             <div ng-class='{judge: user.index === currentPlayer.info.index, inactive: user.isInactive }' class="username" flex="50">
                 {{user.name}}
+                <md-button class="button md-raised" ng-show="currentPlayer.info.isJudge&&!user.hasSubmitted&&!user.isJudge&&!user.isInactive" ng-click="deactivatePlayer(user)">X</md-button>
             </div>
             <div class="score" flex="50">
                 {{user.score}}
             </div>
+
         </div>
     </div>
 </div>
@@ -85,7 +87,7 @@
                   <h1 ng-show="publicPlayArea.mostRecentWin.length && publicPlayArea.judgeMode">{{winner()}} Wins!</h1>
                   <h1 ng-hide="currentPlayer.info.isJudge || publicPlayArea.judgeMode">Select your answer</h1>
                 </div>
-                <div class='card whiteCard' ng-bind-html="whiteCard.text + whiteCard.order" ng-repeat='whiteCard in privatePlayArea.hand' ng-hide="currentPlayer.info.isJudge || publicPlayArea.judgeMode" ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}"></div>
+                <div class='card whiteCard' ng-bind-html="whiteCard.text + whiteCard.order" ng-repeat='whiteCard in privatePlayArea.hand' ng-hide="currentPlayer.info.isJudge || currentPlayer.info.isInactive || publicPlayArea.judgeMode" ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}"></div>
                 <div class='card whiteCard' ng-bind-html="submission.text" ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length" ng-repeat='submission in publicPlayArea.submittedCards[judgeViewIndex]'></div>
                 <div ng-show='publicPlayArea.mostRecentWin.length && publicPlayArea.judgeMode'>
                     <div class='card whiteCard' ng-bind-html="winner.text"  ng-show="publicPlayArea.judgeMode" ng-repeat='winner in publicPlayArea.mostRecentWin'></div>

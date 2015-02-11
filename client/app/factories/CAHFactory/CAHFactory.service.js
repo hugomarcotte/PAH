@@ -209,18 +209,22 @@ angular.module('pahApp')
         };
 
         factoryMethods.deactivateMe = function() {
-            return factoryMethods.deactivatePlayer(currentPlayer);
+            return factoryMethods.deactivatePlayer(currentPlayer.info);
         }
 
         factoryMethods.deactivatePlayer = function(player) {
-            if (player.isJudge) {
-                this.randomJudge();
-            }
+            // if (player.isJudge) {
+            //     this.randomJudge();
+            // }
             isPlayer = false;
-            $http.put('/api/pahs/' + gameId + '/deactivate/' + userId + '', {})
+            $http.put('/api/pahs/' + gameId + '/deactivate/' + player._id + '', {})
                 .success(function(data) {});
-
         };
+
+        factoryMethods.reactivateMe = function() {
+            $http.put('/api/pahs/' + gameId + '/reactivate/' + currentPlayer.info._id + '', {})
+                .success(function(data) {});
+        }
 
         function joinHelper(data) {
             //gameId = data.state._id;
@@ -229,16 +233,20 @@ angular.module('pahApp')
             updatePlayArea(data.state);
 
             gameState.users.forEach(function(user) {
-                    if (user._id == data.playerId) {
-                        currentPlayer.index = user.index;
-                        currentPlayer.info = user;
-                    }
-                })
-                // console.log('currentPlayer: ', currentPlayer);
-            if (privatePlayArea.hand.length)
-                privatePlayArea.hand = deck.populate(currentPlayer.info.cards);
-            if (publicPlayArea.blackCard && publicPlayArea.blackCard.text && !publicPlayArea.judgeMode) {
+                if (user._id == data.playerId) {
+                    currentPlayer.index = user.index;
+                    currentPlayer.info = user;
+                }
+            })
+            // console.log('currentPlayer: ', currentPlayer);
+            if (currentPlayer.info.cards.length) {
+                privatePlayArea.hand = deck.populate(currentPlayer.info.cards); 
+            }
+            if (publicPlayArea.blackCard && publicPlayArea.blackCard.text && !publicPlayArea.judgeMode && !currentPlayer.info.hasSubmitted) {
                 factoryMethods.draw(10 - privatePlayArea.hand.length);
+            }
+            if (currentPlayer.info.isInactive) {
+                factoryMethods.reactivateMe();
             }
             //registerStateSocket();
         }
@@ -256,7 +264,7 @@ angular.module('pahApp')
             // console.log($cookies.games)
             var cookies = JSON.parse($cookies.games);
             var playerId;
-            console.log('cookies array', cookies);
+            // console.log('cookies array', cookies);
             cookies.forEach(function(game) {
                 if (joinCode === game.gameCode) {
                     playerId = game.userId;
@@ -277,18 +285,21 @@ angular.module('pahApp')
         }
 
         function updatePlayArea(newState) {
-            console.log('updating with: ', newState);
+            //console.log('updating with: ', newState);
             // console.log(newState);
             gameState = newState;
-            if (isPlayer) {
+            if (isPlayer || currentPlayer.index) {
+                console.log('player info', currentPlayer.info)
                 currentPlayer.info = newState.users[currentPlayer.index];
                 if (currentPlayer.info && currentPlayer.info.isInactive) {
                     isPlayer = false;
+                } else {
+                    isPlayer = true;
                 }
             }
             publicPlayArea.blackCard = newState.blackCard;
             publicPlayArea.submittedCards = newState.cardsInPlay;
-            publicPlayArea.currentJudge = newState.users[newState.currentJudge];
+            publicPlayArea.currentJudge = newState.users[newState.currentJudge]; 
             publicPlayArea.judgeMode = newState.judgeMode;
             scoreboard.users = newState.users;
 
@@ -309,10 +320,10 @@ angular.module('pahApp')
             // players draw cards in order
             $http.put('/api/pahs/' + gameId + '/start', {})
                 .success(function(data) {
-                    console.log('Did the thing');
+                    // console.log('Did the thing');
                 })
                 .error(function(err) {
-                    console.log('Didnt do the thing: ', err);
+                    console.log('Failed to start round: ', err);
                 });
             // optionally start timer
 
