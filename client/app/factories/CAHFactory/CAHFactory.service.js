@@ -285,7 +285,7 @@ angular.module('pahApp')
         }
 
         function updatePlayArea(newState) {
-            //console.log('updating with: ', newState);
+            console.log('updating with: ', newState);
             // console.log(newState);
             gameState = newState;
             if (isPlayer || currentPlayer.index) {

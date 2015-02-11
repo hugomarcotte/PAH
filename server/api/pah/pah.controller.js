@@ -288,8 +288,8 @@ exports.reactivate = function(req, res) {
         }
         var userId = req.params.user;
 
-
-        //MAYBE MARK MODIFIED.
+        console.log('reactivating?', pah)
+            //MAYBE MARK MODIFIED.
         pah.users.forEach(function(user) {
             if (user._id === userId) {
                 user.isInactive = false;
@@ -423,7 +423,8 @@ function setJudgeTimeout(id, round) {
         console.log('JUDGE TIMED OUT');
         Pah.findById(id, function(err, pah) {
             if (pah.currentRound !== round || !pah.judgeMode) return;
-            pah.users[pah.currentJudge].isInactive;
+            pah.users[pah.currentJudge].isInactive = true;
+            pah.numActivePlayers--;
             pah.mostRecentWin = pah.cardsInPlay[Math.floor(Math.random() * pah.cardsInPlay.length)];
             pah.users.forEach(function(user) {
                 if (user._id === pah.mostRecentWin[0].userId) {
