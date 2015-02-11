@@ -86,8 +86,14 @@
                   <md-button class="md-raised md-primary submit-button" ng-click="submitCards()" ng-hide="currentPlayer.info.isJudge || publicPlayArea.judgeMode || privatePlayArea.hand.length < 10" ng-class="{disabled: noSubmit()}">Submit Cards</md-button>
 
                 </div>
-                <div class='card whiteCard' ng-bind-html="whiteCard.text + whiteCard.order" ng-repeat='whiteCard in privatePlayArea.hand' ng-hide="currentPlayer.info.isJudge || publicPlayArea.judgeMode" ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}"></div>
+                <div ng-repeat='whiteCard in privatePlayArea.hand' ng-hide="currentPlayer.info.isJudge || publicPlayArea.judgeMode">
+                    <div class='card whiteCard' ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}">
+                        <div ng-show="whiteCard.selected && publicPlayArea.blackCard.numAnswers > 1" class="order-badge">{{whiteCard.order}}</div>
+                        <div ng-bind-html="whiteCard.text"></div>
+                    </div> 
+                </div>
                 <div class='card whiteCard' ng-bind-html="submission.text" ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length" ng-repeat='submission in publicPlayArea.submittedCards[judgeViewIndex]'></div>
+                
                 <div ng-show='publicPlayArea.mostRecentWin.length && publicPlayArea.judgeMode'>
                     <div class='card whiteCard' ng-bind-html="winner.text"  ng-show="publicPlayArea.judgeMode" ng-repeat='winner in publicPlayArea.mostRecentWin'></div>
                 </div>
