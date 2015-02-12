@@ -62,7 +62,7 @@
         <!--<div ng-show="!user.isJudge" class="icon icon-social-white icon-social-white-ic_person_white_24dp" style="margin-right:10px;float:left;"></div>-->
         <!--<div ng-show="user.isJudge" class="icon icon-toggle-white icon-toggle-white-ic_star_white_24dp" style="margin-right:10px;float:left;"></div>-->
         <div class="nameScore">
-          <div class="username" ng-class='{judge: user.index === currentPlayer.info.index }' >
+          <div class="username" ng-class='{judge: user.index === currentPlayer.info.index, inactive: user.isInactive }' >
             {{user.name}}
             <md-button class="button md-raised" ng-show="currentPlayer.info.isJudge&&!user.hasSubmitted&&!user.isJudge&&!user.isInactive" ng-click="deactivatePlayer(user)">X</md-button>
           </div>
