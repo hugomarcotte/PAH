@@ -14,10 +14,22 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
     padding: 0.2em 0;
 }
 
-body {
-  font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+.header {
+  .title {
+    h1 {
+      margin-top: 0;
+    }
+  }
+  .button {
+    button{
+      width:125px;
+    }
+  }
 }
 
+button {
+  font-weight: bold;
+}
 
 // Component styles are injected through grunt
 // injector
