@@ -438,6 +438,7 @@ function setJudgeTimeout(id, round) {
             pah.users[pah.currentJudge].isInactive = true;
             pah.numActivePlayers--;
             pah.mostRecentWin = pah.cardsInPlay[Math.floor(Math.random() * pah.cardsInPlay.length)];
+            if (!pah.mostRecentWin) return;
             pah.users.forEach(function(user) {
 
                 if (pah.mostRecentWin[0] && user._id === pah.mostRecentWin[0].userId) {
