@@ -19,10 +19,10 @@
   <div>
       <div ng-repeat="user in scoreboard.users" layout="row" style="margin-bottom: 10px; line-height:27px;">
           <i class="mdi-notification-dnd-forwardslash mdi-material-red" ng-show="user.isInactive" style="font-size: 20pt;"></i>
-          <i class="mdi-device-access-time mdi-material-yellow" ng-show="!currentPlayer.info.isJudge && !user.isJudge && !user.hasSubmitted" style="font-size: 20pt;"></i>
-          <i class="mdi-action-highlight-remove mdi-material-red" ng-show="currentPlayer.info.isJudge && !user.hasSubmitted && !user.isJudge" ng-click="deactivatePlayer(user)" style="font-size: 20pt;cursor:pointer;"></i>
-          <i class="mdi-social-person mdi-material-white" ng-show="user.hasSubmitted && !user.isJudge" style="font-size: 20pt;"></i>
-          <i class="mdi-action-grade mdi-material-white" ng-show="user.isJudge" style="font-size: 20pt;"></i>
+          <i class="mdi-device-access-time mdi-material-yellow" ng-show="!currentPlayer.info.isJudge && !user.isJudge && !user.hasSubmitted && !publicPlayArea.mostRecentWin.length && !user.isInactive" style="font-size: 20pt;"></i>
+          <i class="mdi-action-highlight-remove mdi-material-red" ng-show="currentPlayer.info.isJudge && !user.hasSubmitted && !user.isJudge && !publicPlayArea.mostRecentWin.length && !user.isInactive" ng-click="deactivatePlayer(user)" style="font-size: 20pt;cursor:pointer;"></i>
+          <i class="mdi-social-person mdi-material-white" ng-show="(user.hasSubmitted || publicPlayArea.mostRecentWin.length) && !user.isJudge && !user.isInactive" style="font-size: 20pt;"></i>
+          <i class="mdi-action-grade mdi-material-white" ng-show="user.isJudge && !user.isInactive" style="font-size: 20pt;"></i>
 
           <div layout="row" flex style="margin-left: 20px;">
               <div ng-class='{judge: user.index === currentPlayer.info.index, inactive: user.isInactive }' class="username" flex="50">
@@ -56,10 +56,10 @@
       </div>
       <div ng-repeat="user in scoreboard.users" style="margin-bottom:10px;">
         <i class="mdi-notification-dnd-forwardslash mdi-material-red" ng-show="user.isInactive" style="font-size: 20pt;"></i>
-        <i class="mdi-device-access-time mdi-material-yellow" ng-show="!currentPlayer.info.isJudge && !user.isJudge && !user.hasSubmitted" style="font-size: 20pt;"></i>
-        <i class="mdi-action-highlight-remove mdi-material-red" ng-show="currentPlayer.info.isJudge && !user.hasSubmitted && !user.isJudge" ng-click="deactivatePlayer(user)" style="font-size: 20pt;cursor:pointer;"></i>
-        <i class="mdi-social-person mdi-material-white" ng-show="user.hasSubmitted && !user.isJudge" style="font-size: 20pt;"></i>
-        <i class="mdi-action-grade mdi-material-white" ng-show="user.isJudge" style="font-size: 20pt;"></i>
+        <i class="mdi-device-access-time mdi-material-yellow" ng-show="!currentPlayer.info.isJudge && !user.isJudge && !user.hasSubmitted && !publicPlayArea.mostRecentWin.length && !user.isInactive" style="font-size: 20pt;"></i>
+        <i class="mdi-action-highlight-remove mdi-material-red" ng-show="currentPlayer.info.isJudge && !user.hasSubmitted && !user.isJudge && !publicPlayArea.mostRecentWin.length && !user.isInactive" ng-click="deactivatePlayer(user)" style="font-size: 20pt;cursor:pointer;"></i>
+        <i class="mdi-social-person mdi-material-white" ng-show="(user.hasSubmitted || publicPlayArea.mostRecentWin.length) && !user.isJudge && !user.isInactive" style="font-size: 20pt;"></i>
+        <i class="mdi-action-grade mdi-material-white" ng-show="user.isJudge && !user.isInactive" style="font-size: 20pt;"></i>
 
         <div class="nameScore">
           <div class="username" ng-class='{judge: user.index === currentPlayer.info.index, inactive: user.isInactive }' >
@@ -114,6 +114,7 @@
               <img class="gif" ng-src="{{waitingGif}}"/>
             </div>
             <button class="btn btn-material-green btn-lg" ng-click="submitCards()" ng-hide="currentPlayer.info.isJudge || publicPlayArea.judgeMode || privatePlayArea.hand.length < 10" ng-class="{disabled: noSubmit()}">Submit Cards</button>
+
             <div class="whiteCardZone">
 
               <div class='card whiteCard' ng-repeat='whiteCard in privatePlayArea.hand' ng-hide="currentPlayer.info.isJudge || publicPlayArea.judgeMode" ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}">
@@ -127,7 +128,6 @@
 
             </div>
             <div class="buttonZone">
-
                 <button class="btn btn-material-green btn-lg" ng-show="publicPlayArea.mostRecentWin.length && currentPlayer.info.isJudge" ng-click="startRound()">Start Next Round</button>
                 <div class="button" ng-hide="publicPlayArea.mostRecentWin.length && publicPlayArea.judgeMode">
                     <button class="btn btn-material-green btn-lg" ng-click="startRound()" ng-show="currentPlayer.info.isJudge && waitingForStart()">Start Game</button>
