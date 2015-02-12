@@ -1,8 +1,8 @@
 <!--<md-card style="width:500px; color: white">-->
-<!--<p>Private: {{privatePlayArea.hand}}</p>-->
-<!--<p>Public: {{publicPlayArea}}</p>-->
-<!-- <p>Scoreboard: {{scoreboard}}</p> -->
-<!--<p>Me: {{currentPlayer.info}}</p>-->
+<!-- <p>Private: {{privatePlayArea.hand}}</p>
+<p>Public: {{publicPlayArea}}</p>
+<p>Scoreboard: {{scoreboard}}</p>
+<p>Me: {{currentPlayer.info}}</p> -->
 <!--</md-card>-->
 
 <md-sidenav class="md-sidenav-left sideBar" md-component-id="left" style="padding: 0 10px;">
@@ -97,13 +97,13 @@
         </div>
         <div class="actionSide">
             <div class="msg">
-              <h1 ng-show="waitingForStart() && !currentPlayer.info.isJudge">Waiting for the judge to start the game</h1>
-              <h1 ng-show="waitingForStart() && currentPlayer.info.isJudge">Players are waiting for you to start the game</h1>
-              <h1 ng-show="judgeWaiting()">You are the judge! Waiting for players to submit their answers.</h1>
-              <h1 ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length && !currentPlayer.info.isJudge">See all answers</h1>
+              <h1 ng-show="waitingForStart() && !currentPlayer.info.isJudge">Waiting for {{judge()}} to start the game {{elipse()}}</h1>
+              <h1 ng-show="waitingForStart() && currentPlayer.info.isJudge">Hey {{currentPlayer.info.name}}, <br> Everyone is waiting on you to start the game!</h1>
+              <h1 ng-show="judgeWaiting()">{{currentPlayer.info.name}}, you are the judge!<br>Waiting for {{nonSubmits()}} to submit their cards.</h1>
+              <h1 ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length && !currentPlayer.info.isJudge">View All Submissions</h1>
               <h1 ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length && currentPlayer.info.isJudge">Select your favorite answer</h1>
-              <h1 ng-show="publicPlayArea.mostRecentWin.length && publicPlayArea.judgeMode">{{winner()}} Wins!</h1>
-              <h1 ng-hide="currentPlayer.info.isJudge || publicPlayArea.judgeMode || waitingForStart()">Select your answer</h1>
+              <h1 ng-show="publicPlayArea.mostRecentWin.length && publicPlayArea.judgeMode">{{winner()}} Wins! +1000 points <br> Waiting for {{judge()}} to start the next round</h1>
+              <h1 ng-hide="currentPlayer.info.isJudge || publicPlayArea.judgeMode || waitingForStart()">Select {{publicPlayArea.blackCard.numAnswers}} Then Hit Submit</h1>
             </div>
             <div ng-show="judgeWaiting()">
               <img class="gif" ng-src="{{judgeGif}}" />
