@@ -101,7 +101,13 @@ angular.module('pahApp')
 
         $rootScope.$on('$stateChangeStart', function(){
             ngDialog.closeAll();
+            CAHFactory.deactivateMe();
         })
+
+        window.onbeforeunload = function(){
+            CAHFactory.deactivateMe();
+        }
+
 
 
         $scope.openJoin = function() {

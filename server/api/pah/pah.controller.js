@@ -197,6 +197,7 @@ exports.submit = function(req, res) {
 
 exports.judge = function(req, res) {
     var winning_cards = req.body.cards;
+    if(!winning_cards.length)return handleError(res);
     var winning_user = winning_cards[0].userId;
 
 
@@ -428,7 +429,8 @@ function setJudgeTimeout(id, round) {
             pah.numActivePlayers--;
             pah.mostRecentWin = pah.cardsInPlay[Math.floor(Math.random() * pah.cardsInPlay.length)];
             pah.users.forEach(function(user) {
-                if (user._id === pah.mostRecentWin[0].userId) {
+
+                if (pah.mostRecentWin[0] && user._id === pah.mostRecentWin[0].userId) {
                     console.log('WINNING USER', user);
                     user.score += 1000;
                 }

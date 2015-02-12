@@ -216,6 +216,7 @@ angular.module('pahApp')
             // if (player.isJudge) {
             //     this.randomJudge();
             // }
+            if(!isPlayer)return
             isPlayer = false;
             $http.put('/api/pahs/' + gameId + '/deactivate/' + player._id + '', {})
                 .success(function(data) {});
