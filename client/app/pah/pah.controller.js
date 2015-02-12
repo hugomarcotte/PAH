@@ -74,6 +74,10 @@ angular.module('pahApp')
         $scope.player = {};
         $scope.gameCode = $stateParams.code;
 
+        $scope.deactivateMe = CAHFactory.deactivateMe;
+        $scope.deactivatePlayer = CAHFactory.deactivatePlayer;
+        $scope.reactivateMe = CAHFactory.reactivateMe;
+
         $scope.winner = function() {
             if ($scope.publicPlayArea.mostRecentWin.length && $scope.publicPlayArea.judgeMode) return $scope.publicPlayArea.mostRecentWin[0].userId.split('-')[0];   
         }
@@ -141,6 +145,9 @@ angular.module('pahApp')
         };
 
         $scope.submitCards = function() {
+            var cardArray = $scope.cardOrder;
+            if (cardArray.length !== $scope.publicPlayArea.blackCard.numAnswers) return false;
+            
             $scope.submitted = true;
             var submittedCards = [];
             $scope.privatePlayArea.hand.forEach(function(card) {

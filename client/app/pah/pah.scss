@@ -70,7 +70,7 @@ md-toolbar.md-default-theme {
     }
     .score {
       width:25%;
-      float: left;
+      float: right;
       text-align:right;
     }
   }
@@ -221,10 +221,40 @@ md-toolbar.md-default-theme {
   height: 25px;
   width: 25px;
   line-height: 25px;
+}
+
+.card-icon {
+  height: 20px;
+  width: 15px;
+  border: 1px solid black;
+  border-radius: 1%;
+  background-color: white;
+  font-size: 3px;
+  color: black;
+  float: right;
+}
+
+.spinner {
+  height: 20px;
+  width: 40px;
+  float: right;
+  margin-right: 10px;
+
+}
+
+.spinner-flat {
+  height: 20px;
+  width: 30px;
+  float: left;
+  margin-right: 10px;
 
 }
 
 
+
+.inactive {
+  color:red;
+}
 
 
 

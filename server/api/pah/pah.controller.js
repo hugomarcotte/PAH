@@ -92,6 +92,8 @@ exports.join = function(req, res) {
                 }
 
                 var index = game.users.push(player) - 1;
+                game.numActivePlayers++;
+
                 game.users[index].index = index;
                 game.save(function(err, game) {
                     console.log('SAVED GAME', game);
@@ -166,14 +168,16 @@ exports.submit = function(req, res) {
         console.log("THESE ARE CARDS", cards);
         //cards.userId = req.params.user;
         pah.cardsInPlay.push(cards);
-        if (pah.cardsInPlay.length >= pah.users.length - 1) {
+        if ((pah.cardsInPlay.length >= pah.numActivePlayers - 1 && !pah.users[pah.currentJudge].isInactive) || pah.cardsInPlay.length >= pah.numActivePlayers) {
             pah.judgeMode = true;
             pah.cardsInPlay = shuffle(pah.cardsInPlay);
             console.log("cards in play", pah.cardsInPlay.length)
+            setJudgeTimeout(req.params.id, pah.currentRound);
         }
         pah.users.forEach(function(user) {
             var userHand = user.cards
             if (user._id === req.params.user) {
+                user.hasSubmitted = true;
                 cards.forEach(function(card) {
                     userHand.splice(userHand.indexOf(card.id), 1)
                     card.userId = req.params.user;
@@ -213,9 +217,87 @@ exports.judge = function(req, res) {
             }
         })
         pah.users[pah.currentJudge].isJudge = false;
-        pah.currentJudge++;
-        if (pah.currentJudge === pah.users.length) pah.currentJudge = 0;
+
+        do {
+            pah.currentJudge++;
+            if (pah.currentJudge === pah.users.length) pah.currentJudge = 0;
+        } while (pah.users[pah.currentJudge].isInactive);
+
         pah.users[pah.currentJudge].isJudge = true;
+        pah.markModified('users')
+        pah.save(function(err, pah) {
+            console.log(pah);
+            if (err) {
+                return handleError(res, err);
+            }
+            return res.json(200);
+        })
+    })
+};
+
+exports.deactivate = function(req, res) {
+
+    Pah.findById(req.params.id, function(err, pah) {
+        if (err) {
+            return handleError(res, err);
+        }
+        var userId = req.params.user;
+        var currentUser;
+
+        //MAYBE MARK MODIFIED.
+        pah.users.forEach(function(user, index) {
+            if (user._id === userId) {
+                currentUser = user;
+                user.isInactive = true;
+                pah.numActivePlayers--;
+                if (index === pah.currentJudge && user.cards.length < 10) {
+                    pah.users[pah.currentJudge].isJudge = false;
+                    do {
+                        pah.currentJudge++;
+                        if (pah.currentJudge === pah.users.length) pah.currentJudge = 0;
+                    } while (pah.users[pah.currentJudge].isInactive);
+                    pah.users[pah.currentJudge].isJudge = true;
+                }
+            }
+        })
+        if (!pah.judgeMode) {
+            if ((pah.cardsInPlay.length >= pah.numActivePlayers - 1 && !pah.users[pah.currentJudge].isInactive) || pah.cardsInPlay.length >= pah.numActivePlayers) {
+                pah.judgeMode = true;
+                pah.cardsInPlay = shuffle(pah.cardsInPlay);
+                setJudgeTimeout(req.params.id, pah.currentRound);
+                console.log("cards in play", pah.cardsInPlay.length)
+            }
+        }
+        console.log('deactivating ', userId);
+        console.log(pah.numActivePlayers);
+        pah.markModified('users')
+        pah.save(function(err, pah) {
+            console.log(pah);
+            if (err) {
+                return handleError(res, err);
+            }
+            return res.json(200);
+        })
+    })
+};
+exports.reactivate = function(req, res) {
+
+    Pah.findById(req.params.id, function(err, pah) {
+        if (err) {
+            return handleError(res, err);
+        }
+        var userId = req.params.user;
+
+        console.log('reactivating?', pah)
+            //MAYBE MARK MODIFIED.
+        pah.users.forEach(function(user) {
+            if (user._id === userId) {
+                user.isInactive = false;
+                pah.numActivePlayers++;
+            }
+        })
+        console.log('reactivating ', userId);
+        console.log(pah.numActivePlayers);
         pah.markModified('users')
         pah.save(function(err, pah) {
             console.log(pah);
@@ -321,6 +403,12 @@ exports.startRound = function(req, res) {
         pah.currentDrawingUser = 0;
         pah.cardsInPlay = [];
         pah.judgeMode = false;
+        pah.currentRound++;
+
+        pah.users.forEach(function(user) {
+            user.hasSubmitted = false;
+        })
+        pah.markModified('users')
         pah.save(function(err) {
             if (err) {
                 return handleError(res, err);
@@ -329,6 +417,27 @@ exports.startRound = function(req, res) {
         });
     });
 };
+
+function setJudgeTimeout(id, round) {
+    setTimeout(function() {
+        console.log('JUDGE TIMED OUT');
+        Pah.findById(id, function(err, pah) {
+            if (pah.currentRound !== round || !pah.judgeMode) return;
+            pah.users[pah.currentJudge].isInactive = true;
+            pah.numActivePlayers--;
+            pah.mostRecentWin = pah.cardsInPlay[Math.floor(Math.random() * pah.cardsInPlay.length)];
+            pah.users.forEach(function(user) {
+                if (user._id === pah.mostRecentWin[0].userId) {
+                    console.log('WINNING USER', user);
+                    user.score += 1000;
+                }
+            })
+            pah.markModified('users')
+            pah.save(function(err, pah) {});
+
+        });
+    }, 90000);
+}
 
 function handleError(res, err) {
     return res.send(500, err);
