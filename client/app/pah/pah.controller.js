@@ -86,15 +86,39 @@ angular.module('pahApp')
             if ($scope.publicPlayArea.currentJudge.name) return $scope.publicPlayArea.currentJudge.name;   
         }
 
-        $scope.nonSubmits = function () {
-             if ($scope.scoreboard) console.log($scope.scoreboard);
-             var nonSubmits = "(";
-             $scope.scoreboard.users.forEach(function(user){
-                if (!user.hasSubmitted && !user.isJudge) nonSubmits += user.name + ", ";
+        $scope.nonSubmits = function() {
+             var nonSubmits = [];
+             $scope.scoreboard.users.forEach(function(user) {
+                 if (!user.hasSubmitted && !user.isJudge) nonSubmits.push(user.name);
              });
-             return nonSubmits.substring(0, nonSubmits.length-2) + ") ";
+             if (nonSubmits.length === 1) {
+                    return nonSubmits[0];
+             } else {
+                    return nonSubmits.join('</span>,<span="message-name"> ');
+             }
+         }
+         $scope.judgeWaitingM = "fdsafdsa";
+         $scope.judgeWaitingMsg = function() {
+            var string = "You are the judge!<br>Waiting for <span class='message-name'>" + $scope.nonSubmits() + "</span> to submit.";
+            $scope.judgeWaitingM = string;
+         } 
 
-        }
+         $scope.hideComma = function(user) {
+            console.log(user);
+           var nonSubmits = [];
+             $scope.scoreboard.users.forEach(function(user) {
+                 if (!user.hasSubmitted && !user.isJudge) nonSubmits.push(user);
+             });
+
+             console.log(user)
+           
+
+           if (nonSubmits[nonSubmits.length - 1]._id === user._id) {
+                return true;
+           } else {
+                return false;
+           }
+         }
 
         $scope.decrementJudgeViewIndex = function () {
             if ($scope.judgeViewIndex === 0) {

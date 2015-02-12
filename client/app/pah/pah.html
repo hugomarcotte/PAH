@@ -99,15 +99,23 @@
         </div>
         <div class="actionSide">
             <div class="msg">
-              <h1 ng-show="waitingForStart() && !currentPlayer.info.isJudge">Waiting for {{judge()}} to start the game.</h1>
+              <h1 ng-show="waitingForStart() && !currentPlayer.info.isJudge">Waiting for <span class="message-name">{{judge()}}</span> to start the game.</h1>
               <h1 ng-show="waitingForStart() && currentPlayer.info.isJudge">Hey {{currentPlayer.info.name}}, <br> Everyone is waiting on you to start the game!</h1>
-              <h1 ng-show="judgeWaiting()">You are the judge!<br>Waiting for {{nonSubmits()}} to submit their cards.</h1>
-              <h1 ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length && !currentPlayer.info.isJudge">Waiting for {{judge()}} to select the winner. <br> Check out all the submissions</h1>
-              <h1 ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length && currentPlayer.info.isJudge">Select your favorite answer</h1>
-              <h1 ng-show="publicPlayArea.mostRecentWin.length && publicPlayArea.judgeMode">{{winner()}} Wins! +1000 points <br> Waiting for {{judge()}} to start the next round</h1>
-              <h1 ng-show="!currentPlayer.info.isJudge && !publicPlayArea.judgeMode && !currentPlayer.info.hasSubmitted && publicPlayArea.blackCard.text">Select {{publicPlayArea.blackCard.numAnswers}} Then Hit Submit</h1>
-              <h1 ng-show="currentPlayer.info.hasSubmitted && !publicPlayArea.judgeMode && !currentPlayer.info.isJudge">You have submitted for this round. Waiting for {{nonSubmits()}} to submit their cards.</h1>
-              <h1 ng-show="!publicPlayArea.blackCard.text">Speak Friend and Enter</h1>
+              <h1 ng-show="judgeWaiting()" ng-init="judgeWaitingMsg()">You are the judge!<br>Waiting for
+                <span ng-repeat="user in scoreboard.users">
+                  <span ng-show="!user.hasSubmitted && !user.isJudge"><span class='message-name'>{{user.name}}</span><span ng-hide="hideComma(user)">,</span></span>
+                </span>
+                to submit.</h1>
+              <h1 ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length && !currentPlayer.info.isJudge">Waiting for <span class="message-name">{{judge()}}</span> to select the winner. <br> Check out all the submissions!</h1>
+              <h1 ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length && currentPlayer.info.isJudge">Select your favorite answer.</h1>
+              <h1 ng-show="publicPlayArea.mostRecentWin.length && publicPlayArea.judgeMode"><span class="message-name">{{winner()}}</span> Wins! +1000 points <br> Waiting for <span class="message-name">{{judge()}}</span> to start the next round.</h1>
+              <h1 ng-show="!currentPlayer.info.isJudge && !publicPlayArea.judgeMode && !currentPlayer.info.hasSubmitted && publicPlayArea.blackCard.text">Select {{publicPlayArea.blackCard.numAnswers}} then hit submit.</h1>
+              <h1 ng-show="currentPlayer.info.hasSubmitted && !publicPlayArea.judgeMode && !currentPlayer.info.isJudge">You have submitted for this round. Waiting for 
+                <span ng-repeat="user in scoreboard.users">
+                  <span ng-show="!user.hasSubmitted && !user.isJudge"><span class='message-name'>{{user.name}}</span><span ng-hide="hideComma(user)">,</span></span>
+                </span>
+               to submit.</h1>
+              <h1 ng-show="!publicPlayArea.blackCard.text">Speak Friend and Enter.</h1>
             </div>
             <div ng-show="judgeWaiting()">
               <img class="gif" ng-src="{{judgeGif}}" />
