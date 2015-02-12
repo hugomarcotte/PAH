@@ -219,10 +219,13 @@ exports.judge = function(req, res) {
             }
         })
         pah.users[pah.currentJudge].isJudge = false;
-
+        var oldJudge=pah.currentJudge;
         do {
             pah.currentJudge++;
             if (pah.currentJudge === pah.users.length) pah.currentJudge = 0;
+            if(oldJudge == pah.currentJudge){
+                break;
+            }
         } while (pah.users[pah.currentJudge].isInactive);
 
         pah.users[pah.currentJudge].isJudge = true;
@@ -395,10 +398,15 @@ exports.startRound = function(req, res) {
 
         // console.log(pah.discardedBlack);
         //console.log(Math.floor(Math.random()*availableBlackCards.length));
-        
+        var counter=0;
        do {
             //console.log(Math.floor(Math.random()*availableBlackCards.length));
             pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
+            counter++;
+            if (counter>25){
+                pah.discardedBlack=[];
+                shuffle(availableBlackCards);
+            }
         }while (pah.discardedBlack.indexOf(pah.blackCard.id) >= 0)
         pah.discardedBlack.push(pah.blackCard.id);
 
@@ -435,6 +443,18 @@ function setJudgeTimeout(id, round) {
                     user.score += 1000;
                 }
             })
+             pah.users[pah.currentJudge].isJudge = false;
+
+         var oldJudge=pah.currentJudge;
+        do {
+            pah.currentJudge++;
+            if (pah.currentJudge === pah.users.length) pah.currentJudge = 0;
+            if(oldJudge == pah.currentJudge){
+                break;
+            }
+        } while (pah.users[pah.currentJudge].isInactive);
+
+        pah.users[pah.currentJudge].isJudge = true;
             pah.markModified('users')
             pah.save(function(err, pah) {});
 
