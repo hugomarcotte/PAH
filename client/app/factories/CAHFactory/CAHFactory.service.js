@@ -223,6 +223,7 @@ angular.module('pahApp')
         };
 
         factoryMethods.reactivateMe = function() {
+            if(isPlayer)return
             $http.put('/api/pahs/' + gameId + '/reactivate/' + currentPlayer.info._id + '', {})
                 .success(function(data) {});
         }
@@ -247,6 +248,7 @@ angular.module('pahApp')
                 factoryMethods.draw(10 - privatePlayArea.hand.length);
             }
             if (currentPlayer.info.isInactive) {
+                console.log('REACTIVATING!!!!!')
                 factoryMethods.reactivateMe();
             }
             //registerStateSocket();
