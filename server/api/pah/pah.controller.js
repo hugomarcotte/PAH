@@ -254,6 +254,7 @@ exports.deactivate = function(req, res) {
             if (user._id === userId) {
                 currentUser = user;
                 user.isInactive = true;
+                user.hasLeft = req.body.hasLeft;
                 pah.numActivePlayers--;
                 if (index === pah.currentJudge && user.cards.length < 10) {
                     pah.users[pah.currentJudge].isJudge = false;
@@ -298,6 +299,7 @@ exports.reactivate = function(req, res) {
         pah.users.forEach(function(user) {
             if (user._id === userId) {
                 user.isInactive = false;
+                user.hasLeft = false;
                 pah.numActivePlayers++;
             }
         })

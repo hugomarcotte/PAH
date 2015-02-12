@@ -208,22 +208,28 @@ angular.module('pahApp')
                 });
         };
 
+        factoryMethods.leave = function() {
+            return factoryMethods.deactivatePlayer(currentPlayer.info, true);
+        }
+
         factoryMethods.deactivateMe = function() {
             return factoryMethods.deactivatePlayer(currentPlayer.info);
         }
 
-        factoryMethods.deactivatePlayer = function(player) {
+        factoryMethods.deactivatePlayer = function(player, leaving) {
             // if (player.isJudge) {
             //     this.randomJudge();
             // }
-            if(!isPlayer)return
+            if (currentPlayer.info.isInactive) return;
             isPlayer = false;
-            $http.put('/api/pahs/' + gameId + '/deactivate/' + player._id + '', {})
+            $http.put('/api/pahs/' + gameId + '/deactivate/' + player._id + '', {
+                    hasLeft: leaving
+                })
                 .success(function(data) {});
         };
 
         factoryMethods.reactivateMe = function() {
-            if(isPlayer)return
+            if (!currentPlayer.info.isInactive) return;
             $http.put('/api/pahs/' + gameId + '/reactivate/' + currentPlayer.info._id + '', {})
                 .success(function(data) {});
         }
@@ -235,14 +241,14 @@ angular.module('pahApp')
             updatePlayArea(data.state);
 
             gameState.users.forEach(function(user) {
-                if (user._id == data.playerId) {
-                    currentPlayer.index = user.index;
-                    currentPlayer.info = user;
-                }
-            })
-            // console.log('currentPlayer: ', currentPlayer);
+                    if (user._id == data.playerId) {
+                        currentPlayer.index = user.index;
+                        currentPlayer.info = user;
+                    }
+                })
+                // console.log('currentPlayer: ', currentPlayer);
             if (currentPlayer.info.cards.length) {
-                privatePlayArea.hand = deck.populate(currentPlayer.info.cards); 
+                privatePlayArea.hand = deck.populate(currentPlayer.info.cards);
             }
             if (publicPlayArea.blackCard && publicPlayArea.blackCard.text && !publicPlayArea.judgeMode && !currentPlayer.info.hasSubmitted) {
                 factoryMethods.draw(10 - privatePlayArea.hand.length);
@@ -294,15 +300,17 @@ angular.module('pahApp')
             if (isPlayer || currentPlayer.index) {
                 console.log('player info', currentPlayer.info)
                 currentPlayer.info = newState.users[currentPlayer.index];
-                if (currentPlayer.info && currentPlayer.info.isInactive) {
-                    isPlayer = false;
-                } else {
-                    isPlayer = true;
+                if (currentPlayer.info) {
+                    if (currentPlayer.info.isInactive) {
+                        isPlayer = false;
+                    } else {
+                        isPlayer = true;
+                    }
                 }
             }
             publicPlayArea.blackCard = newState.blackCard;
             publicPlayArea.submittedCards = newState.cardsInPlay;
-            publicPlayArea.currentJudge = newState.users[newState.currentJudge]; 
+            publicPlayArea.currentJudge = newState.users[newState.currentJudge] || {};
             publicPlayArea.judgeMode = newState.judgeMode;
             scoreboard.users = newState.users;
 
