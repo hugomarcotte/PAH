@@ -48,6 +48,7 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
     var pah = new Pah({});
     var id = pah._id.toString();
+    shuffle(availableBlackCards);
 
     pah.code = id.substring(id.length - 4);
 
@@ -393,11 +394,11 @@ exports.startRound = function(req, res) {
 
         // console.log(pah.discardedBlack);
         //console.log(Math.floor(Math.random()*availableBlackCards.length));
-        pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
-        while (pah.discardedBlack.indexOf(pah.blackCard.id) >= 0) {
+        
+       do {
             //console.log(Math.floor(Math.random()*availableBlackCards.length));
             pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
-        }
+        }while (pah.discardedBlack.indexOf(pah.blackCard.id) >= 0)
         pah.discardedBlack.push(pah.blackCard.id);
 
         pah.currentDrawingUser = 0;
