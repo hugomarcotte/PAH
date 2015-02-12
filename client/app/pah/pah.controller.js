@@ -61,10 +61,10 @@ angular.module('pahApp')
         $scope.currentPlayer = CAHFactory.getCurrentPlayer();
         $scope.judgeViewIndex = 0;
         
-        // if ($scope.privatePlayArea) console.log($scope.privatePlayArea, "privatePlayArea");
-        // if ($scope.publicPlayArea) console.log($scope.publicPlayArea, "publicPlayArea");
-        // if ($scope.scoreboard) console.log($scope.scoreboard, "scoreboard");
-        // if ($scope.currentPlayer) console.log($scope.currentPlayer, "currentPlayer");
+        if ($scope.privatePlayArea) console.log($scope.privatePlayArea, "privatePlayArea");
+        if ($scope.publicPlayArea) console.log($scope.publicPlayArea, "publicPlayArea");
+        if ($scope.scoreboard) console.log($scope.scoreboard, "scoreboard");
+        if ($scope.currentPlayer) console.log($scope.currentPlayer, "currentPlayer");
 
         $scope.cardOrder = []
         $scope.submitted = false;
@@ -81,7 +81,20 @@ angular.module('pahApp')
         $scope.winner = function() {
             if ($scope.publicPlayArea.mostRecentWin.length && $scope.publicPlayArea.judgeMode) return $scope.publicPlayArea.mostRecentWin[0].userId.split('-')[0];   
         }
-       
+
+        $scope.judge = function() {
+            if ($scope.publicPlayArea.currentJudge.name) return $scope.publicPlayArea.currentJudge.name;   
+        }
+
+        $scope.nonSubmits = function () {
+             if ($scope.scoreboard) console.log($scope.scoreboard);
+             var nonSubmits = "(";
+             $scope.scoreboard.users.forEach(function(user){
+                if (!user.hasSubmitted && !user.isJudge) nonSubmits += user.name + ", ";
+             });
+             return nonSubmits.substring(0, nonSubmits.length-2) + ") ";
+
+        }
 
         $scope.decrementJudgeViewIndex = function () {
             if ($scope.judgeViewIndex === 0) {
@@ -320,6 +333,8 @@ angular.module('pahApp')
                 }
             }
         };
+
+
 
  });
 
