@@ -172,6 +172,11 @@ md-toolbar.md-default-theme {
       min-width: 100px;
     }
 
+    .winner {
+      width: 80%;
+      max-width: 250px;
+    }
+
     .submit-button {
       width: 80%;
       max-width: 250px;
@@ -303,14 +308,20 @@ $medium-only: "only screen and (min-width : #{$small-screen}) and (max-width : #
 }
 
 
-
-
-
 @media only screen and (max-width: 400px) {
 
   .actionSide {
+    .buttonZone {
+      .winner {
+        width: 80%;
+        max-width: 100px;
+      }
+    }
+  }
+
+  .actionSide {
     .gif{
-      width: 355px;
+      width: 345px;
       height: auto;
     }
   }
