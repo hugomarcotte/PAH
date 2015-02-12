@@ -77,6 +77,7 @@ angular.module('pahApp')
         $scope.deactivateMe = CAHFactory.deactivateMe;
         $scope.deactivatePlayer = CAHFactory.deactivatePlayer;
         $scope.reactivateMe = CAHFactory.reactivateMe;
+        $scope.leave = CAHFactory.leave;
 
         $scope.winner = function() {
             if ($scope.publicPlayArea.mostRecentWin.length && $scope.publicPlayArea.judgeMode) return $scope.publicPlayArea.mostRecentWin[0].userId.split('-')[0];   
@@ -108,6 +109,7 @@ angular.module('pahApp')
            var nonSubmits = [];
              $scope.scoreboard.users.forEach(function(user) {
                  if (!user.hasSubmitted && !user.isJudge) nonSubmits.push(user);
+
              });
 
              console.log(user)
