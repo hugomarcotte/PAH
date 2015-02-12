@@ -1,8 +1,8 @@
 <!--<md-card style="width:500px; color: white">-->
 <!--<p>Private: {{privatePlayArea.hand}}</p>-->
-<!-- <p>Public: {{publicPlayArea}}</p> -->
-<!--<p>Scoreboard: {{scoreboard}}</p>-->
-<!-- <p>Me: {{currentPlayer}}</p> -->
+<p>Public: {{publicPlayArea}}</p>
+<!-- <p>Scoreboard: {{scoreboard}}</p> -->
+<p>Me: {{currentPlayer.info}}</p>
 <!--</md-card>-->
 
 <md-sidenav class="md-sidenav-left sideBar" md-component-id="left" style="padding: 0 10px;">
@@ -16,9 +16,10 @@
 <md-button class="button md-raised" ng-click="openJoin()" ng-show="!currentPlayer.info">+ Join</md-button>
 
 <div>
-    <div ng-repeat="user in scoreboard.users" layout="row">
-        <div ng-show="!user.isJudge" class="icon icon-social-white icon-social-white-ic_person_white_24dp" style="margin-right:10px;"></div>
-        <div ng-show="user.isJudge" class="icon icon-toggle-white icon-toggle-white-ic_star_white_24dp" style="margin-right:10px;"></div>
+    <div ng-repeat="user in scoreboard.users" layout="row" style="margin-bottom: 10px;">
+        <img class="spinner-flat" ng-show="!user.hasSubmitted && !user.isJudge" src="http://i.giphy.com/hoVradJ4jL2kE.gif"/> <!-- not submit-->
+        <img class="spinner-flat" ng-show="user.isJudge" src="http://i.giphy.com/mXuPwvlDnmR9BEYXq8.gif"/> <!-- judge -->
+        <img class="spinner-flat" ng-show="user.hasSubmitted && !user.isJudge" src="http://i.giphy.com/3kQqYPyzGSQ6I.gif"/> <!-- submit -->
         <div layout="row" flex>
             <div ng-class='{judge: user.index === currentPlayer.info.index, inactive: user.isInactive }' class="username" flex="50">
                 {{user.name}}
@@ -47,14 +48,13 @@
       </div>
     </div>
     <div class="players">
-      <md-button class="button md-raised" ng-click="openLinkDialog()" style="margin-bottom: 20px;">Invite Players</md-button>
-      <md-button class="button md-raised" ng-click="openJoin()" ng-show="!currentPlayer.info">+ Join</md-button>
       <div>
-        <div ng-repeat="user in scoreboard.users" style="height:30px;">
-          <div ng-show="!user.isJudge" class="icon icon-social-white icon-social-white-ic_person_white_24dp" style="margin-right:10px;float:left;"></div>
-          <div ng-show="user.isJudge" class="icon icon-toggle-white icon-toggle-white-ic_star_white_24dp" style="margin-right:10px;float:left;"></div>
+        <div ng-repeat="user in scoreboard.users" style="margin-bottom: 10px">
           <div class="nameScore">
-            <div class="username" ng-class='{judge: user.index === currentPlayer.info.index, inactive: user.isInactive  }' >
+             <img class="spinner-flat" ng-show="!user.hasSubmitted && !user.isJudge" src="http://i.giphy.com/hoVradJ4jL2kE.gif"/> <!-- not submit-->
+             <img class="spinner-flat" ng-show="user.isJudge" src="http://i.giphy.com/mXuPwvlDnmR9BEYXq8.gif"/> <!-- judge -->
+              <img class="spinner-flat" ng-show="user.hasSubmitted && !user.isJudge" src="http://i.giphy.com/3kQqYPyzGSQ6I.gif"/> <!-- submit -->
+            <div class="username" style="margin-bottom: 10px"  ng-class='{judge: user.index === currentPlayer.info.index }' />
               {{user.name}}
               <md-button class="button md-raised" ng-show="currentPlayer.info.isJudge&&!user.hasSubmitted&&!user.isJudge&&!user.isInactive" ng-click="deactivatePlayer(user)">X</md-button> 
             </div>
