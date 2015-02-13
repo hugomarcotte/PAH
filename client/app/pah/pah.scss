@@ -6,7 +6,7 @@ body {
 }
 
 .judge {
-  color: gold;
+  color: #4CAF50;
 }
 
 .msg {
@@ -51,27 +51,39 @@ md-toolbar.md-default-theme {
 
 .players {
   text-align:center;
-  width: 190px;
+  width: 250px;
   float:left;
   display:none;
-  .md-button {
-    width:100%;
+
+  .buttons {
+    margin-bottom: 10px;
+    button {
+      margin-top: 0;
+      width:100%;
+    }
   }
 
   .icon {
     float:left;
   }
   .nameScore {
-    float:left;
-    width: 80%;
+    margin-left: 8px;
+    vertical-align: text-bottom;
+    display:inline-block;
+    width: calc(100% - 40px);
     .username {
+      text-align:left;
       width:75%;
       float:left;
+      height:27px;
+      line-height:27px;
     }
     .score {
       width:25%;
       float: right;
       text-align:right;
+      height:27px;
+      line-height:27px;
     }
   }
   .gameCode{
@@ -112,7 +124,7 @@ md-toolbar.md-default-theme {
 
 
 .sideBarContent {
-  .button {
+  button {
     width: 100%;
   }
 }
@@ -261,6 +273,10 @@ md-toolbar.md-default-theme {
   color:red;
 }
 
+.message-name {
+  color: white;
+}
+
 
 
 ////////////////////////////////
@@ -291,9 +307,9 @@ $medium-only: "only screen and (min-width : #{$small-screen}) and (max-width : #
     display:inline-block;
   }
   .board {
-    width: calc(100% - 190px);
+    width: calc(100% - 250px);
     display:inline-block;
-    padding-left: 20px;
+    padding-left: 35px;
   }
 
   .topBar {
@@ -301,7 +317,7 @@ $medium-only: "only screen and (min-width : #{$small-screen}) and (max-width : #
   }
 
   .game {
-    padding: 20px;
+    padding: 35px;
   }
 
 
@@ -326,6 +342,12 @@ $medium-only: "only screen and (min-width : #{$small-screen}) and (max-width : #
     }
   }
 
+  .blackCardZone {
+
+    .blackCard {
+      min-height: 200px;
+      font-size: 1.5em;
+    }
+  }
+
 }
-
-

@@ -7,11 +7,9 @@
 
 
   <div class="button">
-    <md-button class="md-raised" ng-click="createNewGame()" style="margin-right: 10px;">New game</md-button>
-    <md-button class="md-raised" ng-click="openJoinDialog()">Join</md-button>
+    <button class="btn btn-material-green" ng-click="createNewGame()">New</button>
+    <button class="btn btn-material-green" ng-click="openJoinDialog()">Join</button>
   </div>
-
-
 
 </div>
 
@@ -25,7 +23,7 @@
     <input ng-model="gameCode" minlength="4" md-maxlength="4">
   </md-input-container>
   <div style="text-align: center">
-    <md-button class="md-raised" ng-click="joinGame()" style="width:40%;">Join</md-button>
+    <button class="btn btn-material-green" ng-click="joinGame()">Join</button>
   </div>
   </form>
 </div>
