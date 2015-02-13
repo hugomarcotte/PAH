@@ -40,7 +40,7 @@ md-toolbar.md-default-theme {
   line-height: 55px;
 
   .gameCode {
-    width: calc(100% - 24px);
+    width: calc(100% - 170px);
     text-align:right;
   }
   div {
@@ -280,6 +280,18 @@ md-toolbar.md-default-theme {
 
 .message-name {
   color: white;
+}
+
+.gold {
+  color: gold;
+}
+
+.top-player-message {
+  padding-left: 5px;
+}
+
+.top-bar-player-click {
+  cursor: pointer;
 }
 
 
