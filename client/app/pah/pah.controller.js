@@ -113,18 +113,15 @@ angular.module('pahApp')
            var nonSubmits = [];
              $scope.scoreboard.users.forEach(function(user) {
                  if (!user.hasSubmitted && !user.isJudge) nonSubmits.push(user);
-
-
              });
-
              console.log(user)
-           
-
-           if (nonSubmits[nonSubmits.length - 1]._id === user._id) {
-                return true;
-           } else {
-                return false;
-           }
+             if (nonSubmits[nonSubmits.length - 1] && user) {
+               if (nonSubmits[nonSubmits.length - 1]._id === user._id) {
+                    return true;
+               } else {
+                    return false;
+               }                
+             }
          }
 
         $scope.decrementJudgeViewIndex = function() {
