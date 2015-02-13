@@ -23,5 +23,5 @@ function onSave(socket, doc, cb) {
 }
 
 function onRemove(socket, doc, cb) {
-	socket.emit('pah:' + doc._id, doc);
+	// socket.emit('pah:' + doc._id, doc);
 }

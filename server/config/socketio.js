@@ -23,9 +23,7 @@ function onConnect(socket) {
 
   // Insert sockets below
   // require('../api/gif/gif.socket').register(socket);
-  require('../api/pah/pah.socket').register(socket);
   // require('../api/deck/deck.socket').register(socket);
-  require('../api/game/game.socket').register(socket);
   // require('../api/thing/thing.socket').register(socket);
 }
 
@@ -44,6 +42,8 @@ module.exports = function(socketio) {
   //   secret: config.secrets.session,
   //   handshake: true
   // }));
+  require('../api/pah/pah.socket').register(socketio);
+  require('../api/game/game.socket').register(socketio);
 
   socketio.on('connection', function(socket) {
     socket.address = socket.handshake.address !== null ?
