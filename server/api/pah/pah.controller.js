@@ -53,7 +53,7 @@ exports.create = function(req, res) {
     pah.code = id.substring(id.length - 4);
 
     pah.save(function(err, pah) {
-        console.log(pah);
+        //console.log(pah);
         if (err) {
             return handleError(res, err);
         }
@@ -78,35 +78,33 @@ exports.join = function(req, res) {
                 console.log(err);
                 return handleError(res, err);
             }
-            console.log(game);
-            if (code === game.code) {
-                console.log('FOUND GAME', game);
+            // console.log('FOUND GAME', game);
 
-                var isJudge = game.users.length === 0 ? true : false;
-                var player = {
-                    name: req.body.name,
-                    _id: nameHash,
-                    score: 0,
-                    cards: [],
-                    icon: '',
-                    isJudge: isJudge
-                }
-
-                var index = game.users.push(player) - 1;
-                game.numActivePlayers++;
-
-                game.users[index].index = index;
-                game.save(function(err, game) {
-                    console.log('SAVED GAME', game);
-                    if (err) {
-                        return handleError(res, err);
-                    }
-                    return res.json({
-                        state: game,
-                        playerId: player._id
-                    });
-                })
+            var isJudge = game.users.length === 0 ? true : false;
+            var player = {
+                name: req.body.name,
+                _id: nameHash,
+                score: 0,
+                cards: [],
+                icon: '',
+                isJudge: isJudge
             }
+
+            var index = game.users.push(player) - 1;
+            game.numActivePlayers++;
+
+            game.users[index].index = index;
+            game.save(function(err, game) {
+                // console.log('SAVED GAME', game);
+                if (err) {
+                    return handleError(res, err);
+                }
+                return res.json({
+                    state: game,
+                    playerId: player._id
+                });
+            })
+
         })
 };
 
@@ -115,7 +113,7 @@ exports.draw = function(req, res) {
         if (err) {
             return handleError(res, err);
         }
-        console.log('we drew: ', req.body.cardsWeDrew);
+        // console.log('we drew: ', req.body.cardsWeDrew);
         pah.discardedWhite = pah.discardedWhite.concat(req.body.cardsWeDrew);
         pah.users.forEach(function(user) {
             if (user._id === req.params.user) {
@@ -129,7 +127,7 @@ exports.draw = function(req, res) {
         if (pah.currentDrawingUser == pah.users.length) {
             pah.currentDrawingUser = -1;
         }
-        console.log('current drawing user: ', pah.currentDrawingUser);
+        // console.log('current drawing user: ', pah.currentDrawingUser);
         pah.markModified('users');
         pah.save(function(err, pah) {
             if (err) {
@@ -166,13 +164,13 @@ exports.submit = function(req, res) {
             return handleError(res, err);
         }
         var cards = req.body.cards;
-        console.log("THESE ARE CARDS", cards);
+        // console.log("THESE ARE CARDS", cards);
         //cards.userId = req.params.user;
         pah.cardsInPlay.push(cards);
         if ((pah.cardsInPlay.length >= pah.numActivePlayers - 1 && !pah.users[pah.currentJudge].isInactive) || pah.cardsInPlay.length >= pah.numActivePlayers) {
             pah.judgeMode = true;
             pah.cardsInPlay = shuffle(pah.cardsInPlay);
-            console.log("cards in play", pah.cardsInPlay.length)
+            // console.log("cards in play", pah.cardsInPlay.length)
             setJudgeTimeout(req.params.id, pah.currentRound, pah.users[pah.currentJudge].isInactive);
         }
         pah.users.forEach(function(user) {
@@ -205,7 +203,7 @@ exports.judge = function(req, res) {
         if (err) {
             return handleError(res, err);
         }
-        console.log(pah);
+        // console.log(pah);
 
         pah.mostRecentWin = winning_cards;
         // pah.mostRecentBlack = pah.blackCard;
@@ -275,7 +273,7 @@ exports.deactivate = function(req, res) {
                 // check if the round has started
                 if (currentUser.cards.length < 10) {
                     setNextJudge(pah);
-                } 
+                }
             }
         }
 
@@ -292,7 +290,7 @@ exports.deactivate = function(req, res) {
         console.log(pah.numActivePlayers);
         pah.markModified('users')
         pah.save(function(err, pah) {
-            console.log(pah);
+            // console.log(pah);
             if (err) {
                 return handleError(res, err);
             }
@@ -312,9 +310,11 @@ exports.reactivate = function(req, res) {
             //MAYBE MARK MODIFIED.
         pah.users.forEach(function(user) {
             if (user._id === userId) {
-                user.isInactive = false;
-                user.hasLeft = false;
-                pah.numActivePlayers++;
+                if (user.isInactive) {
+                    user.isInactive = false;
+                    user.hasLeft = false;
+                    pah.numActivePlayers++;
+                }
             }
         })
         console.log('reactivating ', userId);
