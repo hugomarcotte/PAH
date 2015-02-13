@@ -342,6 +342,11 @@ $medium-only: "only screen and (min-width : #{$small-screen}) and (max-width : #
   }
 
   .actionSide {
+    .msg {
+      h1 {
+        font-size: 1.5em;
+      }
+    }
     .gif{
       width: 345px;
       height: auto;
@@ -356,4 +361,16 @@ $medium-only: "only screen and (min-width : #{$small-screen}) and (max-width : #
     }
   }
 
+  .ngdialog.ngdialog-theme-default .ngdialog-content {
+    position:fixed;
+    width: 100%;
+    top: 0px;
+  }
+
+}
+
+@media only screen and (max-width: 320px) {
+  .whiteCard {
+    width: 115px;
+  }
 }
