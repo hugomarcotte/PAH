@@ -131,6 +131,11 @@ md-toolbar.md-default-theme {
 
 .blackCardZone {
 
+  .cardPlaceholder {
+    border-style: dashed;
+    border-color: grey;
+    margin-left: 0px !important;
+  }
   .blackCard {
     font-size: 3em;
     background-color: #000;
@@ -148,6 +153,7 @@ md-toolbar.md-default-theme {
   }
 
   .publicWhiteCards {
+
     height:100px;
     margin-left: -5px;
     margin-top: 15px;
