@@ -59,6 +59,7 @@ angular.module('pahApp')
 
         $scope.nonSubmits = function() {
 
+
              var nonSubmits = [];
              $scope.scoreboard.users.forEach(function(user) {
                  if (!user.hasSubmitted && !user.isJudge) nonSubmits.push(user.name);
@@ -73,7 +74,7 @@ angular.module('pahApp')
          $scope.judgeWaitingMsg = function() {
             var string = "You are the judge!<br>Waiting for <span class='message-name'>" + $scope.nonSubmits() + "</span> to submit.";
             $scope.judgeWaitingM = string;
-         } 
+        }
 
          $scope.hideComma = function(user) {
             // console.log(user);
@@ -90,6 +91,7 @@ angular.module('pahApp')
                }                
              }
          }
+         
 
         $scope.decrementJudgeViewIndex = function() {
             if ($scope.judgeViewIndex === 0) {
@@ -195,10 +197,9 @@ angular.module('pahApp')
 
 
 
-        deck.getDeck('base', function() {
-            $scope.deck = deck.getCurrentDeck();
-            //console.log($scope.deck);
-        })
+        $scope.deck = deck.getCurrentDeck();
+        // console.log('this is the deck!', $scope.deck);
+
 
         $scope.openLinkDialog = function() {
             console.log('hey');
@@ -264,13 +265,6 @@ angular.module('pahApp')
         }
 
         $scope.isJudge = true;
-
-
-
-        deck.getDeck('base', function() {
-            $scope.deck = deck.getCurrentDeck();
-            //console.log($scope.deck);
-        })
 
         $scope.openLinkDialog = function() {
             console.log('hey');

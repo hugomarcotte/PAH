@@ -135,7 +135,7 @@ angular.module('pahApp')
         }
 
         factoryMethods.spectate = function(joinCode, callback) {
-            console.log('Im calling spectate');
+            // console.log('Im calling spectate');
             if (gameState && joinCode !== gameState.code) resetFactory();
             var self = this;
             return $http.get('/api/pahs/' + joinCode)

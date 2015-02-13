@@ -5,7 +5,8 @@ var Deck = require('./deck.model');
 
 var decks = {
 	master: require('../../decks/cards_against_humanity/master_cards'),
-	base: require('../../decks/cards_against_humanity/basedeck').white
+	base: require('../../decks/cards_against_humanity/basedeck').white,
+  demo: require('../../decks/cards_against_humanity/demodeck').white
 }
 
 // Get list of decks

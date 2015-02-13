@@ -6,7 +6,14 @@ angular.module('pahApp')
       .state('join', {
         url: '/backend_sandbox',
         templateUrl: 'app/backend_sandbox/backend_sandbox.html',
-        controller: 'BackendSandboxCtrl'
+        controller: 'BackendSandboxCtrl',
+        resolve: {
+          resolveDeck: function(deck) {
+            // get the promise
+            console.log('Using the demo deck');
+            return deck.getDeck('demo');
+          }
+        }
       })
        .state('publicBoard', {
         url: '/backend_sandbox/{gameid}',
