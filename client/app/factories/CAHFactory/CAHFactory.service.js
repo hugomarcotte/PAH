@@ -140,6 +140,8 @@ angular.module('pahApp')
             var self = this;
             return $http.get('/api/pahs/' + joinCode)
                 .success(function(state) {
+                    socket.socket.emit('join', 'pah/' + state._id);
+
                     if (callback) callback(state);
                     gameId = state._id;
                     updatePlayArea(state);
@@ -237,7 +239,6 @@ angular.module('pahApp')
         function joinHelper(data) {
             //gameId = data.state._id;
             isPlayer = true;
-
             updatePlayArea(data.state);
 
             gameState.users.forEach(function(user) {
@@ -264,7 +265,7 @@ angular.module('pahApp')
         // should just get called when join finds that
         // you're already in the game
         factoryMethods.rejoin = function(joinCode, cb) {
-            console.log('cookies.games', $cookies.games);
+            // console.log('cookies.games', $cookies.games);
             if (!$cookies.games) {
                 return false;
             }
@@ -290,7 +291,7 @@ angular.module('pahApp')
         };
 
         function registerStateSocket() {
-            socket.socket.on('pah:' + gameId, updatePlayArea);
+            socket.socket.on('update', updatePlayArea);
         }
 
         function updatePlayArea(newState) {
@@ -314,6 +315,7 @@ angular.module('pahApp')
             publicPlayArea.judgeMode = newState.judgeMode;
             scoreboard.users = newState.users;
 
+console.log('MOST RECENT WIN: ', newState.mostRecentWin);
             if (newState.mostRecentWin.length) {
                 publicPlayArea.mostRecentWin = newState.mostRecentWin;
             } else {
