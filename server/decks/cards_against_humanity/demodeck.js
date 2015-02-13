@@ -336,12 +336,12 @@ module.exports = {
   //   "numAnswers": 1,
   //   "expansion": "Base"
   // }, {
-    "id": 515,
-    "cardType": "Q",
-    "text": "What do old people smell like?",
-    "numAnswers": 1,
-    "expansion": "Base"
-  }, {
+  //   "id": 515,
+  //   "cardType": "Q",
+  //   "text": "What do old people smell like?",
+  //   "numAnswers": 1,
+  //   "expansion": "Base"
+  // }, {
     "id": 516,
     "cardType": "Q",
     "text": "The class field trip was completely ruined by _.",
@@ -589,18 +589,18 @@ module.exports = {
   //   "numAnswers": 0,
   //   "expansion": "Base"
   // }, {
-    "id": 9,
-    "cardType": "A",
-    "text": "MechaHitler.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
-    "id": 10,
-    "cardType": "A",
-    "text": "Being a motherfucking sorcerer.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 9,
+  //   "cardType": "A",
+  //   "text": "MechaHitler.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
+  //   "id": 10,
+  //   "cardType": "A",
+  //   "text": "Being a motherfucking sorcerer.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 11,
     "cardType": "A",
     "text": "A disappointing birthday party.",
@@ -613,12 +613,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 13,
-    "cardType": "A",
-    "text": "A windmill full of corpses.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 13,
+  //   "cardType": "A",
+  //   "text": "A windmill full of corpses.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 14,
     "cardType": "A",
     "text": "Guys who don't call.",
@@ -673,12 +673,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 23,
-    "cardType": "A",
-    "text": "Glenn Beck catching his scrotum on a curtain hook.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 23,
+  //   "cardType": "A",
+  //   "text": "Glenn Beck catching his scrotum on a curtain hook.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 24,
     "cardType": "A",
     "text": "The Rapture.",
@@ -859,18 +859,18 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 54,
-    "cardType": "A",
-    "text": "Jewish fraternities.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
-    "id": 55,
-    "cardType": "A",
-    "text": "Dead babies.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 54,
+  //   "cardType": "A",
+  //   "text": "Jewish fraternities.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
+  //   "id": 55,
+  //   "cardType": "A",
+  //   "text": "Dead babies.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
   //   "id": 56,
   //   "cardType": "A",
   //   "text": "Masturbation.",
@@ -913,12 +913,12 @@ module.exports = {
   //   "numAnswers": 0,
   //   "expansion": "Base"
   // }, {
-    "id": 63,
-    "cardType": "A",
-    "text": "Nazis.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 63,
+  //   "cardType": "A",
+  //   "text": "Nazis.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 64,
     "cardType": "A",
     "text": "Tom Cruise.",
@@ -997,12 +997,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 77,
-    "cardType": "A",
-    "text": "Obesity.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 77,
+  //   "cardType": "A",
+  //   "text": "Obesity.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 78,
     "cardType": "A",
     "text": "Chutzpah.",
@@ -1129,12 +1129,12 @@ module.exports = {
   //   "numAnswers": 0,
   //   "expansion": "Base"
   // }, {
-    "id": 99,
-    "cardType": "A",
-    "text": "Lactation.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 99,
+  //   "cardType": "A",
+  //   "text": "Lactation.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 100,
     "cardType": "A",
     "text": "Pabst Blue Ribbon.",
@@ -1333,12 +1333,12 @@ module.exports = {
   //   "numAnswers": 0,
   //   "expansion": "Base"
   // }, {
-    "id": 133,
-    "cardType": "A",
-    "text": "Yeast.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 133,
+  //   "cardType": "A",
+  //   "text": "Yeast.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
   //   "id": 134,
   //   "cardType": "A",
   //   "text": "Full frontal nudity.",
@@ -1369,12 +1369,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 139,
-    "cardType": "A",
-    "text": "Harry Potter erotica.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 139,
+  //   "cardType": "A",
+  //   "text": "Harry Potter erotica.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 140,
     "cardType": "A",
     "text": "Authentic Mexican cuisine.",
@@ -1399,12 +1399,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 144,
-    "cardType": "A",
-    "text": "Not giving a shit about the Third World.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 144,
+  //   "cardType": "A",
+  //   "text": "Not giving a shit about the Third World.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 145,
     "cardType": "A",
     "text": "Licking things to claim them as your own.",
@@ -1417,12 +1417,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 147,
-    "cardType": "A",
-    "text": "The hardworking Mexican.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 147,
+  //   "cardType": "A",
+  //   "text": "The hardworking Mexican.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 148,
     "cardType": "A",
     "text": "RoboCop.",
@@ -1435,12 +1435,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 150,
-    "cardType": "A",
-    "text": "Scrubbing under the folds.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 150,
+  //   "cardType": "A",
+  //   "text": "Scrubbing under the folds.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
   //   "id": 151,
   //   "cardType": "A",
   //   "text": "Porn Stars.",
@@ -1459,12 +1459,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 154,
-    "cardType": "A",
-    "text": "Expecting a burp and vomiting on the floor.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 154,
+  //   "cardType": "A",
+  //   "text": "Expecting a burp and vomiting on the floor.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 155,
     "cardType": "A",
     "text": "Barack Obama.",
@@ -1615,12 +1615,12 @@ module.exports = {
   //   "numAnswers": 0,
   //   "expansion": "Base"
   // }, {
-    "id": 180,
-    "cardType": "A",
-    "text": "Dead parents.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 180,
+  //   "cardType": "A",
+  //   "text": "Dead parents.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 181,
     "cardType": "A",
     "text": "Hot cheese.",
@@ -1639,12 +1639,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 184,
-    "cardType": "A",
-    "text": "Assless chaps.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 184,
+  //   "cardType": "A",
+  //   "text": "Assless chaps.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 185,
     "cardType": "A",
     "text": "Riding off into the sunset.",
@@ -1687,12 +1687,12 @@ module.exports = {
   //   "numAnswers": 0,
   //   "expansion": "Base"
   // }, {
-    "id": 192,
-    "cardType": "A",
-    "text": "Necrophilia.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 192,
+  //   "cardType": "A",
+  //   "text": "Necrophilia.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 193,
     "cardType": "A",
     "text": "A really cool hat.",
@@ -1777,12 +1777,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 207,
-    "cardType": "A",
-    "text": "Queefing.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 207,
+  //   "cardType": "A",
+  //   "text": "Queefing.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 208,
     "cardType": "A",
     "text": "Heartwarming orphans.",
@@ -1795,12 +1795,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 210,
-    "cardType": "A",
-    "text": "Cheating in the Special Olympics.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 210,
+  //   "cardType": "A",
+  //   "text": "Cheating in the Special Olympics.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 211,
     "cardType": "A",
     "text": "Tangled Slinkys.",
@@ -1831,12 +1831,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 216,
-    "cardType": "A",
-    "text": "Ethnic cleansing.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 216,
+  //   "cardType": "A",
+  //   "text": "Ethnic cleansing.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 217,
     "cardType": "A",
     "text": "Emotions.",
@@ -2155,12 +2155,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 270,
-    "cardType": "A",
-    "text": "Jew-fros.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 270,
+  //   "cardType": "A",
+  //   "text": "Jew-fros.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
   //   "id": 271,
   //   "cardType": "A",
   //   "text": "Waiting 'til marriage.",
@@ -2239,12 +2239,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 284,
-    "cardType": "A",
-    "text": "A can of whoop-ass.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 284,
+  //   "cardType": "A",
+  //   "text": "A can of whoop-ass.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 285,
     "cardType": "A",
     "text": "The Dance of the Sugar Plum Fairy.",
@@ -2317,12 +2317,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 297,
-    "cardType": "A",
-    "text": "A gentle caress of the inner thigh.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 297,
+  //   "cardType": "A",
+  //   "text": "A gentle caress of the inner thigh.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 298,
     "cardType": "A",
     "text": "A time travel paradox.",
@@ -2347,12 +2347,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 302,
-    "cardType": "A",
-    "text": "Italians.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 302,
+  //   "cardType": "A",
+  //   "text": "Italians.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 303,
     "cardType": "A",
     "text": "GoGurt&reg;.",
@@ -2443,12 +2443,12 @@ module.exports = {
   //   "numAnswers": 0,
   //   "expansion": "Base"
   // }, {
-    "id": 318,
-    "cardType": "A",
-    "text": "Child abuse.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 318,
+  //   "cardType": "A",
+  //   "text": "Child abuse.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
   //   "id": 319,
   //   "cardType": "A",
   //   "text": "Glenn Beck convulsively vomiting as a brood of crab spiders hatches in his brain and erupts from his tear ducts.",
@@ -2461,12 +2461,12 @@ module.exports = {
   //   "numAnswers": 0,
   //   "expansion": "Base"
   // }, {
-    "id": 321,
-    "cardType": "A",
-    "text": "A sassy black woman.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 321,
+  //   "cardType": "A",
+  //   "text": "A sassy black woman.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 322,
     "cardType": "A",
     "text": "Re-gifting.",
@@ -2509,12 +2509,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 329,
-    "cardType": "A",
-    "text": "Overcompensation.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 329,
+  //   "cardType": "A",
+  //   "text": "Overcompensation.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
   //   "id": 330,
   //   "cardType": "A",
   //   "text": "Foreskin.",
@@ -2551,12 +2551,12 @@ module.exports = {
   //   "numAnswers": 0,
   //   "expansion": "Base"
   // }, {
-    "id": 336,
-    "cardType": "A",
-    "text": "Muhammad (Praise Be Unto Him).",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 336,
+  //   "cardType": "A",
+  //   "text": "Muhammad (Praise Be Unto Him).",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
   //   "id": 337,
   //   "cardType": "A",
   //   "text": "Half-assed foreplay.",
@@ -2653,12 +2653,12 @@ module.exports = {
   //   "numAnswers": 0,
   //   "expansion": "Base"
   // }, {
-    "id": 353,
-    "cardType": "A",
-    "text": "8 oz. of sweet Mexican black-tar heroin.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 353,
+  //   "cardType": "A",
+  //   "text": "8 oz. of sweet Mexican black-tar heroin.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 354,
     "cardType": "A",
     "text": "Judge Judy.",
@@ -2749,12 +2749,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 369,
-    "cardType": "A",
-    "text": "Poor people.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 369,
+  //   "cardType": "A",
+  //   "text": "Poor people.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 370,
     "cardType": "A",
     "text": "A fetus.",
@@ -2815,12 +2815,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 380,
-    "cardType": "A",
-    "text": "Winking at old people.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 380,
+  //   "cardType": "A",
+  //   "text": "Winking at old people.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 381,
     "cardType": "A",
     "text": "Opposable thumbs.",
@@ -2851,12 +2851,12 @@ module.exports = {
   //   "numAnswers": 0,
   //   "expansion": "Base"
   // }, {
-    "id": 386,
-    "cardType": "A",
-    "text": "Racism.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 386,
+  //   "cardType": "A",
+  //   "text": "Racism.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
   //   "id": 387,
   //   "cardType": "A",
   //   "text": "Copping a feel.",
@@ -2881,12 +2881,12 @@ module.exports = {
   //   "numAnswers": 0,
   //   "expansion": "Base"
   // }, {
-    "id": 391,
-    "cardType": "A",
-    "text": "Kids with ass cancer.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 391,
+  //   "cardType": "A",
+  //   "text": "Kids with ass cancer.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
   //   "id": 392,
   //   "cardType": "A",
   //   "text": "Pictures of boobs.",
@@ -2953,24 +2953,24 @@ module.exports = {
   //   "numAnswers": 0,
   //   "expansion": "Base"
   // }, {
-    "id": 403,
-    "cardType": "A",
-    "text": "Lumberjack fantasies.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 403,
+  //   "cardType": "A",
+  //   "text": "Lumberjack fantasies.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 404,
     "cardType": "A",
     "text": "American Gladiators.",
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 405,
-    "cardType": "A",
-    "text": "Autocannibalism.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 405,
+  //   "cardType": "A",
+  //   "text": "Autocannibalism.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 406,
     "cardType": "A",
     "text": "Sean Connery.",
@@ -2988,7 +2988,7 @@ module.exports = {
     "text": "Domino's&trade; Oreo&trade; Dessert Pizza.",
     "numAnswers": 0,
     "expansion": "Base"
-  // }, {
+  }, {
   //   "id": 409,
   //   "cardType": "A",
   //   "text": "An asymmetric boob job.",
@@ -3007,30 +3007,30 @@ module.exports = {
   //   "numAnswers": 0,
   //   "expansion": "Base"
   // }, {
-    "id": 412,
-    "cardType": "A",
-    "text": "Asians who aren't good at math.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
-    "id": 413,
-    "cardType": "A",
-    "text": "The milk man.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
-    "id": 414,
-    "cardType": "A",
-    "text": "Waterboarding.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
-    "id": 415,
-    "cardType": "A",
-    "text": "Wifely duties.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 412,
+  //   "cardType": "A",
+  //   "text": "Asians who aren't good at math.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
+  //   "id": 413,
+  //   "cardType": "A",
+  //   "text": "The milk man.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
+  //   "id": 414,
+  //   "cardType": "A",
+  //   "text": "Waterboarding.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
+  //   "id": 415,
+  //   "cardType": "A",
+  //   "text": "Wifely duties.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 416,
     "cardType": "A",
     "text": "Loose lips.",
@@ -3049,12 +3049,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 419,
-    "cardType": "A",
-    "text": "The token minority.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 419,
+  //   "cardType": "A",
+  //   "text": "The token minority.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 420,
     "cardType": "A",
     "text": "Jibber-jabber.",
@@ -3079,12 +3079,12 @@ module.exports = {
   //   "numAnswers": 0,
   //   "expansion": "Base"
   // }, {
-    "id": 424,
-    "cardType": "A",
-    "text": "The Chinese gymnastics team.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 424,
+  //   "cardType": "A",
+  //   "text": "The Chinese gymnastics team.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 425,
     "cardType": "A",
     "text": "Prancing.",
@@ -3103,12 +3103,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 428,
-    "cardType": "A",
-    "text": "Man meat.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 428,
+  //   "cardType": "A",
+  //   "text": "Man meat.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 429,
     "cardType": "A",
     "text": "Forgetting the Alamo.",
@@ -3121,12 +3121,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 431,
-    "cardType": "A",
-    "text": "Crystal meth.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 431,
+  //   "cardType": "A",
+  //   "text": "Crystal meth.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 432,
     "cardType": "A",
     "text": "Booby-trapping the house to foil burglars.",
@@ -3145,12 +3145,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 435,
-    "cardType": "A",
-    "text": "Soiling oneself.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 435,
+  //   "cardType": "A",
+  //   "text": "Soiling oneself.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 436,
     "cardType": "A",
     "text": "Laying an egg.",

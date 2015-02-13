@@ -1,4 +1,45 @@
 <div class="col-md-12">
+
+
+
+<md-content>
+    <md-list>
+      <md-item ng-repeat="card in deck">
+        <md-item-content>
+          <div class="md-tile-content">
+            <h3>{{card.text}}</h3>
+          </div>
+        </md-item-content>
+      </md-item>
+    </md-list>
+  </md-content>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <h1>GAME STATE</h1>
 {{state}}
 <md-button class="md-raised" ng-click="getInitialState()">go</md-button>

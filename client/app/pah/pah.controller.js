@@ -92,40 +92,40 @@ angular.module('pahApp')
 
         $scope.nonSubmits = function() {
 
-             var nonSubmits = [];
-             $scope.scoreboard.users.forEach(function(user) {
-                 if (!user.hasSubmitted && !user.isJudge) nonSubmits.push(user.name);
-             });
-             if (nonSubmits.length === 1) {
-                    return nonSubmits[0];
-             } else {
-                    return nonSubmits.join('</span>,<span="message-name"> ');
-             }
-         }
-         $scope.judgeWaitingM = "fdsafdsa";
-         $scope.judgeWaitingMsg = function() {
+            var nonSubmits = [];
+            $scope.scoreboard.users.forEach(function(user) {
+                if (!user.hasSubmitted && !user.isJudge) nonSubmits.push(user.name);
+            });
+            if (nonSubmits.length === 1) {
+                return nonSubmits[0];
+            } else {
+                return nonSubmits.join('</span>,<span="message-name"> ');
+            }
+        }
+        $scope.judgeWaitingM = "fdsafdsa";
+        $scope.judgeWaitingMsg = function() {
             var string = "You are the judge!<br>Waiting for <span class='message-name'>" + $scope.nonSubmits() + "</span> to submit.";
             $scope.judgeWaitingM = string;
-         } 
+        }
 
-         $scope.hideComma = function(user) {
+        $scope.hideComma = function(user) {
             console.log(user);
-           var nonSubmits = [];
-             $scope.scoreboard.users.forEach(function(user) {
-                 if (!user.hasSubmitted && !user.isJudge) nonSubmits.push(user);
+            var nonSubmits = [];
+            $scope.scoreboard.users.forEach(function(user) {
+                if (!user.hasSubmitted && !user.isJudge) nonSubmits.push(user);
 
 
-             });
+            });
 
-             console.log(user)
-           
+            console.log(user)
 
-           if (nonSubmits[nonSubmits.length - 1]._id === user._id) {
+
+            if (nonSubmits[nonSubmits.length - 1]._id === user._id) {
                 return true;
-           } else {
+            } else {
                 return false;
-           }
-         }
+            }
+        }
 
         $scope.decrementJudgeViewIndex = function() {
             if ($scope.judgeViewIndex === 0) {
@@ -226,10 +226,9 @@ angular.module('pahApp')
 
 
 
-        deck.getDeck('base', function() {
-            $scope.deck = deck.getCurrentDeck();
-            //console.log($scope.deck);
-        })
+        $scope.deck = deck.getCurrentDeck();
+        // console.log('this is the deck!', $scope.deck);
+
 
         $scope.openLinkDialog = function() {
             console.log('hey');
@@ -295,13 +294,6 @@ angular.module('pahApp')
         }
 
         $scope.isJudge = true;
-
-
-
-        deck.getDeck('base', function() {
-            $scope.deck = deck.getCurrentDeck();
-            //console.log($scope.deck);
-        })
 
         $scope.openLinkDialog = function() {
             console.log('hey');
