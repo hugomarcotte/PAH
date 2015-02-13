@@ -220,7 +220,7 @@ angular.module('pahApp')
             // if (player.isJudge) {
             //     this.randomJudge();
             // }
-            if (currentPlayer.info.isInactive) return;
+            if (currentPlayer.info.isInactive && !leaving) return;
             isPlayer = false;
             $http.put('/api/pahs/' + gameId + '/deactivate/' + player._id + '', {
                     hasLeft: leaving
