@@ -102,7 +102,13 @@
                 </div>
             </div>
         </div>
-        <div class="actionSide">
+
+        <div style="text-align:center" ng-show="currentPlayer.info.isInactive">
+          <h1 class="gold" >You've been away for a bit :(</h1>
+          <button class="btn btn-material-green btn-lg" ng-click="reactivateMe()" style="margin-bottom: 20px;">Get Back In</button>
+        </div>
+        
+        <div class="actionSide" ng-hide="currentPlayer.info.isInactive">
             <div class="msg">
               <h1 ng-show="waitingForStart() && !currentPlayer.info.isJudge">Waiting for <span class="message-name">{{judge()}}</span> to start the game.</h1>
               <h1 ng-show="waitingForStart() && currentPlayer.info.isJudge">Hey {{currentPlayer.info.name}}, <br> Everyone is waiting on you to start the game!</h1>
@@ -188,3 +194,6 @@
     </form>
 </div>
 </script>
+
+
+

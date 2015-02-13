@@ -9,49 +9,16 @@ angular.module('pahApp')
                 $scope.waitingGif = waitingGif;
                 $scope.judgeGif = judgeGif;
             }
-            // $scope.getGif();
-
+        
 
         gifly.buildGifs().success(function(data) {
             console.log(data)
             $scope.waitingGifs = data.gifs.waitingGifs;
             $scope.judgeGifs = data.gifs.judgeGifs;
             $scope.getGif($scope.judgeGifs, $scope.waitingGifs);
-
-
-            // $scope.waitingGif = $scope.waitingGifs[0]; 
-            // $scope.judgeGif = $scope.judgeGifs [0]; 
-
         });
 
-        //// CAHFactory.init(playerName, callback)
-        //// if you include a playerName, init will also join you to the game
-        //
-        //// CAHFactory.join(playerName, code, callback)
-        //
-        //$scope.examplePrivatePlayArea = CAHFactory.getPrivatePlayArea();
-        //// access each card using exampleHand.hand[i], which is the full object
-        //
-        //$scope.examplePublicPlayArea = CAHFactory.getPublicPlayArea();
-        //// access the public play area (not the scoreboard)
-        ////
-        //// {
-        ////   blackCard: {},
-        ////   submittedCards: [],
-        ////   judgeMode: false,  // true if everyone has submitted a card?
-        ////   currentJudge: {} // user info of judge
-        //// }
-        //
-        //$scope.exampleScoreboard = CAHFactory.getScoreboard();
-        //// get the scoreboard, which includes the array of all players
-        //
-        //$scope.exampleMe = CAHFactory.getCurrentPlayer();
-        //console.log($scope.exampleMe);
-        //// get the current player's info
-        //// {
-        ////   info: {this is the player object},
-        ////   index: 4 // index in users array for display porpoises
-        //// }
+
 
 
 
@@ -102,7 +69,7 @@ angular.module('pahApp')
                     return nonSubmits.join('</span>,<span="message-name"> ');
              }
          }
-         $scope.judgeWaitingM = "fdsafdsa";
+         $scope.judgeWaitingM = "";
          $scope.judgeWaitingMsg = function() {
             var string = "You are the judge!<br>Waiting for <span class='message-name'>" + $scope.nonSubmits() + "</span> to submit.";
             $scope.judgeWaitingM = string;
@@ -143,7 +110,7 @@ angular.module('pahApp')
         $rootScope.$on('$stateChangeStart', function() {
             ngDialog.closeAll();
             CAHFactory.leave();
-        })
+        });
 
         window.onbeforeunload = function() {
             CAHFactory.leave();
@@ -161,12 +128,17 @@ angular.module('pahApp')
         };
 
         $scope.findPlayer = function(player) {
+          
             if (!$scope.currentPlayer.info) {
                 $scope.openJoin();
             } else {
-
                 $scope.noPlayer = false;
+                if ($scope.currentPlayer.isInactive) {
+                    alert("hellO");
+                }
             }
+
+
         };
 
         $scope.selectWhiteCard = function(whiteCard) {
@@ -360,6 +332,8 @@ angular.module('pahApp')
                 }
             }
         };
+
+         
 
 
 
