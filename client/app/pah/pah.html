@@ -136,9 +136,9 @@
                 <div ng-show="whiteCard.selected && publicPlayArea.blackCard.numAnswers > 1" class="order-badge">{{whiteCard.order}}</div>
                 <div ng-bind-html="whiteCard.text"></div>
               </div>
-              <div class='card whiteCard' ng-bind-html="submission.text" ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length" ng-repeat='submission in publicPlayArea.submittedCards[judgeViewIndex]'></div>
+              <div class='card whiteCard whiteCardDisplay' ng-bind-html="submission.text" ng-show="publicPlayArea.judgeMode && !publicPlayArea.mostRecentWin.length" ng-repeat='submission in publicPlayArea.submittedCards[judgeViewIndex]'></div>
               <div ng-show='publicPlayArea.mostRecentWin.length && publicPlayArea.judgeMode'>
-                <div class='card whiteCard' ng-bind-html="winner.text"  ng-show="publicPlayArea.judgeMode" ng-repeat='winner in publicPlayArea.mostRecentWin'></div>
+                <div class='card whiteCard whiteCardDisplay' ng-bind-html="winner.text"  ng-show="publicPlayArea.judgeMode" ng-repeat='winner in publicPlayArea.mostRecentWin'></div>
               </div>
 
             </div>
