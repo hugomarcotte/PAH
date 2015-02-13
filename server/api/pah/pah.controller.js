@@ -125,9 +125,10 @@ exports.draw = function(req, res) {
         })
         pah.currentDrawingUser++;
         if (pah.currentDrawingUser == pah.users.length) {
+            console.log('current drawing user: ', pah.currentDrawingUser);
+
             pah.currentDrawingUser = -1;
         }
-        // console.log('current drawing user: ', pah.currentDrawingUser);
         pah.markModified('users');
         pah.save(function(err, pah) {
             if (err) {
