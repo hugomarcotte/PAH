@@ -12,7 +12,7 @@ angular.module('pahApp')
         
 
         gifly.buildGifs().success(function(data) {
-            console.log(data)
+            // console.log(data)
             $scope.waitingGifs = data.gifs.waitingGifs;
             $scope.judgeGifs = data.gifs.judgeGifs;
             $scope.getGif($scope.judgeGifs, $scope.waitingGifs);
@@ -28,10 +28,10 @@ angular.module('pahApp')
         $scope.currentPlayer = CAHFactory.getCurrentPlayer();
         $scope.judgeViewIndex = 0;
 
-        if ($scope.privatePlayArea) console.log($scope.privatePlayArea, "privatePlayArea");
-        if ($scope.publicPlayArea) console.log($scope.publicPlayArea, "publicPlayArea");
-        if ($scope.scoreboard) console.log($scope.scoreboard, "scoreboard");
-        if ($scope.currentPlayer) console.log($scope.currentPlayer, "currentPlayer");
+        // if ($scope.privatePlayArea) console.log($scope.privatePlayArea, "privatePlayArea");
+        // if ($scope.publicPlayArea) console.log($scope.publicPlayArea, "publicPlayArea");
+        // if ($scope.scoreboard) console.log($scope.scoreboard, "scoreboard");
+        // if ($scope.currentPlayer) console.log($scope.currentPlayer, "currentPlayer");
 
         $scope.cardOrder = []
         $scope.submitted = false;
@@ -76,12 +76,12 @@ angular.module('pahApp')
          } 
 
          $scope.hideComma = function(user) {
-            console.log(user);
+            // console.log(user);
            var nonSubmits = [];
              $scope.scoreboard.users.forEach(function(user) {
                  if (!user.hasSubmitted && !user.isJudge) nonSubmits.push(user);
              });
-             console.log(user)
+             // console.log(user)
              if (nonSubmits[nonSubmits.length - 1] && user) {
                if (nonSubmits[nonSubmits.length - 1]._id === user._id) {
                     return true;

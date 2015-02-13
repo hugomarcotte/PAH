@@ -18,7 +18,8 @@ exports.register = function(socket) {
 function onSave(socket, doc, cb) {
 	//console.log(doc);
 	console.log('FROM SOCKET', doc._id);
-	socket.emit('pah:' + doc._id, doc);
+	socket.to('pah/' + doc._id).emit('update', doc);
+	// socket.emit('pah:' + doc._id, doc);
 }
 
 function onRemove(socket, doc, cb) {

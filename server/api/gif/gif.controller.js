@@ -24,7 +24,7 @@ exports.buildGifs = function (req, res) {
           judgeGifsArray.push(gifObj.images.original.url);
         });
         gifs.judgeGifs = judgeGifsArray;
-        console.log(gifs);
+        // console.log(gifs);
         return res.json(200, {gifs: gifs});
       }
      })
