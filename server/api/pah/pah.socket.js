@@ -10,7 +10,7 @@ exports.register = function(socket) {
 	Pah.schema.post('save', function(doc) {
 		onSave(socket, doc);
 	});
-	Pah.schema.post('remove', function(doc) {
+	Pah.schema.post('remove', function(doc) { 
 		onRemove(socket, doc);
 	});
 }
@@ -23,5 +23,5 @@ function onSave(socket, doc, cb) {
 }
 
 function onRemove(socket, doc, cb) {
-	socket.emit('pah:' + doc._id, doc);
+	// socket.emit('pah:' + doc._id, doc);
 }
