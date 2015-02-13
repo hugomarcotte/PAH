@@ -173,7 +173,7 @@ exports.submit = function(req, res) {
             pah.judgeMode = true;
             pah.cardsInPlay = shuffle(pah.cardsInPlay);
             console.log("cards in play", pah.cardsInPlay.length)
-            setJudgeTimeout(req.params.id, pah.currentRound);
+            setJudgeTimeout(req.params.id, pah.currentRound, pah.users[pah.currentJudge].isInactive);
         }
         pah.users.forEach(function(user) {
             var userHand = user.cards
@@ -197,7 +197,7 @@ exports.submit = function(req, res) {
 
 exports.judge = function(req, res) {
     var winning_cards = req.body.cards;
-    if(!winning_cards.length)return handleError(res);
+    if (!winning_cards.length) return handleError(res);
     var winning_user = winning_cards[0].userId;
 
 
@@ -218,17 +218,9 @@ exports.judge = function(req, res) {
                 user.score += 1000;
             }
         })
-        pah.users[pah.currentJudge].isJudge = false;
-        var oldJudge=pah.currentJudge;
-        do {
-            pah.currentJudge++;
-            if (pah.currentJudge === pah.users.length) pah.currentJudge = 0;
-            if(oldJudge == pah.currentJudge){
-                break;
-            }
-        } while (pah.users[pah.currentJudge].isInactive);
 
-        pah.users[pah.currentJudge].isJudge = true;
+        setNextJudge(pah);
+
         pah.markModified('users')
         pah.save(function(err, pah) {
             console.log(pah);
@@ -253,24 +245,46 @@ exports.deactivate = function(req, res) {
         pah.users.forEach(function(user, index) {
             if (user._id === userId) {
                 currentUser = user;
-                user.isInactive = true;
-                user.hasLeft = req.body.hasLeft;
-                pah.numActivePlayers--;
-                if (index === pah.currentJudge && user.cards.length < 10) {
-                    pah.users[pah.currentJudge].isJudge = false;
-                    do {
-                        pah.currentJudge++;
-                        if (pah.currentJudge === pah.users.length) pah.currentJudge = 0;
-                    } while (pah.users[pah.currentJudge].isInactive);
-                    pah.users[pah.currentJudge].isJudge = true;
+                if (!user.isInactive) {
+                    user.isInactive = true;
+                    pah.numActivePlayers--;
                 }
+                user.hasLeft = req.body.hasLeft;
+                // if (index === pah.currentJudge && user.cards.length < 10) {
+                //     setNextJudge(pah);
+                // }
             }
         })
+
+        // IF THE JUDGE LEFT WE HAVE TO DO SOME STUFF
+        // like set next judge
+        // pah.mostRecentWin = pah.cardsInPlay[Math.floor(Math.random() * pah.cardsInPlay.length)];
+        //            if (!pah.mostRecentWin) return;
+        //            pah.users.forEach(function(user) {
+
+        //                if (pah.mostRecentWin[0] && user._id === pah.mostRecentWin[0].userId) {
+        //                    console.log('WINNING USER', user);
+        //                    user.score += 1000;
+        //                }
+        //            })
+
+        if (currentUser.isJudge) {
+            if (pah.judgeMode) {
+                autoJudge(pah);
+            } else {
+                // check if the round has started
+                if (currentUser.cards.length < 10) {
+                    setNextJudge(pah);
+                } 
+            }
+        }
+
+
         if (!pah.judgeMode) {
             if ((pah.cardsInPlay.length >= pah.numActivePlayers - 1 && !pah.users[pah.currentJudge].isInactive) || pah.cardsInPlay.length >= pah.numActivePlayers) {
                 pah.judgeMode = true;
                 pah.cardsInPlay = shuffle(pah.cardsInPlay);
-                setJudgeTimeout(req.params.id, pah.currentRound);
+                setJudgeTimeout(req.params.id, pah.currentRound, pah.users[pah.currentJudge].isInactive);
                 console.log("cards in play", pah.cardsInPlay.length)
             }
         }
@@ -400,16 +414,16 @@ exports.startRound = function(req, res) {
 
         // console.log(pah.discardedBlack);
         //console.log(Math.floor(Math.random()*availableBlackCards.length));
-        var counter=0;
-       do {
+        var counter = 0;
+        do {
             //console.log(Math.floor(Math.random()*availableBlackCards.length));
             pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
             counter++;
-            if (counter>25){
-                pah.discardedBlack=[];
+            if (counter > 25) {
+                pah.discardedBlack = [];
                 shuffle(availableBlackCards);
             }
-        }while (pah.discardedBlack.indexOf(pah.blackCard.id) >= 0)
+        } while (pah.discardedBlack.indexOf(pah.blackCard.id) >= 0)
         pah.discardedBlack.push(pah.blackCard.id);
 
         pah.currentDrawingUser = 0;
@@ -419,6 +433,7 @@ exports.startRound = function(req, res) {
 
         pah.users.forEach(function(user) {
             user.hasSubmitted = false;
+            if (user.isJudge) user.hasSubmitted = true;
         })
         pah.markModified('users')
         pah.save(function(err) {
@@ -430,39 +445,48 @@ exports.startRound = function(req, res) {
     });
 };
 
-function setJudgeTimeout(id, round) {
+function setJudgeTimeout(id, round, inactiveJudge) {
+    var time = (inactiveJudge ? 30000 : 90000);
+    console.log('timeout time: ', time);
     setTimeout(function() {
         console.log('JUDGE TIMED OUT');
         Pah.findById(id, function(err, pah) {
             if (pah.currentRound !== round || !pah.judgeMode) return;
-            pah.users[pah.currentJudge].isInactive = true;
-            pah.numActivePlayers--;
-            pah.mostRecentWin = pah.cardsInPlay[Math.floor(Math.random() * pah.cardsInPlay.length)];
-            if (!pah.mostRecentWin) return;
-            pah.users.forEach(function(user) {
-
-                if (pah.mostRecentWin[0] && user._id === pah.mostRecentWin[0].userId) {
-                    console.log('WINNING USER', user);
-                    user.score += 1000;
-                }
-            })
-             pah.users[pah.currentJudge].isJudge = false;
-
-         var oldJudge=pah.currentJudge;
-        do {
-            pah.currentJudge++;
-            if (pah.currentJudge === pah.users.length) pah.currentJudge = 0;
-            if(oldJudge == pah.currentJudge){
-                break;
-            }
-        } while (pah.users[pah.currentJudge].isInactive);
-
-        pah.users[pah.currentJudge].isJudge = true;
+            if (inactiveJudge) autoJudge(pah);
+            pah.users[pah.currentJudge].hasSubmitted = false;
+            // setNextJudge(pah);
             pah.markModified('users')
             pah.save(function(err, pah) {});
 
         });
-    }, 90000);
+    }, time);
+}
+
+function setNextJudge(pah) {
+    pah.users[pah.currentJudge].isJudge = false;
+    var oldJudge = pah.currentJudge;
+    do {
+        pah.currentJudge++;
+        if (pah.currentJudge === pah.users.length) pah.currentJudge = 0;
+        if (oldJudge == pah.currentJudge) {
+            break;
+        }
+    } while (pah.users[pah.currentJudge].isInactive);
+
+    pah.users[pah.currentJudge].isJudge = true;
+}
+
+function autoJudge(pah) {
+    pah.mostRecentWin = pah.cardsInPlay[Math.floor(Math.random() * pah.cardsInPlay.length)];
+    if (!pah.mostRecentWin) return;
+    pah.users.forEach(function(user) {
+
+        if (pah.mostRecentWin[0] && user._id === pah.mostRecentWin[0].userId) {
+            console.log('WINNING USER', user);
+            user.score += 1000;
+        }
+    })
+    setNextJudge(pah);
 }
 
 function handleError(res, err) {
