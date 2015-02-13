@@ -1087,12 +1087,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 92,
-    "cardType": "A",
-    "text": "The KKK.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 92,
+  //   "cardType": "A",
+  //   "text": "The KKK.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 93,
     "cardType": "A",
     "text": "Kamikaze pilots.",
@@ -1975,12 +1975,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 240,
-    "cardType": "A",
-    "text": "Peeing a little bit.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 240,
+  //   "cardType": "A",
+  //   "text": "Peeing a little bit.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 241,
     "cardType": "A",
     "text": "The miracle of childbirth.",
@@ -2077,12 +2077,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 257,
-    "cardType": "A",
-    "text": "Black people.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 257,
+  //   "cardType": "A",
+  //   "text": "Black people.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 258,
     "cardType": "A",
     "text": "Natalie Portman.",
@@ -2863,12 +2863,12 @@ module.exports = {
   //   "numAnswers": 0,
   //   "expansion": "Base"
   // }, {
-    "id": 388,
-    "cardType": "A",
-    "text": "Auschwitz.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 388,
+  //   "cardType": "A",
+  //   "text": "Auschwitz.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 389,
     "cardType": "A",
     "text": "Elderly Japanese men.",
