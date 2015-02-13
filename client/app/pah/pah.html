@@ -41,7 +41,10 @@
 <div class="game" ng-init="findPlayer(currentPlayer)" >
 
     <div class="topBar">
-      <div class="navButton icon icon-social-white icon-social-white-ic_person_white_24dp" ng-click="openSidenav()" style="margin-top:15px;"></div>
+    <span class="top-bar-player-click" ng-click="openSidenav()">
+      <div class="navButton icon icon-social-white icon-social-white-ic_person_white_24dp" style="margin-top:15px;"></div>
+      <div class="top-player-message"><span class="gold">{{scoreboard.users.length}}</span> friends a'playing</div>
+    </span>
       <div class="gameCode">
         Game Code {{gameCode}}
       </div>
