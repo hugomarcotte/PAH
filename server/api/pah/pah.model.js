@@ -12,6 +12,7 @@ var PahSchema = new Schema({
   currentDrawingUser: {type:Number, default:-1},
   users: {type:Array, default:[]},
   discardedWhite: {type:Array, default:[]},
+  availableWhite: {type:Array, default:[]},
   mostRecentWin: {type: Array, default:[]},
   mostRecentBlack: {type: Object, default:{}},
   discardedBlack: {type:Array, default:[]},
@@ -19,7 +20,8 @@ var PahSchema = new Schema({
   blackCard: {type: Object, default:{}},
   judgeMode: {type:Boolean, default:false},
   numActivePlayers: {type:Number, default:0},
-  currentRound: {type:Number, default:0}
+  currentRound: {type:Number, default:0},
+  gameState: {type:String, default:'lobby'}
 });
 
 module.exports = mongoose.model('Pah', PahSchema);
