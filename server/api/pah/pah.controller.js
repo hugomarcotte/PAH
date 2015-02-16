@@ -7,11 +7,12 @@ var twilo = require('twilio')(config.twilio.sid, config.twilio.auth);
 
 var decks = {
     master: require('../../decks/cards_against_humanity/master_cards'),
-    base: require('../../decks/cards_against_humanity/basedeck')
+    base: require('../../decks/cards_against_humanity/basedeck'),
+    demo: require('../../decks/cards_against_humanity/demodeck')
 }
 
-var availableBlackCards = decks.base.black;
-var availableWhiteCards = decks.base.white;
+var availableBlackCards = decks.demo.black;
+var availableWhiteCards = decks.demo.white;
 
 function hashUser(name, length) {
     var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
