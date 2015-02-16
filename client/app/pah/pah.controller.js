@@ -80,7 +80,7 @@ angular.module('pahApp')
             // console.log(user);
            var nonSubmits = [];
              $scope.scoreboard.users.forEach(function(user) {
-                 if (!user.hasSubmitted && !user.isJudge) nonSubmits.push(user);
+                 if (!user.hasSubmitted && !user.isJudge && !user.isInactive) nonSubmits.push(user);
              });
              // console.log(user)
              if (nonSubmits[nonSubmits.length - 1] && user) {
