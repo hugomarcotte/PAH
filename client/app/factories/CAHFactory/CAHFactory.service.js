@@ -82,17 +82,17 @@ angular.module('pahApp')
 
         factoryMethods.draw = function(numCards) {
             if (numCards === null) numCards = 1;
+            if (numCards === 0) return;
             // console.log(gameState);
-            var drawInfo = deck.drawCard(gameState.discardedWhite, numCards);
+            //var drawInfo = deck.drawCard(gameState.discardedWhite, numCards);
 
-            $http.put('api/pahs/' + gameId + '/draw/' + currentPlayer.info._id, {
-                cardsWeDrew: drawInfo.cardsWeDrew
-            }).success(function(data) {
-
-                privatePlayArea.hand = privatePlayArea.hand.concat(drawInfo.cards);
-                // console.log(privatePlayArea.hand, "LOOK AT THIS");
-                // console.log(data);
-            });
+            $http.get('api/pahs/' + gameId + '/draw/' + currentPlayer.info._id + '/' + numCards)
+                .success(function(drawnCards) {
+                    console.log('these are the cards I drew: ', drawnCards);
+                    privatePlayArea.hand = privatePlayArea.hand.concat(drawnCards);
+                    // console.log(privatePlayArea.hand, "LOOK AT THIS");
+                    // console.log(data);
+                });
         }
 
         factoryMethods.play = function(cards, userId) {
@@ -313,18 +313,21 @@ angular.module('pahApp')
             publicPlayArea.submittedCards = newState.cardsInPlay;
             publicPlayArea.currentJudge = newState.users[newState.currentJudge] || {};
             publicPlayArea.judgeMode = newState.judgeMode;
+            publicPlayArea.state = newState.gameState;
             scoreboard.users = newState.users;
 
-console.log('MOST RECENT WIN: ', newState.mostRecentWin);
+            console.log('MOST RECENT WIN: ', newState.mostRecentWin);
             if (newState.mostRecentWin.length) {
                 publicPlayArea.mostRecentWin = newState.mostRecentWin;
             } else {
                 publicPlayArea.mostRecentWin = [];
             }
 
-            if (isPlayer && newState.currentDrawingUser == currentPlayer.index) {
+            if (publicPlayArea.state == 'draw' && isPlayer) {
                 factoryMethods.draw(10 - privatePlayArea.hand.length);
+
             }
+            
         }
 
 

@@ -7,10 +7,12 @@ var twilo = require('twilio')(config.twilio.sid, config.twilio.auth);
 
 var decks = {
     master: require('../../decks/cards_against_humanity/master_cards'),
-    base: require('../../decks/cards_against_humanity/basedeck')
+    base: require('../../decks/cards_against_humanity/basedeck'),
+    demo: require('../../decks/cards_against_humanity/demodeck')
 }
 
-var availableBlackCards = decks.base.black;
+var availableBlackCards = decks.demo.black;
+var availableWhiteCards = decks.demo.white;
 
 function hashUser(name, length) {
     var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -49,8 +51,15 @@ exports.create = function(req, res) {
     var pah = new Pah({});
     var id = pah._id.toString();
     shuffle(availableBlackCards);
+    shuffle(availableWhiteCards);
+
+    // makes array of element ids
+    pah.availableWhite = availableWhiteCards.map(function(el) {
+        return el.id;
+    });
 
     pah.code = id.substring(id.length - 4);
+
 
     pah.save(function(err, pah) {
         //console.log(pah);
@@ -113,28 +122,41 @@ exports.draw = function(req, res) {
         if (err) {
             return handleError(res, err);
         }
+        var num = req.params.numCards;
+        var drawnCards = [];
+        while (num) {
+            drawnCards.push(pah.availableWhite.pop());
+            num--;
+        }
         // console.log('we drew: ', req.body.cardsWeDrew);
-        pah.discardedWhite = pah.discardedWhite.concat(req.body.cardsWeDrew);
+        pah.discardedWhite = pah.discardedWhite.concat(drawnCards);
         pah.users.forEach(function(user) {
             if (user._id === req.params.user) {
                 // req.body.cardsWeDrew.forEach(function(newCard) {
                 //     user.cards.push(newCard)
                 // })
-                user.cards = user.cards.concat(req.body.cardsWeDrew);
+                user.cards = user.cards.concat(drawnCards);
             }
         })
-        pah.currentDrawingUser++;
-        if (pah.currentDrawingUser == pah.users.length) {
-            console.log('current drawing user: ', pah.currentDrawingUser);
 
-            pah.currentDrawingUser = -1;
-        }
+        pah.gameState = 'play';
+
+        var retCards = availableWhiteCards.filter(function(el) {
+            return (drawnCards.indexOf(el.id) > -1);
+        })
+
+        // pah.currentDrawingUser++;
+        // if (pah.currentDrawingUser == pah.users.length) {
+        //     console.log('current drawing user: ', pah.currentDrawingUser);
+
+        //     pah.currentDrawingUser = -1;
+        // }
         pah.markModified('users');
         pah.save(function(err, pah) {
             if (err) {
                 return handleError(res, err);
             }
-            return res.json(200);
+            return res.json(200, retCards);
         })
     })
 };
@@ -427,7 +449,7 @@ exports.startRound = function(req, res) {
         } while (pah.discardedBlack.indexOf(pah.blackCard.id) >= 0)
         pah.discardedBlack.push(pah.blackCard.id);
 
-        pah.currentDrawingUser = 0;
+        pah.gameState = 'draw';
         pah.cardsInPlay = [];
         pah.judgeMode = false;
         pah.currentRound++;
