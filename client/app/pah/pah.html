@@ -127,8 +127,9 @@
 
               <h1 ng-show="publicPlayArea.gameState === 'winner'" style="margin-top:10px;"> Waiting for <span ng-hide="currentPlayer.info.name === judge()" class="message-name">{{judge()}}</span><span ng-show="currentPlayer.info.name === judge()" class="message-name">You</span> to start the next round.</h1>
               <h1 ng-show="!currentPlayer.info.isJudge && !publicPlayArea.judgeMode && !currentPlayer.info.hasSubmitted && publicPlayArea.blackCard.text">Select {{publicPlayArea.blackCard.numAnswers}} then hit submit.</h1>
-              <h1 ng-show="currentPlayer.info.hasSubmitted && !publicPlayArea.judgeMode && !currentPlayer.info.isJudge">You have submitted for this round. Waiting for
-                <span ng-repeat="user in scoreboard.users | filter:!isInactive">
+        
+              <h1 ng-show="currentPlayer.info.hasSubmitted && publicPlayArea.gameState === 'play' && !currentPlayer.info.isJudge">You have submitted for this round. Waiting for
+                <span ng-repeat="user in scoreboard.users">
                   <span ng-show="!user.hasSubmitted && !user.isJudge"><span ng-show="!user.isInactive" class='message-name'>{{user.name}}</span><span ng-hide="hideComma(user)">,</span></span>
                 </span>
                to submit.</h1>
