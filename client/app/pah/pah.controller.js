@@ -243,6 +243,7 @@ angular.module('pahApp')
 
 
         $scope.waitingForStart = function() {
+            return $scope.publicPlayArea.gameState == 'lobby';
             if ($scope.scoreboard.users[0]) {
                 return !(($scope.scoreboard.users[0].cards.length > 0) || $scope.noPlayer);
             }
@@ -250,6 +251,8 @@ angular.module('pahApp')
         }
 
         $scope.judgeWaiting = function() {
+            if ($scope.publicPlayArea.gameState !== 'play') return false;
+            return $scope.currentPlayer.info.isJudge;
             if ($scope.currentPlayer.info && $scope.scoreboard.users[0]) {
                 return $scope.currentPlayer.info.isJudge && !$scope.publicPlayArea.judgeMode && ($scope.scoreboard.users[0].cards.length > 0) && !$scope.noPlayer;
             }
