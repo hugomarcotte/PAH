@@ -22,8 +22,10 @@ module.exports = {
   },
 
   twilio: {
-    sid: process.env.SID,
-    auth: process.env.AUTH
+    // sid: process.env.SID,
+    // auth: process.env.AUTH
+        sid: 'ACdf98657c40965919ec09531bd5cdffeb',
+    auth: 'd76e345c66a9f17020b783a4e52192c0'
   }
 
 };
