@@ -18,6 +18,10 @@ body {
 
 md-sidenav {
   background-color: #232323;
+
+  a, a:hover, a:focus {
+    color: gold;
+  }
 }
 
 md-content.md-default-theme {
@@ -40,7 +44,7 @@ md-toolbar.md-default-theme {
   line-height: 55px;
 
   .gameCode {
-    width: calc(100% - 170px);
+    width: calc(100% - 94px);
     text-align:right;
   }
   div {
@@ -187,28 +191,13 @@ md-toolbar.md-default-theme {
   .whiteCardZone {
 
   }
+
+  button {
+    height: 55px;
+  }
   .buttonZone {
     padding-top: 20px;
-    .md-button.md-default-theme.md-raised {
 
-      height: 50px;
-      min-width: 100px;
-    }
-
-    .winner {
-      width: 80%;
-      max-width: 250px;
-    }
-
-    .submit-button {
-      width: 80%;
-      max-width: 250px;
-      margin-top: 20px;
-      height: 50px;
-      background-color: #008000 !important;
-      border-radius: 1%;
-      color: white !important;
-    }
   }
 
   .cardHighlighted {
@@ -351,6 +340,7 @@ $medium-only: "only screen and (min-width : #{$small-screen}) and (max-width : #
 
   .actionSide {
     .buttonZone {
+      margin-bottom: 50px;
       .winner {
         width: 80%;
         max-width: 100px;
@@ -365,7 +355,7 @@ $medium-only: "only screen and (min-width : #{$small-screen}) and (max-width : #
       }
     }
     .gif{
-      width: 345px;
+      width: 335px;
       height: auto;
     }
   }
@@ -389,5 +379,19 @@ $medium-only: "only screen and (min-width : #{$small-screen}) and (max-width : #
 @media only screen and (max-width: 320px) {
   .whiteCard {
     width: 115px;
+  }
+  .actionSide {
+    .buttonZone {
+      .winner {
+        width: 75%;
+        max-width: 85px;
+      }
+    }
+  }
+  .actionSide {
+    .gif{
+      width: 250px;
+      height: auto;
+    }
   }
 }
