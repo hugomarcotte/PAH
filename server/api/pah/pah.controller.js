@@ -265,7 +265,7 @@ exports.deactivate = function(req, res) {
         if (err) {
             return handleError(res, err);
         }
-        if (!pah) res.json(400);
+        if (!pah) return res.json(400);
 
         var userId = req.params.user;
         var currentUser;
