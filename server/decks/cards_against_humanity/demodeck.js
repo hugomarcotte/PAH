@@ -3139,12 +3139,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 434,
-    "cardType": "A",
-    "text": "Third base.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 434,
+  //   "cardType": "A",
+  //   "text": "Third base.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
   //   "id": 435,
   //   "cardType": "A",
   //   "text": "Soiling oneself.",

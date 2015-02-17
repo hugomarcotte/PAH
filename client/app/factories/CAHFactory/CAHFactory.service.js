@@ -22,6 +22,24 @@ angular.module('pahApp')
         }
         var isPlayer = false;
 
+        function resetFactory() {
+            console.log('resetting...');
+            gameId = '';
+            gameState = undefined;
+            currentPlayer.info = undefined;
+            currentPlayer.index = undefined;
+            privatePlayArea.hand = [];
+
+            publicPlayArea.blackCard = {}
+            publicPlayArea.submittedCards = [];
+            publicPlayArea.judgeMode = false;
+            publicPlayArea.gameState = '';
+            publicPlayArea.currentJudge = {};
+            publicPlayArea.mostRecentWin = [];
+
+            scoreboard.users = [];
+            isPlayer = false;
+        }
 
         // we probably shouldn't use this if we can avoid it
         factoryMethods.getState = function() {
@@ -104,13 +122,13 @@ angular.module('pahApp')
                 .success(function(data) {
                     var hand = privatePlayArea.hand
                     cards.forEach(function(card) {
-                            hand.splice(hand.indexOf(card), 1)
-                        })
+                        hand.splice(hand.indexOf(card), 1)
+                    })
                     if (isPlayer) {
                         factoryMethods.draw(10 - hand.length);
                     }
-                        // console.log('Played card', card);
-                        //factoryMethods.draw(10 - hand.length);
+                    // console.log('Played card', card);
+                    //factoryMethods.draw(10 - hand.length);
                 })
                 .error(function(err) {
                     console.log('Failed to join game: ', err);
@@ -141,7 +159,6 @@ angular.module('pahApp')
         factoryMethods.spectate = function(joinCode, callback) {
             // console.log('Im calling spectate');
             if (gameState && joinCode !== gameState.code) resetFactory();
-            var self = this;
             return $http.get('/api/pahs/' + joinCode)
                 .success(function(state) {
                     socket.socket.emit('join', 'pah/' + state._id);
@@ -150,28 +167,13 @@ angular.module('pahApp')
                     gameId = state._id;
                     updatePlayArea(state);
                     registerStateSocket();
-                    if (self.rejoin(joinCode)) {
+                    if (factoryMethods.rejoin(joinCode)) {
                         console.log('rejoining...');
                         if (callback) return callback(joinCode);
                     }
                 });
         };
 
-        function resetFactory() {
-            console.log('resetting...');
-            gameId = '';
-            gameState = undefined;
-            currentPlayer.info = undefined;
-            privatePlayArea.hand = [];
-
-            publicPlayArea.blackCard = {}
-            publicPlayArea.submittedCards = [];
-            publicPlayArea.judgeMode = false,
-                publicPlayArea.currentJudge = {}
-
-            scoreboard.users = [];
-            isPlayer = false;
-        }
 
         factoryMethods.join = function(name, joinCode, callback) {
             //console.log(arguments);
