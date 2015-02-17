@@ -45,7 +45,7 @@ grunt test
 1. Clone the repository
 
 	```bash
-	git clone https://github.com/angular/angular.js.git
+	git clone https://github.com/hugomarcotte/PAH
 	```
 2.	Install dependencies
 
