@@ -2191,12 +2191,12 @@ module.exports = {
     "numAnswers": 0,
     "expansion": "Base"
   }, {
-    "id": 276,
-    "cardType": "A",
-    "text": "The Trail of Tears.",
-    "numAnswers": 0,
-    "expansion": "Base"
-  }, {
+  //   "id": 276,
+  //   "cardType": "A",
+  //   "text": "The Trail of Tears.",
+  //   "numAnswers": 0,
+  //   "expansion": "Base"
+  // }, {
     "id": 277,
     "cardType": "A",
     "text": "Self-loathing.",
