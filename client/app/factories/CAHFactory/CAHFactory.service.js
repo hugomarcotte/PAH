@@ -13,6 +13,7 @@ angular.module('pahApp')
             blackCard: {},
             submittedCards: [],
             judgeMode: false,
+            gameState: '',
             currentJudge: {},
             mostRecentWin: []
         };
@@ -82,7 +83,7 @@ angular.module('pahApp')
 
         factoryMethods.draw = function(numCards) {
             if (numCards === null) numCards = 1;
-            if (numCards === 0) return;
+            if (numCards <= 0) return;
             // console.log(gameState);
             //var drawInfo = deck.drawCard(gameState.discardedWhite, numCards);
 
@@ -105,6 +106,9 @@ angular.module('pahApp')
                     cards.forEach(function(card) {
                             hand.splice(hand.indexOf(card), 1)
                         })
+                    if (isPlayer) {
+                        factoryMethods.draw(10 - hand.length);
+                    }
                         // console.log('Played card', card);
                         //factoryMethods.draw(10 - hand.length);
                 })
@@ -187,6 +191,9 @@ angular.module('pahApp')
                     if (callback) callback(data);
                     //console.log('success!');
                     joinHelper(data);
+                    if (isPlayer) {
+                        factoryMethods.draw(10 - privatePlayArea.hand.length);
+                    }
 
                     if ($cookies.games) {
                         var cookies = JSON.parse($cookies.games);
@@ -233,7 +240,9 @@ angular.module('pahApp')
         factoryMethods.reactivateMe = function() {
             if (!currentPlayer.info.isInactive) return;
             $http.put('/api/pahs/' + gameId + '/reactivate/' + currentPlayer.info._id + '', {})
-                .success(function(data) {});
+                .success(function(data) {
+                    updatePlayArea(data);
+                });
         }
 
         function joinHelper(data) {
@@ -296,6 +305,37 @@ angular.module('pahApp')
 
         function updatePlayArea(newState) {
             console.log('updating with: ', newState);
+            publicPlayArea.gameState = newState.gameState;
+            switch (publicPlayArea.gameState) {
+                case 'lobby':
+                    updateScoreboard(newState);
+                    updatePublicPlayArea(newState);
+                    break;
+                case 'draw':
+                    if (isPlayer) {
+                        factoryMethods.draw(10 - privatePlayArea.hand.length);
+                    }
+                    break;
+                case 'play':
+                    updateScoreboard(newState);
+                    updatePublicPlayArea(newState);
+                    break;
+                case 'judge':
+                    updateScoreboard(newState);
+                    updatePublicPlayArea(newState);
+                    break;
+                case 'winner':
+                    updateScoreboard(newState);
+                    updatePublicPlayArea(newState);
+                    updateWinner(newState);
+                    break;
+                default:
+                    console.log('ERROR: Invalid game state');
+                    break;
+
+            }
+
+
             // console.log(newState);
             gameState = newState;
             if (isPlayer || currentPlayer.index) {
@@ -309,25 +349,25 @@ angular.module('pahApp')
                     }
                 }
             }
-            publicPlayArea.blackCard = newState.blackCard;
-            publicPlayArea.submittedCards = newState.cardsInPlay;
-            publicPlayArea.currentJudge = newState.users[newState.currentJudge] || {};
-            publicPlayArea.judgeMode = newState.judgeMode;
-            publicPlayArea.state = newState.gameState;
-            scoreboard.users = newState.users;
 
             console.log('MOST RECENT WIN: ', newState.mostRecentWin);
-            if (newState.mostRecentWin.length) {
-                publicPlayArea.mostRecentWin = newState.mostRecentWin;
-            } else {
-                publicPlayArea.mostRecentWin = [];
-            }
 
-            if (publicPlayArea.state == 'draw' && isPlayer) {
-                factoryMethods.draw(10 - privatePlayArea.hand.length);
 
-            }
-            
+        }
+
+        function updateScoreboard(state) {
+            scoreboard.users = state.users;
+        }
+
+        function updatePublicPlayArea(state) {
+            publicPlayArea.blackCard = state.blackCard;
+            publicPlayArea.submittedCards = state.cardsInPlay;
+            publicPlayArea.currentJudge = state.users[state.currentJudge] || {};
+            publicPlayArea.judgeMode = state.judgeMode;
+        }
+
+        function updateWinner(state) {
+            publicPlayArea.mostRecentWin = state.mostRecentWin;
         }
 
 

@@ -243,6 +243,7 @@ angular.module('pahApp')
 
 
         $scope.waitingForStart = function() {
+            return $scope.publicPlayArea.gameState == 'lobby';
             if ($scope.scoreboard.users[0]) {
                 return !(($scope.scoreboard.users[0].cards.length > 0) || $scope.noPlayer);
             }

@@ -59,7 +59,7 @@ exports.create = function(req, res) {
     });
 
     pah.code = id.substring(id.length - 4);
-
+    pah.gameState = 'lobby';
 
     pah.save(function(err, pah) {
         //console.log(pah);
@@ -124,7 +124,7 @@ exports.draw = function(req, res) {
         }
         var num = req.params.numCards;
         var drawnCards = [];
-        while (num) {
+        while (num > 0) {
             drawnCards.push(pah.availableWhite.pop());
             num--;
         }
@@ -139,7 +139,9 @@ exports.draw = function(req, res) {
             }
         })
 
-        pah.gameState = 'play';
+        if (pah.gameState === 'draw') {
+            pah.gameState = 'play';
+        }
 
         var retCards = availableWhiteCards.filter(function(el) {
             return (drawnCards.indexOf(el.id) > -1);
@@ -192,6 +194,7 @@ exports.submit = function(req, res) {
         pah.cardsInPlay.push(cards);
         if ((pah.cardsInPlay.length >= pah.numActivePlayers - 1 && !pah.users[pah.currentJudge].isInactive) || pah.cardsInPlay.length >= pah.numActivePlayers) {
             pah.judgeMode = true;
+            pah.gameState = 'judge';
             pah.cardsInPlay = shuffle(pah.cardsInPlay);
             // console.log("cards in play", pah.cardsInPlay.length)
             setJudgeTimeout(req.params.id, pah.currentRound, pah.users[pah.currentJudge].isInactive);
@@ -229,6 +232,7 @@ exports.judge = function(req, res) {
         // console.log(pah);
 
         pah.mostRecentWin = winning_cards;
+        pah.gameState = 'winner';
         // pah.mostRecentBlack = pah.blackCard;
 
 
@@ -301,9 +305,10 @@ exports.deactivate = function(req, res) {
         }
 
 
-        if (!pah.judgeMode) {
+        if (pah.gameState === 'play') {
             if ((pah.cardsInPlay.length >= pah.numActivePlayers - 1 && !pah.users[pah.currentJudge].isInactive) || pah.cardsInPlay.length >= pah.numActivePlayers) {
                 pah.judgeMode = true;
+                pah.gameState = 'judge';
                 pah.cardsInPlay = shuffle(pah.cardsInPlay);
                 setJudgeTimeout(req.params.id, pah.currentRound, pah.users[pah.currentJudge].isInactive);
                 console.log("cards in play", pah.cardsInPlay.length)
@@ -317,7 +322,7 @@ exports.deactivate = function(req, res) {
             if (err) {
                 return handleError(res, err);
             }
-            return res.json(200);
+            return res.json(200, pah);
         })
     })
 };
@@ -348,7 +353,7 @@ exports.reactivate = function(req, res) {
             if (err) {
                 return handleError(res, err);
             }
-            return res.json(200);
+            return res.json(200, pah);
         })
     })
 };
@@ -513,5 +518,6 @@ function autoJudge(pah) {
 }
 
 function handleError(res, err) {
+    console.log(err);
     return res.send(500, err);
 }
