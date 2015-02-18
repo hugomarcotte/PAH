@@ -50,7 +50,7 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
     var pah = new Pah({});
     var id = pah._id.toString();
-    shuffle(availableBlackCards);
+    // shuffle(availableBlackCards);
     shuffle(availableWhiteCards);
 
     // makes array of element ids
@@ -449,7 +449,8 @@ exports.startRound = function(req, res) {
         var counter = 0;
         do {
             //console.log(Math.floor(Math.random()*availableBlackCards.length));
-            pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
+            pah.blackCard = availableBlackCards[pah.currentRound];
+            // pah.blackCard = availableBlackCards[Math.floor(Math.random() * availableBlackCards.length)];
             counter++;
             if (counter > 25) {
                 pah.discardedBlack = [];

@@ -8,13 +8,16 @@ angular.module('pahApp')
                 var judgeGif = judgeGifs[Math.floor(Math.random() * judgeGifs.length)];
                 $scope.waitingGif = waitingGif;
                 $scope.judgeGif = judgeGif;
+
             }
         
 
         gifly.buildGifs().success(function(data) {
             // console.log(data)
-            $scope.waitingGifs = data.gifs.waitingGifs;
-            $scope.judgeGifs = data.gifs.judgeGifs;
+            // $scope.waitingGifs = data.gifs.waitingGifs;
+            // $scope.judgeGifs = data.gifs.judgeGifs;
+            $scope.judgeGifs = ["http://media.giphy.com/media/3HAYjeYNrXB0T4jof8A/giphy.gif", "http://i1142.photobucket.com/albums/n617/frankog10/23211751wf6mR7lS_zps8b231d3c.gif"];
+            $scope.waitingGifs = ["http://img0.joyreactor.com/pics/post/work-newton's-cradle-cookie-monster-gif-1069931.gif", "http://www.reactiongifs.us/wp-content/uploads/2013/03/cookie_monster_waiting.gif"];
             $scope.getGif($scope.judgeGifs, $scope.waitingGifs);
         });
 

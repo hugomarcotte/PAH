@@ -1,5 +1,17 @@
 module.exports = {
   black: [{
+    "id": 511,
+    "cardType": "Q",
+    "text": "Step 1: _.  Step 2: _.  Step 3: Profit.",
+    "numAnswers": 2,
+    "expansion": "Base"
+  }, {
+    "id": 474,
+    "cardType": "Q",
+    "text": "I'm sorry professor, but I couldn't complete my homework because of _.",
+    "numAnswers": 1,
+    "expansion": "Base"
+  }, {
     "id": 459,
     "cardType": "Q",
     "text": "_?  There's an app for that.",
@@ -87,12 +99,6 @@ module.exports = {
     "id": 473,
     "cardType": "Q",
     "text": "I drink to forget _.",
-    "numAnswers": 1,
-    "expansion": "Base"
-  }, {
-    "id": 474,
-    "cardType": "Q",
-    "text": "I'm sorry professor, but I couldn't complete my homework because of _.",
     "numAnswers": 1,
     "expansion": "Base"
   }, {
@@ -310,12 +316,6 @@ module.exports = {
     "cardType": "Q",
     "text": "Next on ESPN2, the World Series of _.",
     "numAnswers": 1,
-    "expansion": "Base"
-  }, {
-    "id": 511,
-    "cardType": "Q",
-    "text": "Step 1: _.  Step 2: _.  Step 3: Profit.",
-    "numAnswers": 2,
     "expansion": "Base"
   }, {
     "id": 512,
