@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pahApp')
-    .factory('CAHFactory', function($http, deck, $cookies, socket) {
+    .factory('CAHFactory', function($http, deck, $cookies, socket, roomFactory) {
         var gameId = '';
         var factoryMethods = {};
         var gameState;
@@ -66,18 +66,47 @@ angular.module('pahApp')
             return this.getScoreboard();
         }
 
-        factoryMethods.init = function(playerName, callback) {
-            var self = this;
+        factoryMethods.spectate = function(joinCode, callback) {
+            if (gameState && joinCode !== gameState.code) resetFactory();
+            return roomFactory.spectate('pah', joinCode, joinHelper, function(state) {
 
+                if (callback) callback(state);
+                gameId = state._id;
+                updatePlayArea(state);
+                registerStateSocket();
+            });
+        };
+
+        factoryMethods.join = function(name, joinCode, callback) {
+            return roomFactory.join('pah', name)
+                .success(function(data) {
+                    if (callback) callback(data);
+                    //console.log('success!');
+                    joinHelper(data);
+                })
+                .error(function(err) {
+                    console.log('Failed to join game: ', err);
+                });
+        };
+
+        factoryMethods.deactivateMe = function() {
+            return factoryMethods.deactivatePlayer(currentPlayer.info);
+        }
+
+        factoryMethods.deactivatePlayer = function(player, leaving) {
+            return roomFactory.deactivatePlayer('pah', player, leaving);
+
+        };
+
+        factoryMethods.reactivateMe = function() {
+            return roomFactory.reactivatePlayer('pah', currentPlayer.info);
+        }
+
+        factoryMethods.init = function(playerName, callback) {
             $http.post('/api/pahs/', {})
                 .success(function(state) {
                     console.log('new game state: ', state);
-                    if (playerName) {
-                        self.join(playerName, state.code, callback);
-                    } else {
-                        if (callback) callback(state);
-                        //self.spectate(state.code, callback);
-                    }
+                    if (callback) callback(state);
                 })
                 .error(function(err) {
                     console.log('Failed to initialize game: ', err);
@@ -156,95 +185,9 @@ angular.module('pahApp')
             // call judge with that index of the array
         }
 
-        factoryMethods.spectate = function(joinCode, callback) {
-            // console.log('Im calling spectate');
-            if (gameState && joinCode !== gameState.code) resetFactory();
-            return $http.get('/api/pahs/' + joinCode)
-                .success(function(state) {
-                    socket.socket.emit('join', 'pah/' + state._id);
-
-                    if (callback) callback(state);
-                    gameId = state._id;
-                    updatePlayArea(state);
-                    registerStateSocket();
-                    if (factoryMethods.rejoin(joinCode)) {
-                        console.log('rejoining...');
-                        if (callback) return callback(joinCode);
-                    }
-                });
-        };
-
-
-        factoryMethods.join = function(name, joinCode, callback) {
-            //console.log(arguments);
-
-            //console.log('am I here?');
-
-            // check the cookie to see whether we rejoin or not
-            // if (this.rejoin(joinCode)) {
-            //     console.log('rejoining...');
-            //     if (callback) return callback(joinCode);
-            //     return;
-            // }
-            $http.post('/api/pahs/' + gameState.code, {
-                    'name': name
-                })
-                .success(function(data) {
-                    if (callback) callback(data);
-                    //console.log('success!');
-                    joinHelper(data);
-                    if (isPlayer) {
-                        factoryMethods.draw(10 - privatePlayArea.hand.length);
-                    }
-
-                    if ($cookies.games) {
-                        var cookies = JSON.parse($cookies.games);
-                        cookies.push({
-                            gameCode: joinCode,
-                            userId: currentPlayer.info._id
-                        });
-                        $cookies.games = JSON.stringify(cookies);
-                    } else {
-
-                        // Set the cookie for this player
-                        $cookies.games = JSON.stringify([{
-                            gameCode: joinCode,
-                            userId: currentPlayer.info._id
-                        }]);
-                        if (callback) callback(joinCode);
-                    }
-                })
-                .error(function(err) {
-                    console.log('Failed to join game: ', err);
-                });
-        };
 
         factoryMethods.leave = function() {
             return factoryMethods.deactivatePlayer(currentPlayer.info, true);
-        }
-
-        factoryMethods.deactivateMe = function() {
-            return factoryMethods.deactivatePlayer(currentPlayer.info);
-        }
-
-        factoryMethods.deactivatePlayer = function(player, leaving) {
-            // if (player.isJudge) {
-            //     this.randomJudge();
-            // }
-            if (currentPlayer.info.isInactive && !leaving) return;
-            isPlayer = false;
-            $http.put('/api/pahs/' + gameId + '/deactivate/' + player._id + '', {
-                    hasLeft: leaving
-                })
-                .success(function(data) {});
-        };
-
-        factoryMethods.reactivateMe = function() {
-            if (!currentPlayer.info.isInactive) return;
-            $http.put('/api/pahs/' + gameId + '/reactivate/' + currentPlayer.info._id + '', {})
-                .success(function(data) {
-                    updatePlayArea(data);
-                });
         }
 
         function joinHelper(data) {
@@ -262,9 +205,9 @@ angular.module('pahApp')
             if (currentPlayer.info.cards.length) {
                 privatePlayArea.hand = deck.populate(currentPlayer.info.cards);
             }
-            if (publicPlayArea.blackCard && publicPlayArea.blackCard.text && !publicPlayArea.judgeMode && !currentPlayer.info.hasSubmitted) {
-                factoryMethods.draw(10 - privatePlayArea.hand.length);
-            }
+
+            factoryMethods.draw(10 - privatePlayArea.hand.length);
+
             if (currentPlayer.info.isInactive) {
                 console.log('REACTIVATING!!!!!')
                 factoryMethods.reactivateMe();
@@ -272,34 +215,6 @@ angular.module('pahApp')
             //registerStateSocket();
         }
 
-        // this shouldn't be externally facing,
-        // should just get called when join finds that
-        // you're already in the game
-        factoryMethods.rejoin = function(joinCode, cb) {
-            // console.log('cookies.games', $cookies.games);
-            if (!$cookies.games) {
-                return false;
-            }
-
-            /// parse it check it push it stringify it reset it
-            // console.log($cookies.games)
-            var cookies = JSON.parse($cookies.games);
-            var playerId;
-            // console.log('cookies array', cookies);
-            cookies.forEach(function(game) {
-                if (joinCode === game.gameCode) {
-                    playerId = game.userId;
-                }
-            })
-            if (!playerId) {
-                return false;
-            }
-            joinHelper({
-                state: gameState,
-                playerId: playerId
-            });
-            return true;
-        };
 
         function registerStateSocket() {
             socket.socket.on('update', updatePlayArea);
