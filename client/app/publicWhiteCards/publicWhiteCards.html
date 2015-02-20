@@ -1,0 +1,8 @@
+<div class="publicWhiteCards" ng-class="{cardPlaceholder: publicPlayArea.submittedCards.length === 0}" ng-show="currentPlayer.info.isJudge && !publicPlayArea.judgeMode && !waitingForStart()">
+    <h1 ng-show="publicPlayArea.submittedCards.length === 0" style="color:grey;text-align:center;">Submissions</h1>
+    <div class='pahCard whiteCard' ng-repeat='whiteCard in publicPlayArea.submittedCards' ng-hide="publicPlayArea.judgeMode">
+        <!--<div class="publicWhiteCards" style="margin-left:{{calStackCardsMargin(publicPlayArea.submittedCards.length)}}px" flex="25">-->
+        <!--<div class='pahCard whiteCard' style="margin-left:-{{calStackCardsMargin(publicPlayArea.submittedCards.length)}}px" ng-repeat='whiteCard in publicPlayArea.submittedCards'>-->
+        Phones Against Humanity
+    </div>
+</div>

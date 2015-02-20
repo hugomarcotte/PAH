@@ -4,173 +4,33 @@
 <p>Scoreboard: {{scoreboard}}</p>
 <p>Me: {{currentPlayer.info}}</p> -->
 <!--</md-card>-->
-
 <md-sidenav class="md-sidenav-left sideBar" md-component-id="left" style="padding: 0 10px;">
-<md-toolbar>
-<h1 class="md-toolbar-tools" style="padding:0;font-weight:bold;">
-  <a class="navButton" ng-click="closeSideNav()" style="margin-left:5px;">X</a>
-</h1>
-</md-toolbar>
-<md-content class="sideBarContent">
-  <button class="btn btn-material-grey" ng-click="openLinkDialog()">Invite</button>
-  <button class="btn btn-material-grey" ng-click="openJoin()" ng-show="!currentPlayer.info">+ Join</button>
-  <button class="btn btn-material-grey" ng-click="reactivateMe()" ng-show="currentPlayer.info.isInactive">Reactivate Me</button>
-  <button class="btn btn-material-grey" ng-click="leave()" ng-show="!currentPlayer.info.hasLeft">Leave</button>
-  <div>
-      <div ng-repeat="user in scoreboard.users" ng-hide="user.hasLeft" layout="row" style="margin-bottom: 10px; line-height:27px;">
-          <i class="mdi-notification-dnd-forwardslash mdi-material-red" ng-show="user.isInactive" style="font-size: 20pt;"></i>
-          <i class="mdi-device-access-time mdi-material-yellow" ng-show="!currentPlayer.info.isJudge && !user.isJudge && !user.hasSubmitted && !publicPlayArea.mostRecentWin.length && !user.isInactive" style="font-size: 20pt;"></i>
-          <i class="mdi-action-highlight-remove mdi-material-red" ng-show="currentPlayer.info.isJudge && !user.hasSubmitted && !user.isJudge && publicPlayArea.gameState === 'play' && !user.isInactive" ng-click="deactivatePlayer(user)" style="font-size: 20pt;cursor:pointer;"></i>
-          <i class="mdi-social-person mdi-material-white" ng-show="(user.hasSubmitted || publicPlayArea.gameState !== 'play') && !user.isJudge && !user.isInactive" style="font-size: 20pt;"></i>
-          <i class="mdi-action-grade mdi-material-white" ng-show="user.isJudge && !user.isInactive" style="font-size: 20pt;"></i>
-
-          <div layout="row" flex style="margin-left: 20px;">
-              <div ng-class='{judge: user.index === currentPlayer.info.index, inactive: user.isInactive }' class="username" flex="50">
-                  {{user.name}}
-              </div>
-              <div class="score" flex="50" style="text-align:right;">
-                  {{user.score}}
-              </div>
-          </div>
-      </div>
-  </div>
-</md-content>
+    <md-toolbar>
+      <toolbar-tools></toolbar-tools>
+    </md-toolbar>
+    <md-content class="sideBarContent">
+        <scoreboard></scoreboard>
+    </md-content>
 </md-sidenav>
-
-
-<div class="game" ng-init="findPlayer(currentPlayer)" >
-
-    <div class="topBar">
-    <span class="top-bar-player-click" ng-click="openSidenav()">
-      <div class="navButton icon icon-social-white icon-social-white-ic_person_white_24dp" style="margin-top:15px;"></div>
-      <div class="top-player-message"><span class="gold">{{scoreboard.users.length}}</span> players</div>
-    </span>
-      <div class="gameCode">
-        Code {{gameCode}}
-      </div>
-    </div>
+<div class="game" ng-init="findPlayer(currentPlayer)">
+    <top-bar></top-bar>
     <div class="players">
-      <div class="buttons">
-        <button class="btn btn-material-grey" ng-click="openLinkDialog()">Invite</button>
-        <button class="btn btn-material-grey" ng-click="openJoin()" ng-show="!currentPlayer.info">+ Join</button>
-        <button class="btn btn-material-grey" ng-click="reactivateMe()" ng-show="currentPlayer.info.isInactive">Reactivate Me</button>
-        <button class="btn btn-material-grey" ng-click="leave()" ng-show="!currentPlayer.info.hasLeft">Leave</button>
-
-
-      </div>
-      <div ng-repeat="user in scoreboard.users" ng-hide="user.hasLeft" style="margin-bottom:10px;">
-        <i class="mdi-notification-dnd-forwardslash mdi-material-red" ng-show="user.isInactive" style="font-size: 20pt;"></i>
-        <i class="mdi-device-access-time mdi-material-yellow" ng-show="!currentPlayer.info.isJudge && !user.isJudge && !user.hasSubmitted && !publicPlayArea.mostRecentWin.length && !user.isInactive" style="font-size: 20pt;"></i>
-        <i class="mdi-action-highlight-remove mdi-material-red" ng-show="currentPlayer.info.isJudge && !user.hasSubmitted && !user.isJudge && !publicPlayArea.mostRecentWin.length && !user.isInactive" ng-click="deactivatePlayer(user)" style="font-size: 20pt;cursor:pointer;"></i>
-        <i class="mdi-social-person mdi-material-white" ng-show="(user.hasSubmitted || publicPlayArea.mostRecentWin.length) && !user.isJudge && !user.isInactive" style="font-size: 20pt;"></i>
-        <i class="mdi-action-grade mdi-material-white" ng-show="user.isJudge && !user.isInactive" style="font-size: 20pt;"></i>
-
-
-        <div class="nameScore">
-          <div class="username" ng-class='{judge: user.index === currentPlayer.info.index, inactive: user.isInactive }' >
-            {{user.name}}
-          </div>
-          <div class="score">
-            {{user.score}}
-          </div>
-        </div>
-
-      </div>
-      <div class="gameCode" style="margin-top:30px;">
-        Game Code<br> <span style="font-size:1.5em;">{{gameCode}}</span>
-      </div>
+      <scoreboard></scoreboard>
+      <game-code></game-code>
     </div>
     <div class="board">
         <div class="blackCardZone">
-            <div class="pahCard blackCard" ng-show="waitingForStart()">
-                <div class="text">
-                  Phones Against Humanity
-                </div>
-                <div class="footer"></div>
-            </div>
-            <div class="pahCard blackCard" ng-hide="waitingForStart()">
-                <div class="text" ng-bind-html='publicPlayArea.blackCard.text | underscore'></div>
-                <div class="footer">
-                    Phones Against Humanity
-                </div>
-            </div>
-            <div class="publicWhiteCards" ng-class="{cardPlaceholder: publicPlayArea.submittedCards.length === 0}" ng-show="currentPlayer.info.isJudge && !publicPlayArea.judgeMode && !waitingForStart()">
-                <h1 ng-show="publicPlayArea.submittedCards.length === 0" style="color:grey;text-align:center;">Submissions</h1>
-                <div class='pahCard whiteCard' ng-repeat='whiteCard in publicPlayArea.submittedCards' ng-hide="publicPlayArea.judgeMode">
-                    <!--<div class="publicWhiteCards" style="margin-left:{{calStackCardsMargin(publicPlayArea.submittedCards.length)}}px" flex="25">-->
-                    <!--<div class='pahCard whiteCard' style="margin-left:-{{calStackCardsMargin(publicPlayArea.submittedCards.length)}}px" ng-repeat='whiteCard in publicPlayArea.submittedCards'>-->
-                    Phones Against Humanity
-                </div>
-            </div>
+          <black-card></black-card>
+          <public-white-cards></public-white-cards>
         </div>
-
-        <div style="text-align:center" ng-show="currentPlayer.info.isInactive">
-          <h1 class="gold" >You've been away for a bit :(</h1>
-          <button class="btn btn-material-green btn-lg" ng-click="reactivateMe()" style="margin-bottom: 20px;height: 55px;">Get Back In</button>
-        </div>
-
-        <div class="actionSide" ng-hide="currentPlayer.info.isInactive">
-            <div class="msg">
-              <h1 ng-show="waitingForStart() && !currentPlayer.info.isJudge">Waiting for <span class="message-name">{{judge()}}</span> to start the game.</h1>
-              <h1 ng-show="waitingForStart() && currentPlayer.info.isJudge">Hey <span class="message-name">{{currentPlayer.info.name}}</span>, <br> Everyone is waiting on you to start the game!</h1>
-              <h1 ng-show="judgeWaiting()" ng-init="judgeWaitingMsg()">You are the judge!<br>Waiting for
-                <span ng-repeat="user in scoreboard.users">
-                  <span ng-show="!user.hasSubmitted && !user.isJudge"><span ng-show="!user.isInactive" class='message-name'>{{user.name}}</span><span ng-hide="hideComma(user)">,</span></span>
-                </span>
-                to submit.</h1>
-              <h1 ng-show="publicPlayArea.gameState === 'judge' && !currentPlayer.info.isJudge">Waiting for <span class="message-name">{{judge()}}</span> to select the winner. <br> Check out all the submissions!</h1>
-              <h1 ng-show="publicPlayArea.gameState === 'judge' && currentPlayer.info.isJudge">Select your favorite answer.</h1>
-              <h1 ng-show="publicPlayArea.gameState === 'winner'"><span class="message-name">{{winner()}}</span> Wins! +1000 points</h1>
-              <div ng-show="publicPlayArea.gameState === 'winner'">
-                <div class='pahCard whiteCard whiteCardDisplay' ng-bind-html="winner.text"  ng-show="publicPlayArea.judgeMode" ng-repeat='winner in publicPlayArea.mostRecentWin'></div>
-              </div>
-
-              <h1 ng-show="publicPlayArea.gameState === 'winner'" style="margin-top:10px;"> Waiting for <span ng-hide="currentPlayer.info.name === judge()" class="message-name">{{judge()}}</span><span ng-show="currentPlayer.info.name === judge()" class="message-name">You</span> to start the next round.</h1>
-              <h1 ng-show="!currentPlayer.info.isJudge && !publicPlayArea.judgeMode && !currentPlayer.info.hasSubmitted && publicPlayArea.blackCard.text">Select {{publicPlayArea.blackCard.numAnswers}} then hit submit.</h1>
-        
-              <h1 ng-show="currentPlayer.info.hasSubmitted && publicPlayArea.gameState === 'play' && !currentPlayer.info.isJudge">You have submitted for this round. Waiting for
-                <span ng-repeat="user in scoreboard.users">
-                  <span ng-show="!user.hasSubmitted && !user.isJudge"><span ng-show="!user.isInactive" class='message-name'>{{user.name}}</span><span ng-hide="hideComma(user)">,</span></span>
-                </span>
-               to submit.</h1>
-              <h1 ng-show="!publicPlayArea.blackCard.text && !currentPlayer.info">Speak Friend and Enter.</h1>
-            </div>
-
-            <button class="btn btn-material-green btn-lg" ng-click="submitCards()" ng-hide="currentPlayer.info.isJudge || currentPlayer.info.isInactive || currentPlayer.info.hasSubmitted || publicPlayArea.judgeMode || publicPlayArea.gameState !== 'play'" ng-class="{disabled: noSubmit()}">Submit Cards</button>
-            <button class="btn btn-material-green btn-lg" ng-show="publicPlayArea.gameState === 'winner' && currentPlayer.info.isJudge" ng-click="startRound()" style="margin-bottom: 10px;">Start Next Round</button>
-            <button class="btn btn-material-green btn-lg" ng-click="startRound()" ng-show="currentPlayer.info.isJudge && waitingForStart()" style="margin-bottom: 20px;">Start Game</button>
-
-            <div ng-show="judgeWaiting()">
-              <img class="gif" ng-src="{{judgeGif}}" />
-            </div>
-            <div ng-show="waitingForStart()">
-              <img class="gif" ng-src="{{waitingGif}}"/>
-            </div>
-            <div class="whiteCardZone">
-
-              <div class='pahCard whiteCard' ng-repeat='whiteCard in privatePlayArea.hand' ng-hide="currentPlayer.info.isJudge || publicPlayArea.judgeMode || waitingForStart()" ng-click="selectWhiteCard(whiteCard)" ng-class="{cardHighlighted: whiteCard.selected}">
-                <div ng-show="whiteCard.selected && publicPlayArea.blackCard.numAnswers > 1" class="order-badge">{{whiteCard.order}}</div>
-                <div ng-bind-html="whiteCard.text"></div>
-              </div>
-
-              <div class='pahCard whiteCard whiteCardDisplay' ng-bind-html="submission.text" ng-show="publicPlayArea.gameState === 'judge'" ng-repeat='submission in publicPlayArea.submittedCards[judgeViewIndex]'></div>
-              <!-- <div ng-show='publicPlayArea.mostRecentWin.length && publicPlayArea.judgeMode'>
-                <div class='pahCard whiteCard whiteCardDisplay' ng-bind-html="winner.text"  ng-show="publicPlayArea.judgeMode" ng-repeat='winner in publicPlayArea.mostRecentWin'></div>
-              </div> -->
-
-
-            </div>
-            <div class="buttonZone">
-                <div class="button" ng-show="publicPlayArea.gameState === 'judge'">
-                    <button class="btn btn-material-grey" ng-click="decrementJudgeViewIndex()" ng-show="publicPlayArea.judgeMode" style="margin-right:10px;">&lt;&lt;</button>
-                    <button class="btn btn-material-green" ng-click="selectWinner(publicPlayArea.submittedCards[judgeViewIndex])" ng-show="currentPlayer.info.isJudge && publicPlayArea.judgeMode">Winner</button>
-                    <button class="btn btn-material-grey" ng-click="incrementJudgeViewIndex()" ng-show="publicPlayArea.judgeMode" style="margin-left:10px;">&gt;&gt;</button>
-                </div>
-
-            </div>
+        <div class="actionSide">
+            <messages></messages>
+            <top-buttons></top-buttons>
+            <gif></gif>
+            <private-white-cards></private-white-cards>
+            <bottom-buttons></bottom-buttons>
         </div>
     </div>
-
 </div>
 <script type="text/ng-template" id="getLinkDialog">
 <div class="getLink">

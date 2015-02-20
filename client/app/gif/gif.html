@@ -1,0 +1,8 @@
+<div ng-hide="currentPlayer.info.isInactive">
+	<div ng-show="judgeWaiting()">
+	    <img class="gif" ng-src="{{judgeGif}}" />
+	</div>
+	<div ng-show="waitingForStart()">
+	    <img class="gif" ng-src="{{waitingGif}}" />
+	</div>
+</div>
