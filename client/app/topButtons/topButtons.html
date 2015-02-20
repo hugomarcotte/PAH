@@ -1,0 +1,5 @@
+<div ng-hide="currentPlayer.info.isInactive">
+    <button class="btn btn-material-green btn-lg" ng-click="submitCards()" ng-hide="currentPlayer.info.isJudge || currentPlayer.info.isInactive || currentPlayer.info.hasSubmitted || publicPlayArea.judgeMode || publicPlayArea.gameState !== 'play'" ng-class="{disabled: noSubmit()}">Submit Cards</button>
+    <button class="btn btn-material-green btn-lg" ng-show="publicPlayArea.gameState === 'winner' && currentPlayer.info.isJudge" ng-click="startRound()" style="margin-bottom: 10px;">Start Next Round</button>
+    <button class="btn btn-material-green btn-lg" ng-click="startRound()" ng-show="currentPlayer.info.isJudge && waitingForStart()" style="margin-bottom: 20px;">Start Game</button>
+<div>

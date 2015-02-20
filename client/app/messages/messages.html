@@ -1,0 +1,30 @@
+<div style="text-align:center" ng-show="currentPlayer.info.isInactive">
+    <h1 class="gold">You've been away for a bit :(</h1>
+    <button class="btn btn-material-green btn-lg" ng-click="reactivateMe()" style="margin-bottom: 20px;height: 55px;">Get Back In</button>
+</div>
+
+<div class="msg" ng-hide="currentPlayer.info.isInactive">
+    <h1 ng-show="waitingForStart() && !currentPlayer.info.isJudge">Waiting for <span class="message-name">{{judge()}}</span> to start the game.</h1>
+    <h1 ng-show="waitingForStart() && currentPlayer.info.isJudge">Hey <span class="message-name">{{currentPlayer.info.name}}</span>, <br> Everyone is waiting on you to start the game!</h1>
+    <h1 ng-show="judgeWaiting()" ng-init="judgeWaitingMsg()">You are the judge!<br>Waiting for
+<span ng-repeat="user in scoreboard.users">
+<span ng-show="!user.hasSubmitted && !user.isJudge"><span ng-show="!user.isInactive" class='message-name'>{{user.name}}</span><span ng-hide="hideComma(user)">,</span></span>
+</span>
+to submit.</h1>
+    <h1 ng-show="publicPlayArea.gameState === 'judge' && !currentPlayer.info.isJudge">Waiting for <span class="message-name">{{judge()}}</span> to select the winner. <br> Check out all the submissions!</h1>
+    <h1 ng-show="publicPlayArea.gameState === 'judge' && currentPlayer.info.isJudge">Select your favorite answer.</h1>
+    <h1 ng-show="publicPlayArea.gameState === 'winner'"><span class="message-name">{{winner()}}</span> Wins! +1000 points</h1>
+    <div ng-show="publicPlayArea.gameState === 'winner'">
+        <div class='pahCard whiteCard whiteCardDisplay' ng-bind-html="winner.text" ng-show="publicPlayArea.judgeMode" ng-repeat='winner in publicPlayArea.mostRecentWin'></div>
+    </div>
+
+    <h1 ng-show="publicPlayArea.gameState === 'winner'" style="margin-top:10px;"> Waiting for <span ng-hide="currentPlayer.info.name === judge()" class="message-name">{{judge()}}</span><span ng-show="currentPlayer.info.name === judge()" class="message-name">You</span> to start the next round.</h1>
+    <h1 ng-show="!currentPlayer.info.isJudge && !publicPlayArea.judgeMode && !currentPlayer.info.hasSubmitted && publicPlayArea.blackCard.text">Select {{publicPlayArea.blackCard.numAnswers}} then hit submit.</h1>
+
+    <h1 ng-show="currentPlayer.info.hasSubmitted && publicPlayArea.gameState === 'play' && !currentPlayer.info.isJudge">You have submitted for this round. Waiting for
+<span ng-repeat="user in scoreboard.users">
+<span ng-show="!user.hasSubmitted && !user.isJudge"><span ng-show="!user.isInactive" class='message-name'>{{user.name}}</span><span ng-hide="hideComma(user)">,</span></span>
+</span>
+to submit.</h1>
+    <h1 ng-show="!publicPlayArea.blackCard.text && !currentPlayer.info">Speak Friend and Enter.</h1>
+</div>

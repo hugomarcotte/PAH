@@ -1,1 +1,54 @@
-<div>this is the scoreboard directive {{message}}</div>
+<button class="btn btn-material-grey" ng-click="openLinkDialog()">Invite</button>
+  <button class="btn btn-material-grey" ng-click="openJoin()" ng-show="!currentPlayer.info">+ Join</button>
+  <button class="btn btn-material-grey" ng-click="reactivateMe()" ng-show="currentPlayer.info.isInactive">Reactivate Me</button>
+  <button class="btn btn-material-grey" ng-click="leave()" ng-show="!currentPlayer.info.hasLeft">Leave</button>
+  <div>
+      <div ng-repeat="user in scoreboard.users" ng-hide="user.hasLeft" layout="row" style="margin-bottom: 10px; line-height:27px;">
+          <i class="mdi-notification-dnd-forwardslash mdi-material-red" ng-show="user.isInactive" style="font-size: 20pt;"></i>
+          <i class="mdi-device-access-time mdi-material-yellow" ng-show="!currentPlayer.info.isJudge && !user.isJudge && !user.hasSubmitted && !publicPlayArea.mostRecentWin.length && !user.isInactive" style="font-size: 20pt;"></i>
+          <i class="mdi-action-highlight-remove mdi-material-red" ng-show="currentPlayer.info.isJudge && !user.hasSubmitted && !user.isJudge && publicPlayArea.gameState === 'play' && !user.isInactive" ng-click="deactivatePlayer(user)" style="font-size: 20pt;cursor:pointer;"></i>
+          <i class="mdi-social-person mdi-material-white" ng-show="(user.hasSubmitted || publicPlayArea.gameState !== 'play') && !user.isJudge && !user.isInactive" style="font-size: 20pt;"></i>
+          <i class="mdi-action-grade mdi-material-white" ng-show="user.isJudge && !user.isInactive" style="font-size: 20pt;"></i>
+
+          <div layout="row" flex style="margin-left: 20px;">
+              <div ng-class='{judge: user.index === currentPlayer.info.index, inactive: user.isInactive }' class="username" flex="50">
+                  {{user.name}}
+              </div>
+              <div class="score" flex="50" style="text-align:right;">
+                  {{user.score}}
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+
+
+  
+
+      <!-- <div class="buttons">
+        <button class="btn btn-material-grey" ng-click="openLinkDialog()">Invite</button>
+        <button class="btn btn-material-grey" ng-click="openJoin()" ng-show="!currentPlayer.info">+ Join</button>
+        <button class="btn btn-material-grey" ng-click="reactivateMe()" ng-show="currentPlayer.info.isInactive">Reactivate Me</button>
+        <button class="btn btn-material-grey" ng-click="leave()" ng-show="!currentPlayer.info.hasLeft">Leave</button>
+
+
+      </div>
+      <div ng-repeat="user in scoreboard.users" ng-hide="user.hasLeft" style="margin-bottom:10px;">
+        <i class="mdi-notification-dnd-forwardslash mdi-material-red" ng-show="user.isInactive" style="font-size: 20pt;"></i>
+        <i class="mdi-device-access-time mdi-material-yellow" ng-show="!currentPlayer.info.isJudge && !user.isJudge && !user.hasSubmitted && !publicPlayArea.mostRecentWin.length && !user.isInactive" style="font-size: 20pt;"></i>
+        <i class="mdi-action-highlight-remove mdi-material-red" ng-show="currentPlayer.info.isJudge && !user.hasSubmitted && !user.isJudge && !publicPlayArea.mostRecentWin.length && !user.isInactive" ng-click="deactivatePlayer(user)" style="font-size: 20pt;cursor:pointer;"></i>
+        <i class="mdi-social-person mdi-material-white" ng-show="(user.hasSubmitted || publicPlayArea.mostRecentWin.length) && !user.isJudge && !user.isInactive" style="font-size: 20pt;"></i>
+        <i class="mdi-action-grade mdi-material-white" ng-show="user.isJudge && !user.isInactive" style="font-size: 20pt;"></i>
+
+
+        <div class="nameScore">
+          <div class="username" ng-class='{judge: user.index === currentPlayer.info.index, inactive: user.isInactive }' >
+            {{user.name}}
+          </div>
+          <div class="score">
+            {{user.score}}
+          </div>
+        </div>
+
+      </div> -->

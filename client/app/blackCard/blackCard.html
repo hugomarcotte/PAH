@@ -1,0 +1,12 @@
+<div class="pahCard blackCard" ng-show="waitingForStart()">
+    <div class="text">
+        Phones Against Humanity
+    </div>
+    <div class="footer"></div>
+</div>
+<div class="pahCard blackCard" ng-hide="waitingForStart()">
+    <div class="text" ng-bind-html='publicPlayArea.blackCard.text | underscore'></div>
+    <div class="footer">
+        Phones Against Humanity
+    </div>
+</div>

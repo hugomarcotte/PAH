@@ -1,0 +1,7 @@
+<div class="buttonZone" ng-hide="currentPlayer.info.isInactive">
+    <div class="button" ng-show="publicPlayArea.gameState === 'judge'">
+        <button class="btn btn-material-grey" ng-click="decrementJudgeViewIndex()" ng-show="publicPlayArea.judgeMode" style="margin-right:10px;">&lt;&lt;</button>
+        <button class="btn btn-material-green" ng-click="selectWinner(publicPlayArea.submittedCards[judgeViewIndex])" ng-show="currentPlayer.info.isJudge && publicPlayArea.judgeMode">Winner</button>
+        <button class="btn btn-material-grey" ng-click="incrementJudgeViewIndex()" ng-show="publicPlayArea.judgeMode" style="margin-left:10px;">&gt;&gt;</button>
+    </div>
+</div>
