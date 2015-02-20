@@ -11,8 +11,8 @@ var decks = {
     demo: require('../../decks/cards_against_humanity/demodeck')
 }
 
-var availableBlackCards = decks.demo.black;
-var availableWhiteCards = decks.demo.white;
+var availableBlackCards = decks.base.black;
+var availableWhiteCards = decks.base.white;
 
 function hashUser(name, length) {
     var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
