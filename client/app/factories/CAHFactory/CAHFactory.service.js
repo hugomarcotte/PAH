@@ -98,9 +98,13 @@ angular.module('pahApp')
 
         };
 
+        factoryMethods.leave = function() {
+            return factoryMethods.deactivatePlayer(currentPlayer.info, true);
+        };
+
         factoryMethods.reactivateMe = function() {
             return roomFactory.reactivatePlayer('pah', currentPlayer.info);
-        }
+        };
 
         factoryMethods.init = function(playerName, callback) {
             $http.post('/api/pahs/', {})
@@ -186,9 +190,6 @@ angular.module('pahApp')
         }
 
 
-        factoryMethods.leave = function() {
-            return factoryMethods.deactivatePlayer(currentPlayer.info, true);
-        }
 
         function joinHelper(data) {
             //gameId = data.state._id;
