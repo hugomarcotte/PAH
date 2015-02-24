@@ -53,11 +53,15 @@ md-toolbar.md-default-theme {
   }
 }
 
+.hideWhenSideBar {
+  display:none;
+}
+
 .players {
   text-align:center;
   width: 250px;
   float:left;
-  display:none;
+
 
   .buttons {
     margin-bottom: 10px;
@@ -74,7 +78,7 @@ md-toolbar.md-default-theme {
     margin-left: 8px;
     vertical-align: text-bottom;
     display:inline-block;
-    width: calc(100% - 40px);
+    width: calc(100% - 47px);
     .username {
       text-align:left;
       width:75%;
@@ -314,7 +318,7 @@ $medium-only: "only screen and (min-width : #{$small-screen}) and (max-width : #
   .navButton {
     display: none;
   }
-  .players {
+  .hideWhenSideBar {
 
     display:inline-block;
   }

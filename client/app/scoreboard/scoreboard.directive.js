@@ -5,8 +5,8 @@ angular.module('pahApp')
     return {
       templateUrl: 'app/scoreboard/scoreboard.html',
       restrict: 'E',
-      scope: true, 
-      controller: 'ScoreboardCtrl',
+      scope: true,
+      controller: 'PahCtrl',
       link: function (scope, element, attrs) {
       }
     };
