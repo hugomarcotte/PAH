@@ -8,15 +8,15 @@
     <md-toolbar>
       <toolbar-tools></toolbar-tools>
     </md-toolbar>
-    <md-content class="sideBarContent">
-        <scoreboard></scoreboard>
-    </md-content>
+    <div class="players">
+      <scoreboard></scoreboard>
+    </div>
+
 </md-sidenav>
 <div class="game" ng-init="findPlayer(currentPlayer)">
     <top-bar></top-bar>
-    <div class="players">
+    <div class="players hideWhenSideBar">
       <scoreboard></scoreboard>
-      <game-code></game-code>
     </div>
     <div class="board">
         <div class="blackCardZone">
